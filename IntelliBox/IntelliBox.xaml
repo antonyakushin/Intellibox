@@ -1,0 +1,50 @@
+﻿<UserControl
+    x:Class="System.Windows.Controls.Custom.IntelliBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrl="clr-namespace:System.Windows.Controls.Custom">
+    <UserControl.Resources>
+        <ctrl:AlternateBackgroundConverter x:Key="rowBackgroundConverter" OddRowBrush="LightGray" />
+
+        <Style TargetType="{x:Type ListViewItem}">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <Binding RelativeSource="{RelativeSource Self}" Converter="{StaticResource rowBackgroundConverter}" />
+                </Setter.Value>
+            </Setter>
+            <EventSetter Event="MouseUp" Handler="OnListItemMouseUp" />
+        </Style>
+
+        <Style TargetType="{x:Type Popup}">
+            <Setter Property="Margin" Value="1" />
+            <Setter Property="AllowsTransparency" Value="true" />
+            <Setter Property="Placement" Value="Bottom" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <TextBox Name="PART_EDITFIELD"
+                 PreviewKeyDown="OnTextBoxPreviewKeyDown"
+                 KeyUp="OnTextBoxKeyUp"
+                 GotFocus="PART_EDITFIELD_GotFocus"/>
+        <Popup MinWidth="30" MaxWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=ResultListMaxWidth, Mode=OneWay}"
+               MaxHeight="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=ResultListMaxHeight, Mode=OneWay}"
+               PlacementTarget="{Binding ElementName=PART_EDITFIELD}"
+               IsOpen="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=ShowResults}">
+
+            <ListView Name="lstSearchItems"
+                      ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=Items}"
+                      SelectedItem="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=HighlightedItem}"
+                      PreviewKeyDown="lstSearchItems_PreviewKeyDown"/>
+
+        </Popup>
+
+        <Popup Name="noResultsPopup" PlacementTarget="{Binding ElementName=PART_EDITFIELD}"
+               PreviewKeyDown="lstSearchItems_PreviewKeyDown">
+            <Border Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}" BorderThickness="1">
+                <TextBlock Padding="16,4" FontStyle="Italic" Text="No results found" Foreground="Black" Background="White" />
+            </Border>
+        </Popup>
+
+    </Grid>
+</UserControl>
