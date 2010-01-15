@@ -52,7 +52,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                  PreviewKeyDown="OnTextBoxPreviewKeyDown"
                  KeyUp="OnTextBoxKeyUp"
                  GotFocus="PART_EDITFIELD_GotFocus"/>
-        <Popup MinWidth="30" MaxWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=ResultListMaxWidth, Mode=OneWay}"
+        <Popup StaysOpen="False" MinWidth="30" MaxWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=ResultListMaxWidth, Mode=OneWay}"
                MaxHeight="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=ResultListMaxHeight, Mode=OneWay}"
                PlacementTarget="{Binding ElementName=PART_EDITFIELD}"
                IsOpen="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=ShowResults}">
@@ -64,7 +64,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
         </Popup>
 
-        <Popup Name="noResultsPopup" PlacementTarget="{Binding ElementName=PART_EDITFIELD}"
+        <Popup StaysOpen="False" Name="noResultsPopup" PlacementTarget="{Binding ElementName=PART_EDITFIELD}"
                PreviewKeyDown="lstSearchItems_PreviewKeyDown">
             <Border Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}" BorderThickness="1">
                 <TextBlock Padding="16,4" FontStyle="Italic" Text="No results found" Foreground="Black" Background="White" />
