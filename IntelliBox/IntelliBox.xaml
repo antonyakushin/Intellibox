@@ -29,17 +29,6 @@ OTHER DEALINGS IN THE SOFTWARE.
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ctrl="clr-namespace:System.Windows.Controls.Custom">
     <UserControl.Resources>
-        <ctrl:AlternateBackgroundConverter x:Key="rowBackgroundConverter" OddRowBrush="Gainsboro"  />
-
-        <Style TargetType="{x:Type ListViewItem}">
-            <Setter Property="Background">
-                <Setter.Value>
-                    <Binding RelativeSource="{RelativeSource Self}" Converter="{StaticResource rowBackgroundConverter}" />
-                </Setter.Value>
-            </Setter>
-            <EventSetter Event="MouseUp" Handler="OnListItemMouseUp" />
-        </Style>
-
         <Style TargetType="{x:Type Popup}">
             <Setter Property="Margin" Value="1" />
             <Setter Property="AllowsTransparency" Value="true" />

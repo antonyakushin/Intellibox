@@ -65,7 +65,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlternateBackgroundConverter.cs" />
+    <Compile Include="AbstractRowColorizer.cs" />
+    <Compile Include="AlternateRowColorizer.cs" />
     <Compile Include="BindingBaseFactory.cs" />
     <Compile Include="CloneHelper.cs" />
     <Compile Include="DataColumn.cs" />
