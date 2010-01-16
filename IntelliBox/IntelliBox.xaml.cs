@@ -359,12 +359,19 @@ namespace System.Windows.Controls.Custom {
         }
 
         private GridView ConstructGridView(object item) {
-            if (IsBaseType(item))
-                return null; // do the default thing
-
             var view = new GridView();
-            if (HideColumnHeaders) {
+            if (HideColumnHeaders || IsBaseType(item)) {
                 view.ColumnHeaderContainerStyle = ZeroHeightColumnHeader;
+            }
+
+            if (IsBaseType(item)) {
+                var gvc = new GridViewColumn();
+                gvc.Header = item.GetType().Name;
+
+                gvc.DisplayMemberBinding = new Binding();
+                view.Columns.Add(gvc);
+
+                return view;
             }
 
             if (ExplicitlyIncludeColumns && Columns != null && Columns.Count > 0) {
