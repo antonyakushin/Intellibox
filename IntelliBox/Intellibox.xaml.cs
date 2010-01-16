@@ -158,7 +158,7 @@ namespace System.Windows.Controls {
 
         /// <summary>
         /// The columns in the search result set to display. When <see cref="ExplicitlyIncludeColumns"/>
-        /// is set to true, then only the <see cref="DataColumn"/>s in this collection will be shown.
+        /// is set to true, then only the <see cref="IntelliboxColumn"/>s in this collection will be shown.
         /// Setting <see cref="HideColumnHeaders"/> to true will prevent column headers from being shown.
         /// </summary>
         public IntelliboxColumnCollection Columns {
@@ -167,7 +167,7 @@ namespace System.Windows.Controls {
         }
 
         /// <summary>
-        /// This is the <see cref="ISearchResultsProvider"/> that the <see cref="IntelliBox"/> uses
+        /// This is the <see cref="IIntelliboxResultsProvider"/> that the <see cref="IntelliBox"/> uses
         /// to ask for search results. This is a Dependancy Property.
         /// </summary>
         public IIntelliboxResultsProvider DataProvider {
@@ -229,7 +229,7 @@ namespace System.Windows.Controls {
         }
 
         /// <summary>
-        /// When True, only the <see cref="DataColumn"/>s in the <see cref="Columns"/> collection
+        /// When True, only the <see cref="IntelliboxColumn"/>s in the <see cref="Columns"/> collection
         /// will display in the search results set. When False, all the columns in the search result set
         /// will show, but any columns in the <see cref="Columns"/> collection then override specific columns.
         /// </summary>
@@ -273,7 +273,7 @@ namespace System.Windows.Controls {
 
         /// <summary>
         /// Gets or sets the maximum number of results that the <see cref="IntelliBox"/> asks
-        /// its <see cref="ISearchResultsProvider"/> for. This is a Dependancy Property.
+        /// its <see cref="IIntelliboxResultsProvider"/> for. This is a Dependancy Property.
         /// </summary>
         public int MaxResults {
             get {
@@ -365,8 +365,8 @@ namespace System.Windows.Controls {
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="AbstractRowColorizer"/> used to color each row of the search result set.
-        /// Set to an instance of <see cref="AlternateRowColorizer"/> by default.
+        /// Gets or sets the <see cref="IntelliboxAlternateRowColorizer"/> used to color each row of the search result set.
+        /// Set to an instance of <see cref="IntelliboxRowColorizer"/> by default.
         /// </summary>
         public IntelliboxRowColorizer RowColorizer {
             get {

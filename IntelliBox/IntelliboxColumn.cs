@@ -25,7 +25,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 namespace System.Windows.Controls {
     /// <summary>
-    /// Represents a column that displays data from an <see cref="ISearchResultsProvider"/> result set.
+    /// Represents a column that displays data from an <see cref="IIntelliboxResultsProvider"/> result set.
     /// </summary>
     public class IntelliboxColumn : GridViewColumn {
         /// <summary>
