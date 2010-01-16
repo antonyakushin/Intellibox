@@ -82,8 +82,8 @@ OTHER DEALINGS IN THE SOFTWARE.
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Margin="0,0,6,0">Search:</TextBlock>
                     <auto:IntelliBox Width="200" Name="multiColumn"
-                                              DisplayedValuePath="FirstName"
-                                              SelectedValuePath="PersonID"
+                                     DisplayedValueBinding="{Binding FirstName}"
+                                     SelectedValueBinding="{Binding PersonID}"
                         DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
 
                     </auto:IntelliBox>
@@ -114,8 +114,8 @@ OTHER DEALINGS IN THE SOFTWARE.
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Margin="0,0,6,0">Search:</TextBlock>
                     <auto:IntelliBox Width="200" Name="overrideColumn"
-                                              DisplayedValuePath="FirstName"
-                                              SelectedValuePath="PersonID"
+                                              DisplayedValueBinding="{Binding FirstName}"
+                                              SelectedValueBinding="{Binding PersonID}"
                         DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
                         <auto:IntelliBox.Columns>
                             <auto:DataColumn ForProperty="Age"
@@ -153,8 +153,8 @@ OTHER DEALINGS IN THE SOFTWARE.
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Margin="0,0,6,0">Search:</TextBlock>
                     <auto:IntelliBox Width="200" Name="overrideAllColumn"
-                                              DisplayedValuePath="FirstName"
-                                              SelectedValuePath="PersonID"
+                                              DisplayedValueBinding="{Binding FirstName}"
+                                              SelectedValueBinding="{Binding PersonID}"
                                               ExplicitlyIncludeColumns="True"
                         DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
                         <auto:IntelliBox.Columns>
@@ -193,8 +193,8 @@ OTHER DEALINGS IN THE SOFTWARE.
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Margin="0,0,6,0">Search:</TextBlock>
                     <auto:IntelliBox Width="200" Name="positionColumn"
-                                              DisplayedValuePath="FirstName"
-                                              SelectedValuePath="PersonID"
+                                              DisplayedValueBinding="{Binding FirstName}"
+                                              SelectedValueBinding="{Binding PersonID}"
                         DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
                         
                         <auto:IntelliBox.Columns>

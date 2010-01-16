@@ -73,13 +73,6 @@ namespace System.Windows.Controls.Custom {
         public static readonly DependencyProperty ShowResultsProperty =
             DependencyProperty.Register("ShowResults", typeof(bool), typeof(IntelliBox), new UIPropertyMetadata(false));
 
-        public static readonly DependencyProperty DisplayedValuePathProperty =
-            DependencyProperty.Register("DisplayedValuePath", typeof(string), typeof(IntelliBox), new UIPropertyMetadata(string.Empty));
-
-        public static readonly DependencyProperty SelectedValuePathProperty =
-            DependencyProperty.Register("SelectedValuePath", typeof(string), typeof(IntelliBox),
-            new UIPropertyMetadata(string.Empty, OnSelectedValuePathPropertyChanged));
-
         private static Type[] _baseTypes = new[] {
             typeof(bool), typeof(byte), typeof(sbyte), typeof(char), typeof(decimal),
             typeof(double), typeof(float),
@@ -90,6 +83,7 @@ namespace System.Windows.Controls.Custom {
         private DateTime _lastTimeSearchRecievedUtc;
         private Type _previousResultType;
         private string _lastTextValue;
+        private Binding _selectedValueBinding;
 
         public ObservableCollection<DataColumn> Columns {
             get;
@@ -105,13 +99,9 @@ namespace System.Windows.Controls.Custom {
             }
         }
 
-        public string DisplayedValuePath {
-            get {
-                return (string)GetValue(DisplayedValuePathProperty);
-            }
-            set {
-                SetValue(DisplayedValuePathProperty, value);
-            }
+        public Binding DisplayedValueBinding {
+            get;
+            set;
         }
 
         public bool ExplicitlyIncludeColumns {
@@ -208,12 +198,25 @@ namespace System.Windows.Controls.Custom {
             }
         }
 
-        public string SelectedValuePath {
+
+        public Binding SelectedValueBinding {
             get {
-                return (string)GetValue(SelectedValuePathProperty);
+                return _selectedValueBinding;
             }
             set {
-                SetValue(SelectedValuePathProperty, value);
+                if (value != _selectedValueBinding) {
+                    _selectedValueBinding = value;
+                    OnSelectedValueBindingChanged();
+                }
+            }
+        }
+
+        private void OnSelectedValueBindingChanged() {
+            if (SelectedValueBinding == null) {
+                BindingOperations.ClearBinding(this, SelectedValueProperty);
+            }
+            else {
+                this.SetBinding(SelectedValueProperty, ConstructBindingForSelected(SelectedValueBinding));
             }
         }
 
@@ -245,6 +248,46 @@ namespace System.Windows.Controls.Custom {
             CloseSearchResults();
         }
 
+        private Binding Clone(Binding template) {
+            var bind = new Binding() {
+                BindingGroupName = template.BindingGroupName,
+                BindsDirectlyToSource = template.BindsDirectlyToSource,
+                Converter = template.Converter,
+                ConverterCulture = template.ConverterCulture,
+                ConverterParameter = template.ConverterParameter,
+                FallbackValue = template.FallbackValue,
+                IsAsync = template.IsAsync,
+                Mode = template.Mode,
+                NotifyOnSourceUpdated = template.NotifyOnSourceUpdated,
+                NotifyOnTargetUpdated = template.NotifyOnTargetUpdated,
+                NotifyOnValidationError = template.NotifyOnValidationError,
+                Path = template.Path,
+                StringFormat = template.StringFormat,
+                TargetNullValue = template.TargetNullValue,
+                UpdateSourceExceptionFilter = template.UpdateSourceExceptionFilter,
+                UpdateSourceTrigger = template.UpdateSourceTrigger,
+                ValidatesOnDataErrors = template.ValidatesOnDataErrors,
+                ValidatesOnExceptions = template.ValidatesOnExceptions,
+                XPath = template.XPath
+
+            };
+
+            if (!string.IsNullOrEmpty(template.ElementName))
+                bind.ElementName = template.ElementName;
+
+            if (template.RelativeSource != null)
+                bind.RelativeSource = template.RelativeSource;
+
+            if (template.Source != null)
+                bind.Source = template.Source;
+
+            for (int i = 0; i < template.ValidationRules.Count; i++) {
+                bind.ValidationRules.Add(template.ValidationRules[i]);
+            }
+
+            return bind;
+        }
+
         private GridViewColumn Clone(DataColumn original) {
             //TODO need to copy bindings over, if any exist
             var copy = new GridViewColumn() {
@@ -265,6 +308,32 @@ namespace System.Windows.Controls.Custom {
         private void CloseSearchResults() {
             ShowResults = false;
             noResultsPopup.IsOpen = false;
+        }
+
+        private Binding ConstructBindingForHighlighted(Binding template) {
+            var bind = Clone(template);
+            if (bind.ElementName != null)
+                bind.ElementName = null;
+
+            if (bind.RelativeSource != null)
+                bind.RelativeSource = null;
+
+            bind.Path = new PropertyPath("HighlightedItem." + bind.Path.Path, bind.Path.PathParameters);
+            bind.Source = this;
+            return bind;
+        }
+
+        private Binding ConstructBindingForSelected(Binding template) {
+            var bind = Clone(template);
+            if (bind.ElementName != null)
+                bind.ElementName = null;
+
+            if (bind.RelativeSource != null)
+                bind.RelativeSource = null;
+
+            bind.Path = new PropertyPath("SelectedItem." + bind.Path.Path, bind.Path.PathParameters);
+            bind.Source = this;
+            return bind;
         }
 
         private GridView ConstructGridView(object item) {
@@ -400,7 +469,7 @@ namespace System.Windows.Controls.Custom {
             var text = PART_EDITFIELD.Text;
             BindingOperations.ClearBinding(PART_EDITFIELD, TextBox.TextProperty); // so that it can bind to the Highlighted item if the user starts typing again
             PART_EDITFIELD.Text = text;
-            
+
             if (Items != null) {
                 Items = null;
             }
@@ -412,22 +481,6 @@ namespace System.Windows.Controls.Custom {
             if (exp != null) {
                 exp.UpdateTarget();
             }
-
-            //UpdateSearchBoxText();
-        }
-
-        private static void OnSelectedValuePathPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args) {
-            BindingOperations.ClearBinding(sender, SelectedValuePathProperty);
-
-            var path = args.NewValue as string;
-
-            var bind = new Binding();
-            bind.Source = sender;
-            bind.Path = new PropertyPath(string.IsNullOrEmpty(path) ? "SelectedItem" : "SelectedItem." + path);
-            bind.Mode = BindingMode.OneWay;
-            bind.UpdateSourceTrigger = UpdateSourceTrigger.Explicit;
-
-            BindingOperations.SetBinding(sender, SelectedValueProperty, bind);
         }
 
         private void OnListItemMouseUp(object sender, MouseButtonEventArgs e) {
@@ -505,17 +558,17 @@ namespace System.Windows.Controls.Custom {
 
         private void UpdateSearchBoxText(bool useSelectedItem) {
             //this is hacky, but the other alternative is to evaluate a propery path manually
-            var path = DisplayedValuePath;
-            string property = useSelectedItem ? "SelectedItem" : "HighlightedItem";
+            if (DisplayedValueBinding == null)
+                return;
 
-            var exp = BindingOperations.GetBindingExpression(PART_EDITFIELD, TextBox.TextProperty);
+            var exp = BindingOperations.GetBindingExpressionBase(PART_EDITFIELD, TextBox.TextProperty);
             if (exp == null) {
-                var bind = new Binding();
-                bind.Source = this;
-                bind.Path = new PropertyPath(string.IsNullOrEmpty(path) ? property : property + "." + path);
+                var bind = useSelectedItem
+                    ? ConstructBindingForSelected(DisplayedValueBinding)
+                    : ConstructBindingForHighlighted(DisplayedValueBinding);
                 bind.Mode = BindingMode.OneTime; //setting to OneTime means that it updates only when I want it to -- despite the normal meaning of 'Explicit'
                 bind.UpdateSourceTrigger = UpdateSourceTrigger.Explicit;
-                
+
                 BindingOperations.SetBinding(PART_EDITFIELD, TextBox.TextProperty, bind);
             }
             else {
