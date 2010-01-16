@@ -49,7 +49,6 @@ namespace System.Windows.Controls {
     ///         <description>Supports search cancelation.</description>
     ///     </item>
     /// </list>
-    /// 
     /// </summary>
     public partial class IntelliBox : UserControl {
         /// <summary>

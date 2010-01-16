@@ -5,6 +5,7 @@
     
     <PropertyGroup>
         <SolutionFile>IntelliBox.sln</SolutionFile>
+        <SandcastlePath></SandcastlePath>
         <Configuration>Debug</Configuration>
         <Version>1.0.0.0</Version>
     </PropertyGroup>
@@ -16,6 +17,7 @@
         <ReleaseFiles Include="$(Configuration)\*.exe" Exclude="$(Configuration)\*vshost.exe"/>
         <ReleaseFiles Include="$(Configuration)\*.dll" />
         <ReleaseFiles Include="$(Configuration)\IntelliBox.xml" />
+        <ReleaseFiles Include="$(Configuration)\*.chm" />
     </ItemGroup>
     
     
@@ -28,20 +30,26 @@
         <Message Text="    Builds the entire project and places a releasable zip file in the 'Installers' folder." />
         <Message Text="Clean" />
         <Message Text="    Removes all files created by the Build target." />
+        <Message Text="BuildForRelease" />
+        <Message Text="    Builds the entire project including documentation and places a releasable"/>
+        <Message Text="    zip file in the 'Installers' folder." />
         <!-- <Message Text="" /> -->
         <!-- <Message Text="    " /> -->
     </Target>
+
+    <Target Name="BuildForRelease" DependsOnTargets="Build;CreateInstallers" />
     
     <Target Name="Build" DependsOnTargets="Clean;SetVersionNumber">
         <MSBuild Projects="$(SolutionFile)" Targets="Rebuild" Properties="Configuration=$(Configuration);Platform=Any CPU" StopOnFirstFailure="true" />
-        
+    </Target>
+
+    <Target Name="CreateInstallers">
         <Zip Files="@(PDBFiles)" Flatten="True"
              ZipFileName="Installers\IntelliBox-$(Version)-PDBs.zip" />
-             
+
         <Zip Files="@(ReleaseFiles)" Flatten="True"
              ZipFileName="Installers\IntelliBox-$(Version).zip" />
     </Target>
-
 
     <Target Name="Clean">
         <!-- must clean up from the previous build -->

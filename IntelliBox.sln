@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples", "Examples\Exampl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E9F0B7B9-B16C-4955-9450-5E430978B9CF}"
 	ProjectSection(SolutionItems) = preProject
+		documentation-Debug.shfbproj = documentation-Debug.shfbproj
+		documentation-Release.shfbproj = documentation-Release.shfbproj
 		IntelliBox.proj = IntelliBox.proj
 	EndProjectSection
 EndProject
