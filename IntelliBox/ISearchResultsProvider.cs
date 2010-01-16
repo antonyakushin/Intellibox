@@ -25,6 +25,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 using System.Collections.Generic;
 
 namespace System.Windows.Controls.Custom {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface ISearchResultsProvider {
 
         /// <summary>
