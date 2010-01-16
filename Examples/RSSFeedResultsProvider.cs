@@ -98,9 +98,13 @@ namespace Examples {
 
         #region ISearchResultsProvider Members
 
-        public void BeginSearchAsync(string searchTerm, DateTime startTimeUtc, int maxResults, 
+        public void BeginSearchAsync(string searchTerm, DateTime startTimeUtc, int maxResults,
             object extraInfo, Action<DateTime, IEnumerable<object>> whenDone) {
-
+            
+            //trim fixes issue but I think we should pre trim, see
+            //http://intellibox.codeplex.com/WorkItem/View.aspx?WorkItemId=3497
+            searchTerm = (searchTerm ?? string.Empty).Trim();
+            
             var results = getRSSfeed();
 
             whenDone(startTimeUtc, results
