@@ -28,11 +28,11 @@ using System.Windows.Controls;
 namespace Examples {
     public partial class LimitedResultsCtrl : UserControl {
         public static readonly DependencyProperty ProviderProperty =
-            DependencyProperty.Register("Provider", typeof(IIntellibboxResultsProvider), typeof(LimitedResultsCtrl), new UIPropertyMetadata(null));
+            DependencyProperty.Register("Provider", typeof(IIntelliboxResultsProvider), typeof(LimitedResultsCtrl), new UIPropertyMetadata(null));
 
-        public IIntellibboxResultsProvider Provider {
+        public IIntelliboxResultsProvider Provider {
             get {
-                return (IIntellibboxResultsProvider)GetValue(ProviderProperty);
+                return (IIntelliboxResultsProvider)GetValue(ProviderProperty);
             }
             set {
                 SetValue(ProviderProperty, value);
