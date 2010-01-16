@@ -107,7 +107,8 @@ namespace System.Windows.Controls.Custom {
             set {
                 if (value != _displayedValueBinding) {
                     _displayedValueBinding = value;
-                    OnDisplayedValueBindingChanged();
+                    //the call is commented out so that people can type w/o the displayed value overwriting what they're trying to do
+                    //OnDisplayedValueBindingChanged();
                 }
             }
         }
@@ -242,7 +243,6 @@ namespace System.Windows.Controls.Custom {
 
             //set up default bindings
             OnSelectedValueBindingChanged();
-            OnDisplayedValueBindingChanged();
 
             InitializeComponent();
         }
@@ -403,7 +403,6 @@ namespace System.Windows.Controls.Custom {
 
                 lstSearchItems.SelectedIndex = nextIndex;
                 lstSearchItems.ScrollIntoView(lstSearchItems.SelectedItem);
-                UpdateSearchBoxText();
 
                 return true;
             }
@@ -441,7 +440,7 @@ namespace System.Windows.Controls.Custom {
             BindingOperations.ClearBinding(PART_EDITFIELD, TextBox.TextProperty);
             UpdateSearchBoxText(true);
             var text = PART_EDITFIELD.Text;
-            BindingOperations.ClearBinding(PART_EDITFIELD, TextBox.TextProperty); // so that it can bind to the Highlighted item if the user starts typing again
+            BindingOperations.ClearBinding(PART_EDITFIELD, TextBox.TextProperty);
             PART_EDITFIELD.Text = text;
             PART_EDITFIELD.CaretIndex = text.Length;
 
