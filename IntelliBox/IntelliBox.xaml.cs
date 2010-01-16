@@ -58,11 +58,23 @@ namespace System.Windows.Controls.Custom {
         public static readonly DependencyProperty MaxResultsProperty =
             DependencyProperty.Register("MaxResults", typeof(int), typeof(IntelliBox), new UIPropertyMetadata(10));
 
-        public static readonly DependencyProperty PopupMaxHeightProperty =
-            DependencyProperty.Register("PopupMaxHeight", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(150d));
+        public static readonly DependencyProperty ResultsHeightProperty =
+            DependencyProperty.Register("ResultsHeight", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(200d));
 
-        public static readonly DependencyProperty PopupMaxWidthProperty =
-            DependencyProperty.Register("PopupMaxWidth", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(400d));
+        public static readonly DependencyProperty ResultsMaxHeightProperty =
+            DependencyProperty.Register("ResultsMaxHeight", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(DependencyProperty.UnsetValue));
+
+        public static readonly DependencyProperty ResultsMaxWidthProperty =
+            DependencyProperty.Register("ResultsMaxWidth", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(DependencyProperty.UnsetValue));
+
+        public static readonly DependencyProperty ResultsMinHeightProperty =
+            DependencyProperty.Register("ResultsMinHeight", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(DependencyProperty.UnsetValue));
+
+        public static readonly DependencyProperty ResultsMinWidthProperty =
+                    DependencyProperty.Register("ResultsMinWidth", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(DependencyProperty.UnsetValue));
+
+        public static readonly DependencyProperty ResultsWidthProperty =
+            DependencyProperty.Register("ResultsWidth", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(400d));
 
         public static readonly DependencyProperty SelectedItemProperty =
             DependencyProperty.Register("SelectedItem", typeof(object), typeof(IntelliBox), new UIPropertyMetadata(null));
@@ -206,31 +218,84 @@ namespace System.Windows.Controls.Custom {
         }
 
         /// <summary>
-        /// Gets or sets the maximum height that the search results popup is allowed to have.
-        /// Defaults to 150. This is a Dependancy Property.
+        /// Gets or sets the suggested height that the search results popup.
+        /// The default value is 200.
+        /// This is a Dependancy Property.
         /// </summary>
-        public double PopupMaxHeight {
+        public double ResultsHeight {
             get {
-                return (double)GetValue(PopupMaxHeightProperty);
+                return (double)GetValue(ResultsHeightProperty);
             }
             set {
-                SetValue(PopupMaxHeightProperty, value);
+                SetValue(ResultsHeightProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the maximum height that the search results popup is allowed to have.
+        /// This is a Dependancy Property.
+        /// </summary>
+        public double ResultsMaxHeight {
+            get {
+                return (double)GetValue(ResultsMaxHeightProperty);
+            }
+            set {
+                SetValue(ResultsMaxHeightProperty, value);
             }
         }
 
         /// <summary>
         /// Gets or sets the maximum width that the search results popup is allowed to have.
-        /// Defaults to 400. This is a Dependancy Property.
+        /// This is a Dependancy Property.
         /// </summary>
-        public double PopupMaxWidth {
+        public double ResultsMaxWidth {
             get {
-                return (double)GetValue(PopupMaxWidthProperty);
+                return (double)GetValue(ResultsMaxWidthProperty);
             }
             set {
-                SetValue(PopupMaxWidthProperty, value);
+                SetValue(ResultsMaxWidthProperty, value);
             }
         }
 
+        /// <summary>
+        /// Gets or sets the minimum height that the search results popup is allowed to have.
+        /// This is a Dependancy Property.
+        /// </summary>
+        public double ResultsMinHeight {
+            get {
+                return (double)GetValue(ResultsMinHeightProperty);
+            }
+            set {
+                SetValue(ResultsMinHeightProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the minimum width that the search results popup is allowed to have.
+        /// This is a Dependancy Property.
+        /// </summary>
+        public double ResultsMinWidth {
+            get {
+                return (double)GetValue(ResultsMinWidthProperty);
+            }
+            set {
+                SetValue(ResultsMinWidthProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the suggested width that the search results popup is allowed to have.
+        /// The default value is 400.
+        /// This is a Dependancy Property.
+        /// </summary>
+        public double ResultsWidth {
+            get {
+                return (double)GetValue(ResultsWidthProperty);
+            }
+            set {
+                SetValue(ResultsWidthProperty, value);
+            }
+        }
         /// <summary>
         /// When true, all of the text in the field will be selected when the control gets focus.
         /// </summary>

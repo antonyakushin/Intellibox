@@ -52,11 +52,18 @@ OTHER DEALINGS IN THE SOFTWARE.
                  PreviewKeyDown="OnTextBoxPreviewKeyDown"
                  KeyUp="OnTextBoxKeyUp"
                  GotFocus="PART_EDITFIELD_GotFocus"/>
-        <Popup StaysOpen="False" MinWidth="30"
-               MaxWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=PopupMaxWidth, Mode=OneWay}"
-               MaxHeight="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=PopupMaxHeight, Mode=OneWay}"
+        <Popup StaysOpen="False"
                PlacementTarget="{Binding ElementName=PART_EDITFIELD}"
-               IsOpen="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=ShowPopup}">
+               IsOpen="{Binding Path=ShowPopup, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+               
+               MaxHeight="{Binding Path=ResultsMaxHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+               MaxWidth="{Binding Path=ResultsMaxWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+               
+               MinHeight="{Binding Path=ResultsMinHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+               MinWidth="{Binding Path=ResultsMinWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+               
+               Height="{Binding Path=ResultsHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+               Width="{Binding Path=ResultsWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
 
             <ListView Name="lstSearchItems"
                       ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=Items}"
