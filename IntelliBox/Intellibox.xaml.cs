@@ -545,8 +545,8 @@ namespace System.Windows.Controls {
                            Column = Columns.FirstOrDefault(c => p.Name.Equals(c.ForProperty))
                        };
 
-            //This is a shortcut to sort the nulls to the top instead of the bottom
-            //we did this instead of creating an Comparer.
+            //This is a shortcut to sort the nulls to the back of the list instead of the front
+            //we did this instead of creating an IComparer.
             var typesWithPositions = typeProperties
                 .Where(a => a.Column != null && a.Column.Position != null).OrderBy(a => a.Column.Position);
             
