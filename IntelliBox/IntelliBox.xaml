@@ -29,7 +29,7 @@ OTHER DEALINGS IN THE SOFTWARE.
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ctrl="clr-namespace:System.Windows.Controls.Custom">
     <UserControl.Resources>
-        <ctrl:AlternateBackgroundConverter x:Key="rowBackgroundConverter" OddRowBrush="LightGray"  />
+        <ctrl:AlternateBackgroundConverter x:Key="rowBackgroundConverter" OddRowBrush="Gainsboro"  />
 
         <Style TargetType="{x:Type ListViewItem}">
             <Setter Property="Background">
