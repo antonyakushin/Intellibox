@@ -61,13 +61,13 @@ namespace System.Windows.Controls {
         /// <summary>
         /// For Internal Use Only. Identifies the <see cref="DisplayTextFromHighlightedItemProperty"/> Dependancy Property.
         /// </summary>
-        public static readonly DependencyProperty DisplayTextFromHighlightedItemProperty =
+        protected static readonly DependencyProperty DisplayTextFromHighlightedItemProperty =
             DependencyProperty.Register("DisplayTextFromHighlightedItem", typeof(string), typeof(IntelliBox), new UIPropertyMetadata(null));
 
         /// <summary>
         /// For Internal Use Only. Identifies the <see cref="DisplayTextFromSelectedItemProperty"/> Dependancy Property.
         /// </summary>
-        public static readonly DependencyProperty DisplayTextFromSelectedItemProperty =
+        protected static readonly DependencyProperty DisplayTextFromSelectedItemProperty =
             DependencyProperty.Register("DisplayTextFromSelectedItem", typeof(string), typeof(IntelliBox), new UIPropertyMetadata(null));
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace System.Windows.Controls {
         /// <summary>
         /// For Internal Use Only. Identifies the <see cref="ItemsProperty"/> Dependancy Property.
         /// </summary>
-        public static readonly DependencyProperty ItemsProperty =
+        protected static readonly DependencyProperty ItemsProperty =
             DependencyProperty.Register("Items", typeof(List<object>), typeof(IntelliBox), new UIPropertyMetadata(null));
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace System.Windows.Controls {
         /// <summary>
         /// For Internal Use Only. Identifies the <see cref="ShowResultsProperty"/> Dependancy Property.
         /// </summary>
-        public static readonly DependencyProperty ShowResultsProperty =
+        protected static readonly DependencyProperty ShowResultsProperty =
             DependencyProperty.Register("ShowPopup", typeof(bool), typeof(IntelliBox), new UIPropertyMetadata(false));
 
 
