@@ -52,7 +52,12 @@ OTHER DEALINGS IN THE SOFTWARE.
                MinWidth="{Binding Path=ResultsMinWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
                
                Height="{Binding Path=ResultsHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
-               Width="{Binding Path=ResultsWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
+               Width="{Binding Path=ResultsWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+               
+               PreviewMouseDown="Popup_PreviewMouseButton"
+               PreviewMouseUp="Popup_PreviewMouseButton"
+               >
+            
 
             <ListView Name="lstSearchItems"
                       ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=Items}"

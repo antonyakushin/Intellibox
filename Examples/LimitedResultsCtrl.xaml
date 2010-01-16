@@ -42,8 +42,8 @@ OTHER DEALINGS IN THE SOFTWARE.
         </StackPanel>
 
         <StackPanel Orientation="Horizontal">
-            <TextBlock>Highlighted Item:</TextBlock>
-            <TextBlock Text="{Binding ElementName=autoBox, Path=HighlightedItem}" />
+            <TextBlock>Highlighted Value:</TextBlock>
+            <TextBlock Text="{Binding ElementName=autoBox, Path=DisplayTextFromHighlightedItem}" />
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <TextBlock VerticalAlignment="Center" Margin="0,0,6,0">Search:</TextBlock>

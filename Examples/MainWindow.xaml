@@ -81,8 +81,8 @@ OTHER DEALINGS IN THE SOFTWARE.
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock>Highlighted Item:</TextBlock>
-                    <TextBlock Text="{Binding ElementName=multiColumn, Path=HighlightedItem}" />
+                    <TextBlock>Highlighted Value:</TextBlock>
+                    <TextBlock Text="{Binding ElementName=multiColumn, Path=DisplayTextFromHighlightedItem}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Margin="0,0,6,0">Search:</TextBlock>
@@ -113,8 +113,8 @@ OTHER DEALINGS IN THE SOFTWARE.
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock>Highlighted Item:</TextBlock>
-                    <TextBlock Text="{Binding ElementName=multiColumnRss, Path=HighlightedItem}" />
+                    <TextBlock>Highlighted Value:</TextBlock>
+                    <TextBlock Text="{Binding ElementName=multiColumnRss, Path=DisplayTextFromHighlightedItem}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center"
@@ -162,8 +162,8 @@ OTHER DEALINGS IN THE SOFTWARE.
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock>Highlighted Item:</TextBlock>
-                    <TextBlock Text="{Binding ElementName=overrideColumn, Path=HighlightedItem}" />
+                    <TextBlock>Highlighted Value:</TextBlock>
+                    <TextBlock Text="{Binding ElementName=overrideColumn, Path=DisplayTextFromHighlightedItem}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Margin="0,0,6,0">Search:</TextBlock>
@@ -203,8 +203,8 @@ OTHER DEALINGS IN THE SOFTWARE.
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock>Highlighted Item:</TextBlock>
-                    <TextBlock Text="{Binding ElementName=overrideAllColumn, Path=HighlightedItem}" />
+                    <TextBlock>Highlighted Value:</TextBlock>
+                    <TextBlock Text="{Binding ElementName=overrideAllColumn, Path=DisplayTextFromHighlightedItem}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Margin="0,0,6,0">Search:</TextBlock>
@@ -245,8 +245,8 @@ OTHER DEALINGS IN THE SOFTWARE.
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock>Highlighted Item:</TextBlock>
-                    <TextBlock Text="{Binding ElementName=positionColumn, Path=HighlightedItem}" />
+                    <TextBlock>Highlighted Value:</TextBlock>
+                    <TextBlock Text="{Binding ElementName=positionColumn, Path=DisplayTextFromHighlightedItem}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Margin="0,0,6,0">Search:</TextBlock>
