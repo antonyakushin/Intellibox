@@ -79,7 +79,7 @@ namespace System.Windows.Controls.Custom {
         }
 
         public static BindingBase ConstructBindingForHighlighted(IntelliBox source, BindingBase template) {
-            return ConstructBinding(source, template, "HighlightedItem");
+            return ConstructBinding(source, template, "lstSearchItems.SelectedItem");
         }
 
         public static BindingBase ConstructBindingForSelected(IntelliBox source, BindingBase template) {
