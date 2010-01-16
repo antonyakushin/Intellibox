@@ -35,8 +35,5 @@ namespace Examples {
         public IEnumerable<object> DoSearch(string searchTerm, int maxResults, object tag) {
             return new List<object>();
         }
-
-        public void CancelAllSearches() {
-        }
     }
 }
