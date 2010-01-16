@@ -72,6 +72,9 @@ namespace System.Windows.Controls {
             if (bind.RelativeSource != null)
                 throw new ArgumentOutOfRangeException("The IntelliBox control does not support setting 'RelativeSource' on the DisplayValueBinding or SelectedValueBinding properties.");
 
+            if (bind.XPath != null)
+                throw new ArgumentOutOfRangeException("The IntelliBox control does not support setting XPath binding expressions.");
+
             string path = "." + bind.Path.Path ?? string.Empty;
 
             bind.Path = new PropertyPath(propertyName + path, bind.Path.PathParameters);
