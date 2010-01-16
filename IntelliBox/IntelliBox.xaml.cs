@@ -46,11 +46,14 @@ namespace System.Windows.Controls.Custom {
         public static readonly DependencyProperty DataProviderProperty =
             DependencyProperty.Register("DataProvider", typeof(ISearchResultsProvider), typeof(IntelliBox), new UIPropertyMetadata(null));
 
+        public static readonly DependencyProperty DisplayTextFromHighlightedItemProperty =
+            DependencyProperty.Register("DisplayTextFromHighlightedItem", typeof(string), typeof(IntelliBox), new UIPropertyMetadata(null));
+
+        public static readonly DependencyProperty DisplayTextFromSelectedItemProperty =
+            DependencyProperty.Register("DisplayTextFromSelectedItem", typeof(string), typeof(IntelliBox), new UIPropertyMetadata(null));
+
         public static readonly DependencyProperty HideColumnHeadersProperty =
             DependencyProperty.Register("HideColumnHeaders", typeof(bool), typeof(IntelliBox), new UIPropertyMetadata(false));
-
-        public static readonly DependencyProperty HighlightedItemProperty =
-            DependencyProperty.Register("HighlightedItem", typeof(object), typeof(IntelliBox), new UIPropertyMetadata(null));
 
         public static readonly DependencyProperty ItemsProperty =
             DependencyProperty.Register("Items", typeof(List<object>), typeof(IntelliBox), new UIPropertyMetadata(null));
@@ -148,8 +151,26 @@ namespace System.Windows.Controls.Custom {
                 if (value != _displayedValueBinding) {
                     _displayedValueBinding = value;
                     //the call is commented out so that people can type w/o the displayed value overwriting what they're trying to do
-                    //OnDisplayedValueBindingChanged();
+                    OnDisplayedValueBindingChanged();
                 }
+            }
+        }
+
+        private string DisplayTextFromHighlightedItem {
+            get {
+                return (string)GetValue(DisplayTextFromHighlightedItemProperty);
+            }
+            set {
+                SetValue(DisplayTextFromHighlightedItemProperty, value);
+            }
+        }
+
+        private string DisplayTextFromSelectedItem {
+            get {
+                return (string)GetValue(DisplayTextFromSelectedItemProperty);
+            }
+            set {
+                SetValue(DisplayTextFromSelectedItemProperty, value);
             }
         }
 
@@ -184,15 +205,6 @@ namespace System.Windows.Controls.Custom {
             }
             set {
                 SetValue(HideColumnHeadersProperty, value);
-            }
-        }
-
-        private object HighlightedItem {
-            get {
-                return (object)GetValue(HighlightedItemProperty);
-            }
-            set {
-                SetValue(HighlightedItemProperty, value);
             }
         }
 
@@ -391,6 +403,7 @@ namespace System.Windows.Controls.Custom {
 
             //set up default bindings
             OnSelectedValueBindingChanged();
+            OnDisplayedValueBindingChanged();
 
             InitializeComponent();
 
@@ -539,17 +552,11 @@ namespace System.Windows.Controls.Custom {
         }
 
         private void SelectCurrentItem() {
-            SetSelectedItem(HighlightedItem);
+            SetSelectedItem(lstSearchItems.SelectedItem);
             CloseSearchResults();
             _lastTextValue = null;
 
-            BindingOperations.ClearBinding(PART_EDITFIELD, TextBox.TextProperty);
             UpdateSearchBoxText(true);
-            var text = PART_EDITFIELD.Text;
-            BindingOperations.ClearBinding(PART_EDITFIELD, TextBox.TextProperty);
-            PART_EDITFIELD.Text = text;
-            PART_EDITFIELD.CaretIndex = text.Length;
-
             if (Items != null) {
                 Items = null;
             }
@@ -564,12 +571,16 @@ namespace System.Windows.Controls.Custom {
         }
 
         private void OnDisplayedValueBindingChanged() {
-            if (PART_EDITFIELD != null) {
-                PART_EDITFIELD.SetBinding(TextBox.TextProperty, BindingBaseFactory.ConstructBindingForHighlighted(this, DisplayedValueBinding));
+            if (lstSearchItems != null) {
+                this.SetBinding(IntelliBox.DisplayTextFromHighlightedItemProperty,
+                    BindingBaseFactory.ConstructBindingForHighlighted(this, DisplayedValueBinding));
             }
+
+            this.SetBinding(IntelliBox.DisplayTextFromSelectedItemProperty,
+                BindingBaseFactory.ConstructBindingForSelected(this, DisplayedValueBinding));
         }
 
-        private void OnListItemMouseUp(object sender, MouseButtonEventArgs e) {
+        private void OnListItemMouseDoubleClick(object sender, MouseButtonEventArgs e) {
             SelectCurrentItem();
             CloseSearchResults();
         }
@@ -583,6 +594,9 @@ namespace System.Windows.Controls.Custom {
 
                 var style = new Style(typeof(ListViewItem));
                 style.Setters.Add(new Setter(ListViewItem.BackgroundProperty, bind));
+                
+                var sett = new EventSetter(ListViewItem.MouseDoubleClickEvent, new MouseButtonEventHandler(OnListItemMouseDoubleClick));
+                style.Setters.Add(sett);
 
                 Resources[typeof(ListViewItem)] = style;
             }
@@ -660,26 +674,14 @@ namespace System.Windows.Controls.Custom {
             }
         }
 
-        private void UpdateSearchBoxText() {
-            UpdateSearchBoxText(false);
-        }
-
         private void UpdateSearchBoxText(bool useSelectedItem) {
-            //this is hacky, but the other alternative is to evaluate a propery path manually
 
-            var exp = BindingOperations.GetBindingExpressionBase(PART_EDITFIELD, TextBox.TextProperty);
-            if (exp == null) {
-                var bind = useSelectedItem
-                    ? BindingBaseFactory.ConstructBindingForSelected(this, DisplayedValueBinding)
-                    : BindingBaseFactory.ConstructBindingForHighlighted(this, DisplayedValueBinding);
+            var text = useSelectedItem
+                ? this.DisplayTextFromSelectedItem
+                : this.DisplayTextFromHighlightedItem;
 
-                BindingOperations.SetBinding(PART_EDITFIELD, TextBox.TextProperty, bind);
-            }
-            else {
-                exp.UpdateTarget();
-            }
-
-            PART_EDITFIELD.CaretIndex = PART_EDITFIELD.Text.Length;
+            PART_EDITFIELD.Text = text;
+            PART_EDITFIELD.CaretIndex = text.Length;
         }
 
         private void PART_EDITFIELD_GotFocus(object sender, RoutedEventArgs e) {
