@@ -91,6 +91,12 @@ namespace Examples {
                     rssdetail = rssitems.Item(i).SelectSingleNode("severity");
                     result.Severity = (rssdetail != null) ? rssdetail.InnerText : "";
 
+                    //just trim for now.
+                    result.Category = (result.Category ?? string.Empty).Trim();
+                    result.Description = (result.Description ?? string.Empty).Trim();
+                    result.Link = (result.Link ?? string.Empty).Trim();
+                    result.Severity = (result.Severity ?? string.Empty).Trim();
+                    result.Title = (result.Title ?? string.Empty).Trim();
                 }
             }
             return retVal;
