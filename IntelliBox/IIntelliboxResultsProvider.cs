@@ -32,9 +32,7 @@ namespace System.Windows.Controls {
     public interface IIntelliboxResultsProvider {
 
         /// <summary>
-        /// Tell the <see cref="IIntelliboxResultsProvider" /> to begin searching for the <paramref name="searchTerm"/>. Use the <paramref name="whenDone"/>
-        /// parameter to give the results back to the <see cref="IntelliBox" /> when the search is completed. The <see cref="DateTime" />
-        /// parameter to the <paramref name="whenDone"/> action should be the <paramref name="startTimeUtc"/> parameter.
+        /// Tell the <see cref="IIntelliboxResultsProvider" /> to search for the <paramref name="searchTerm"/>. 
         /// </summary>
         /// <param name="searchTerm">The text in the search box at the time the search was requested.</param>
         /// <param name="maxResults">The maximum number of search results the <see cref="IntelliBox"/> wants returned.</param>
