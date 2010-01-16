@@ -36,9 +36,9 @@ namespace System.Windows.Controls.Custom {
             get;
             set;
         }
-
+        
         /// <summary>
-        /// When <see cref="True"/>, this column will not be shown in the result set. This property is useful
+        /// When True, this column will not be shown in the result set. This property is useful
         /// if you only want to hide a few columns of the result set; otherwise you're
         /// probably better off just listing all the columns explicitly.
         /// </summary>

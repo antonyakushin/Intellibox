@@ -152,7 +152,7 @@ namespace System.Windows.Controls.Custom {
                 var duplBind = Clone(BindingOperations.GetBindingBase(original, GridViewColumn.WidthProperty));
                 BindingOperations.SetBinding(copy, GridViewColumn.WidthProperty, duplBind);
             }
-            else if (original.Width != null) {
+            else {
                 copy.Width = original.Width;
             }
 

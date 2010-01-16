@@ -43,48 +43,93 @@ using System.ComponentModel;
 namespace System.Windows.Controls.Custom {
 
     public partial class IntelliBox : UserControl {
+        /// <summary>
+        /// Identifies the <see cref="DataProviderProperty"/> Dependancy Property.
+        /// </summary>
         public static readonly DependencyProperty DataProviderProperty =
             DependencyProperty.Register("DataProvider", typeof(ISearchResultsProvider), typeof(IntelliBox), new UIPropertyMetadata(null));
 
+        /// <summary>
+        /// For Internal Use Only. Identifies the <see cref="DisplayTextFromHighlightedItemProperty"/> Dependancy Property.
+        /// </summary>
         public static readonly DependencyProperty DisplayTextFromHighlightedItemProperty =
             DependencyProperty.Register("DisplayTextFromHighlightedItem", typeof(string), typeof(IntelliBox), new UIPropertyMetadata(null));
 
+        /// <summary>
+        /// For Internal Use Only. Identifies the <see cref="DisplayTextFromSelectedItemProperty"/> Dependancy Property.
+        /// </summary>
         public static readonly DependencyProperty DisplayTextFromSelectedItemProperty =
             DependencyProperty.Register("DisplayTextFromSelectedItem", typeof(string), typeof(IntelliBox), new UIPropertyMetadata(null));
 
+        /// <summary>
+        /// Identifies the <see cref="HideColumnHeadersProperty"/> Dependancy Property.
+        /// </summary>
         public static readonly DependencyProperty HideColumnHeadersProperty =
             DependencyProperty.Register("HideColumnHeaders", typeof(bool), typeof(IntelliBox), new UIPropertyMetadata(false));
 
+        /// <summary>
+        /// For Internal Use Only. Identifies the <see cref="ItemsProperty"/> Dependancy Property.
+        /// </summary>
         public static readonly DependencyProperty ItemsProperty =
             DependencyProperty.Register("Items", typeof(List<object>), typeof(IntelliBox), new UIPropertyMetadata(null));
 
+        /// <summary>
+        /// Identifies the <see cref="MaxResultsProperty"/> Dependancy Property.
+        /// </summary>
         public static readonly DependencyProperty MaxResultsProperty =
             DependencyProperty.Register("MaxResults", typeof(int), typeof(IntelliBox), new UIPropertyMetadata(10));
 
+        /// <summary>
+        /// Identifies the <see cref="ResultsHeightProperty"/> Dependancy Property.
+        /// </summary>
         public static readonly DependencyProperty ResultsHeightProperty =
             DependencyProperty.Register("ResultsHeight", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(double.NaN));
 
+        /// <summary>
+        /// Identifies the <see cref="ResultsMaxHeightProperty"/> Dependancy Property.
+        /// </summary>
         public static readonly DependencyProperty ResultsMaxHeightProperty =
             DependencyProperty.Register("ResultsMaxHeight", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(double.PositiveInfinity));
 
+        /// <summary>
+        /// Identifies the <see cref="ResultsMaxWidthProperty"/> Dependancy Property.
+        /// </summary>
         public static readonly DependencyProperty ResultsMaxWidthProperty =
             DependencyProperty.Register("ResultsMaxWidth", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(double.PositiveInfinity));
 
+        /// <summary>
+        /// Identifies the <see cref="ResultsMinHeightProperty"/> Dependancy Property.
+        /// </summary>
         public static readonly DependencyProperty ResultsMinHeightProperty =
             DependencyProperty.Register("ResultsMinHeight", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(0d));
 
+        /// <summary>
+        /// Identifies the <see cref="ResultsMinWidthProperty"/> Dependancy Property.
+        /// </summary>
         public static readonly DependencyProperty ResultsMinWidthProperty =
                     DependencyProperty.Register("ResultsMinWidth", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(0d));
 
+        /// <summary>
+        /// Identifies the <see cref="ResultsWidthProperty"/> Dependancy Property.
+        /// </summary>
         public static readonly DependencyProperty ResultsWidthProperty =
             DependencyProperty.Register("ResultsWidth", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(double.NaN));
 
+        /// <summary>
+        /// Identifies the <see cref="SelectedItemProperty"/> Dependancy Property.
+        /// </summary>
         public static readonly DependencyProperty SelectedItemProperty =
             DependencyProperty.Register("SelectedItem", typeof(object), typeof(IntelliBox), new UIPropertyMetadata(null));
 
+        /// <summary>
+        /// Identifies the <see cref="SelectedValueProperty"/> Dependancy Property.
+        /// </summary>
         public static readonly DependencyProperty SelectedValueProperty =
             DependencyProperty.Register("SelectedValue", typeof(object), typeof(IntelliBox), new UIPropertyMetadata(null));
 
+        /// <summary>
+        /// For Internal Use Only. Identifies the <see cref="ShowResultsProperty"/> Dependancy Property.
+        /// </summary>
         public static readonly DependencyProperty ShowResultsProperty =
             DependencyProperty.Register("ShowPopup", typeof(bool), typeof(IntelliBox), new UIPropertyMetadata(false));
 
@@ -127,7 +172,7 @@ namespace System.Windows.Controls.Custom {
         }
 
         /// <summary>
-        /// When <see cref="True"/>, the text in the text field will NOT be trimmed for
+        /// When True, the text in the text field will NOT be trimmed for
         /// whitespace prior to being passed to the <see cref="DataProvider"/>.
         /// </summary>
         public bool DisableWhitespaceTrim {
@@ -176,8 +221,8 @@ namespace System.Windows.Controls.Custom {
         }
 
         /// <summary>
-        /// When <see cref="True"/>, only the <see cref="DataColumn"/>s in the <see cref="Columns"/> collection
-        /// will display in the search results set. When <see cref="False"/>, all the columns in the search result set
+        /// When True, only the <see cref="DataColumn"/>s in the <see cref="Columns"/> collection
+        /// will display in the search results set. When False, all the columns in the search result set
         /// will show, but any columns in the <see cref="Columns"/> collection then override specific columns.
         /// </summary>
         public bool ExplicitlyIncludeColumns {
@@ -198,7 +243,7 @@ namespace System.Windows.Controls.Custom {
         }
 
         /// <summary>
-        /// When <see cref="True"/>, columns in the search result set will not have headers. This is a Dependancy Property.
+        /// When True, columns in the search result set will not have headers. This is a Dependancy Property.
         /// </summary>
         public bool HideColumnHeaders {
             get {
@@ -398,6 +443,10 @@ namespace System.Windows.Controls.Custom {
             }
         }
 
+        /// <summary>
+        /// Initializes the <see cref="IntelliBox" />, preparing it to accept data entry
+        /// and retrieve results from the <see cref="DataProvider"/>.
+        /// </summary>
         public IntelliBox() {
             _lastTimeSearchRecievedUtc = DateTime.Now.ToUniversalTime(); // make sure the field is never null
             Columns = new DataColumnCollection();
