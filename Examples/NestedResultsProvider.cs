@@ -29,7 +29,7 @@ using System.Text;
 using System.Windows.Controls;
 
 namespace Examples {
-    public class NestedResultsProvider :IIntelliBoxResultsProvider {
+    public class NestedResultsProvider :IIntellibboxResultsProvider {
 
         public void BeginSearchAsync(string searchTerm, DateTime startTimeUtc, int maxResults, object tag, Action<DateTime, IEnumerable<object>> whenDone) {
         }
