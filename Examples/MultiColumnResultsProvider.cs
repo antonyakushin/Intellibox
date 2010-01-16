@@ -28,7 +28,7 @@ using System.Linq;
 using System.Windows.Controls;
 
 namespace Examples {
-    public class MultiColumnResultsProvider : IIntellibboxResultsProvider {
+    public class MultiColumnResultsProvider : IIntelliboxResultsProvider {
         private List<Person> _results;
 
         private void ConstructResultSet() {

@@ -29,7 +29,7 @@ using System.Text;
 using System.Windows.Controls;
 
 namespace Examples {
-    public class SingleColumnResultsProvider : IIntellibboxResultsProvider {
+    public class SingleColumnResultsProvider : IIntelliboxResultsProvider {
 
         private List<string> _results;
         private int _numEach = 10;

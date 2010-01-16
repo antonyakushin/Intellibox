@@ -28,27 +28,27 @@ using System.Windows.Controls;
 namespace Examples {
     public partial class MainWindow : Window {
 
-        public IIntellibboxResultsProvider NoSearchResults {
+        public IIntelliboxResultsProvider NoSearchResults {
             get;
             private set;
         }
 
-        public IIntellibboxResultsProvider SingleColumnResults {
+        public IIntelliboxResultsProvider SingleColumnResults {
             get;
             private set;
         }
 
-        public IIntellibboxResultsProvider MultiColumnResults {
+        public IIntelliboxResultsProvider MultiColumnResults {
             get;
             private set;
         }
 
-        public IIntellibboxResultsProvider MultiColumnResultsRss {
+        public IIntelliboxResultsProvider MultiColumnResultsRss {
             get;
             private set;
         }
 
-        public IIntellibboxResultsProvider InvertSingleColumnResults {
+        public IIntelliboxResultsProvider InvertSingleColumnResults {
             get;
             private set;
         }

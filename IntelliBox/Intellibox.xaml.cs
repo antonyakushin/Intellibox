@@ -55,7 +55,7 @@ namespace System.Windows.Controls {
         /// Identifies the <see cref="DataProviderProperty"/> Dependancy Property.
         /// </summary>
         public static readonly DependencyProperty DataProviderProperty =
-            DependencyProperty.Register("DataProvider", typeof(IIntellibboxResultsProvider), typeof(IntelliBox), new UIPropertyMetadata(null));
+            DependencyProperty.Register("DataProvider", typeof(IIntelliboxResultsProvider), typeof(IntelliBox), new UIPropertyMetadata(null));
 
         /// <summary>
         /// For Internal Use Only. Identifies the <see cref="DisplayTextFromHighlightedItemProperty"/> Dependancy Property.
@@ -154,14 +154,14 @@ namespace System.Windows.Controls {
         private string _lastTextValue;
         private BindingBase _selectedValueBinding;
         private BindingBase _displayedValueBinding;
-        private IntellibboxRowColorizer _rowColorizer;
+        private IntelliboxRowColorizer _rowColorizer;
 
         /// <summary>
         /// The columns in the search result set to display. When <see cref="ExplicitlyIncludeColumns"/>
         /// is set to true, then only the <see cref="DataColumn"/>s in this collection will be shown.
         /// Setting <see cref="HideColumnHeaders"/> to true will prevent column headers from being shown.
         /// </summary>
-        public IntellibboxColumnCollection Columns {
+        public IntelliboxColumnCollection Columns {
             get;
             set;
         }
@@ -170,9 +170,9 @@ namespace System.Windows.Controls {
         /// This is the <see cref="ISearchResultsProvider"/> that the <see cref="IntelliBox"/> uses
         /// to ask for search results. This is a Dependancy Property.
         /// </summary>
-        public IIntellibboxResultsProvider DataProvider {
+        public IIntelliboxResultsProvider DataProvider {
             get {
-                return (IIntellibboxResultsProvider)GetValue(DataProviderProperty);
+                return (IIntelliboxResultsProvider)GetValue(DataProviderProperty);
             }
             set {
                 SetValue(DataProviderProperty, value);
@@ -368,7 +368,7 @@ namespace System.Windows.Controls {
         /// Gets or sets the <see cref="AbstractRowColorizer"/> used to color each row of the search result set.
         /// Set to an instance of <see cref="AlternateRowColorizer"/> by default.
         /// </summary>
-        public IntellibboxRowColorizer RowColorizer {
+        public IntelliboxRowColorizer RowColorizer {
             get {
                 return _rowColorizer;
             }
@@ -457,7 +457,7 @@ namespace System.Windows.Controls {
         /// </summary>
         public IntelliBox() {
             _lastTimeSearchRecievedUtc = DateTime.Now.ToUniversalTime(); // make sure the field is never null
-            Columns = new IntellibboxColumnCollection();
+            Columns = new IntelliboxColumnCollection();
 
             //set up default bindings
             OnSelectedValueBindingChanged();
@@ -465,7 +465,7 @@ namespace System.Windows.Controls {
 
             InitializeComponent();
 
-            RowColorizer = new IntellibboxAlternateRowColorizer() {
+            RowColorizer = new IntelliboxAlternateRowColorizer() {
                 OddRowBrush = Brushes.Gainsboro
             };
         }
