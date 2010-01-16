@@ -538,29 +538,33 @@ namespace System.Windows.Controls {
                 return view;
             }
 
-            var temp = from p in item.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
+            var typeProperties = from p in item.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
                        where p.CanRead && p.CanWrite
                        select new {
                            Name = p.Name,
-                           Col = Columns.FirstOrDefault(c => p.Name.Equals(c.ForProperty))
+                           Column = Columns.FirstOrDefault(c => p.Name.Equals(c.ForProperty))
                        };
 
-            var left = temp.Where(a => a.Col != null && a.Col.Position != null).OrderBy(a => a.Col.Position);
-            var right = temp.Except(left);
+            //This is a shortcut to sort the nulls to the top instead of the bottom
+            //we did this instead of creating an Comparer.
+            var typesWithPositions = typeProperties
+                .Where(a => a.Column != null && a.Column.Position != null).OrderBy(a => a.Column.Position);
             
-            var props = left.Concat(right);
+            var typesWithoutPositions = typeProperties.Except(typesWithPositions);
+            
+            var sortedProperties = typesWithPositions.Concat(typesWithoutPositions);
 
-            foreach (var p in props) {
-                if (p.Col != null) {
-                    if (!p.Col.Hide) {
-                        var gvc = CloneHelper.Clone(p.Col);
+            foreach (var currentProperty in sortedProperties) {
+                if (currentProperty.Column != null) {
+                    if (!currentProperty.Column.Hide) {
+                        var gvc = CloneHelper.Clone(currentProperty.Column);
 
                         if (gvc.Header == null) { // TODO check if this is bound to anything
-                            gvc.Header = p.Name;
+                            gvc.Header = currentProperty.Name;
                         }
 
                         if (gvc.DisplayMemberBinding == null) {
-                            gvc.DisplayMemberBinding = new Binding(p.Name);
+                            gvc.DisplayMemberBinding = new Binding(currentProperty.Name);
                         }
 
                         view.Columns.Add(gvc);
@@ -568,9 +572,9 @@ namespace System.Windows.Controls {
                 }
                 else {
                     var gvc = new GridViewColumn();
-                    gvc.Header = p.Name;
+                    gvc.Header = currentProperty.Name;
 
-                    gvc.DisplayMemberBinding = new Binding(p.Name);
+                    gvc.DisplayMemberBinding = new Binding(currentProperty.Name);
                     view.Columns.Add(gvc);
                 }
             }
