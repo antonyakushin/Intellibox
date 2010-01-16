@@ -22,11 +22,13 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
-using System.Windows.Data;
 using System.Windows.Media;
 
 namespace System.Windows.Controls.Custom {
-    class AlternateBackgroundConverter : IValueConverter {
+    /// <summary>
+    /// Provides a simple way to color the even rows of a ListBox with one color and the odd rows with another.
+    /// </summary>
+    public class AlternateRowColorizer : AbstractRowColorizer {
 
         public Brush EvenRowBrush {
             get;
@@ -38,24 +40,8 @@ namespace System.Windows.Controls.Custom {
             set;
         }
 
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) {
-            var boxItem = value as ListBoxItem;
-            if (boxItem != null) {
-                var listCtrl = ItemsControl.ItemsControlFromItemContainer(boxItem);
-                if (listCtrl != null) {
-                    var index = listCtrl.ItemContainerGenerator.IndexFromContainer(boxItem);
-
-                    return index % 2 == 0
-                        ? EvenRowBrush
-                        : OddRowBrush;
-                }
-            }
-
-            return null;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) {
-            throw new InvalidOperationException("Impossible to convert from a Brush to a ListViewItem!");
+        protected override Brush[] GetBrushes() {
+            return new[] { EvenRowBrush, OddRowBrush };
         }
     }
 }

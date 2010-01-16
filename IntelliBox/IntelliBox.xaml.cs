@@ -59,13 +59,13 @@ namespace System.Windows.Controls.Custom {
             DependencyProperty.Register("MaxResults", typeof(int), typeof(IntelliBox), new UIPropertyMetadata(10));
 
         public static readonly DependencyProperty ResultsHeightProperty =
-            DependencyProperty.Register("ResultsHeight", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(200d));
+            DependencyProperty.Register("ResultsHeight", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(double.NaN));
 
         public static readonly DependencyProperty ResultsMaxHeightProperty =
-            DependencyProperty.Register("ResultsMaxHeight", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(double.MaxValue));
+            DependencyProperty.Register("ResultsMaxHeight", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(double.PositiveInfinity));
 
         public static readonly DependencyProperty ResultsMaxWidthProperty =
-            DependencyProperty.Register("ResultsMaxWidth", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(double.MaxValue));
+            DependencyProperty.Register("ResultsMaxWidth", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(double.PositiveInfinity));
 
         public static readonly DependencyProperty ResultsMinHeightProperty =
             DependencyProperty.Register("ResultsMinHeight", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(0d));
@@ -74,7 +74,7 @@ namespace System.Windows.Controls.Custom {
                     DependencyProperty.Register("ResultsMinWidth", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(0d));
 
         public static readonly DependencyProperty ResultsWidthProperty =
-            DependencyProperty.Register("ResultsWidth", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(400d));
+            DependencyProperty.Register("ResultsWidth", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(double.NaN));
 
         public static readonly DependencyProperty SelectedItemProperty =
             DependencyProperty.Register("SelectedItem", typeof(object), typeof(IntelliBox), new UIPropertyMetadata(null));
@@ -97,6 +97,7 @@ namespace System.Windows.Controls.Custom {
         private string _lastTextValue;
         private BindingBase _selectedValueBinding;
         private BindingBase _displayedValueBinding;
+        private AbstractRowColorizer _rowColorizer;
 
         /// <summary>
         /// The columns in the search result set to display. When <see cref="ExplicitlyIncludeColumns"/>
@@ -296,6 +297,23 @@ namespace System.Windows.Controls.Custom {
                 SetValue(ResultsWidthProperty, value);
             }
         }
+
+        /// <summary>
+        /// Gets or sets the <see cref="AbstractRowColorizer"/> used to color each row of the search result set.
+        /// Set to an instance of <see cref="AlternateRowColorizer"/> by default.
+        /// </summary>
+        public AbstractRowColorizer RowColorizer {
+            get {
+                return _rowColorizer;
+            }
+            set {
+                if (value != _rowColorizer) {
+                    _rowColorizer = value;
+                    OnRowColorizerChanged();
+                }
+            }
+        }
+
         /// <summary>
         /// When true, all of the text in the field will be selected when the control gets focus.
         /// </summary>
@@ -375,6 +393,10 @@ namespace System.Windows.Controls.Custom {
             OnSelectedValueBindingChanged();
 
             InitializeComponent();
+
+            RowColorizer = new AlternateRowColorizer() {
+                OddRowBrush = Brushes.Gainsboro
+            };
         }
 
         private void ClearSelectedItem() {
@@ -550,6 +572,20 @@ namespace System.Windows.Controls.Custom {
         private void OnListItemMouseUp(object sender, MouseButtonEventArgs e) {
             SelectCurrentItem();
             CloseSearchResults();
+        }
+
+        private void OnRowColorizerChanged() {
+            if (IsInitialized) {
+                var bind = new Binding() {
+                    RelativeSource = RelativeSource.Self,
+                    Converter = RowColorizer
+                };
+
+                var style = new Style(typeof(ListViewItem));
+                style.Setters.Add(new Setter(ListViewItem.BackgroundProperty, bind));
+
+                Resources[typeof(ListViewItem)] = style;
+            }
         }
 
         private void OnSelectedValueBindingChanged() {
