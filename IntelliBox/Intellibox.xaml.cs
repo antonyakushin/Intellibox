@@ -142,18 +142,6 @@ namespace System.Windows.Controls {
         protected static readonly DependencyProperty ShowResultsProperty =
             DependencyProperty.Register("ShowPopup", typeof(bool), typeof(IntelliBox), new UIPropertyMetadata(false));
 
-
-        private static void OnDataProviderChanged(DependencyObject receiver, DependencyPropertyChangedEventArgs args) {
-            var ib = receiver as IntelliBox;
-            if (ib != null && args != null && args.NewValue is IIntelliboxResultsProvider) {
-                ib.OnDataProviderChanged(args.NewValue as IIntelliboxResultsProvider);
-            }
-        }
-
-        private void OnDataProviderChanged(IIntelliboxResultsProvider provider) {
-            SearchProvider = new IntelliboxAsyncProvider(provider.DoSearch);
-        }
-
         private static Type[] _baseTypes = new[] {
             typeof(bool), typeof(byte), typeof(sbyte), typeof(char), typeof(decimal),
             typeof(double), typeof(float),
@@ -661,6 +649,15 @@ namespace System.Windows.Controls {
             var exp = BindingOperations.GetBindingExpression(this, SelectedValueProperty);
             if (exp != null) {
                 exp.UpdateTarget();
+            }
+        }
+
+        private static void OnDataProviderChanged(DependencyObject receiver, DependencyPropertyChangedEventArgs args) {
+            var ib = receiver as IntelliBox;
+            if (ib != null && args != null && args.NewValue is IIntelliboxResultsProvider) {
+                var provider = args.NewValue as IIntelliboxResultsProvider;
+
+                ib.SearchProvider = new IntelliboxAsyncProvider(provider.DoSearch);
             }
         }
 
