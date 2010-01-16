@@ -58,24 +58,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="IntelliBox.xaml">
+    <Page Include="Intellibbox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="IntelliBox.xaml.cs">
-      <DependentUpon>IntelliBox.xaml</DependentUpon>
+    <Compile Include="Intellibbox.xaml.cs">
+      <DependentUpon>Intellibbox.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IntelliBoxRowColorizer.cs" />
-    <Compile Include="IntelliBoxAlternateRowColorizer.cs" />
+    <Compile Include="IntellibboxRowColorizer.cs" />
+    <Compile Include="IntellibboxAlternateRowColorizer.cs" />
     <Compile Include="BindingBaseFactory.cs" />
     <Compile Include="CloneHelper.cs" />
-    <Compile Include="IntelliBoxColumn.cs" />
-    <Compile Include="IntelliBoxCollection.cs" />
+    <Compile Include="IntellibboxColumn.cs" />
+    <Compile Include="IntellibboxColumnCollection.cs" />
     <Compile Include="IntelliboxSearchState.cs" />
-    <Compile Include="IIntelliBoxResultsProvider.cs" />
+    <Compile Include="IIntellibboxResultsProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

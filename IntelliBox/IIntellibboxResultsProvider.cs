@@ -28,7 +28,7 @@ namespace System.Windows.Controls {
     /// <summary>
     /// Defines the interface contract between an <see cref="IntelliBox"/> and its <see cref="IntelliBox.DataProvider" />.
     /// </summary>
-    public interface IIntelliBoxResultsProvider {
+    public interface IIntellibboxResultsProvider {
 
         /// <summary>
         /// Tell the <see cref="ISearchResultsProvider" /> to begin searching for the <paramref name="searchTerm"/>. Use the <paramref name="whenDone"/>

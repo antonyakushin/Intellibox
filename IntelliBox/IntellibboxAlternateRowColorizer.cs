@@ -28,7 +28,7 @@ namespace System.Windows.Controls {
     /// <summary>
     /// Provides a simple way to color the even rows of a ListBox with one color and the odd rows with another.
     /// </summary>
-    public sealed class IntelliBoxAlternateRowColorizer : IntelliBoxRowColorizer {
+    public sealed class IntellibboxAlternateRowColorizer : IntellibboxRowColorizer {
 
         /// <summary>
         /// The <see cref="Brush"/> to use on even numbered rows (0,2,4,6,...)

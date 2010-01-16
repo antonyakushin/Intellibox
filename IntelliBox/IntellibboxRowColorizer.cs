@@ -30,7 +30,7 @@ namespace System.Windows.Controls {
     /// Provides an abstract implementation of an <see cref="IValueConverter"/> that converts a ListBoxItem
     /// into a Brush based on the index of the ListBoxItem in its parent collection.
     /// </summary>
-    public abstract class IntelliBoxRowColorizer : IValueConverter {
+    public abstract class IntellibboxRowColorizer : IValueConverter {
 
         /// <summary>
         /// Must be overridden by derived classes to return the brushes that the derived class
