@@ -35,7 +35,5 @@ namespace Examples {
             return new List<object>();
         }
 
-        public void CancelAllSearches() {
-        }
     }
 }

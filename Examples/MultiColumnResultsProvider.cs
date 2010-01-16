@@ -52,10 +52,6 @@ namespace Examples {
             return _results.Cast<object>();
         }
 
-        public void CancelAllSearches() {
-            
-        }
-
         private class Person {
             public int PersonID {
                 get;

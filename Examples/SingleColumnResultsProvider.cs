@@ -57,9 +57,5 @@ namespace Examples {
             ConstructDataSource();
             return _results.Where(term => term.StartsWith(searchTerm)).Take(maxResults).Cast<object>();
         }
-
-        public void CancelAllSearches() {
-
-        }
     }
 }
