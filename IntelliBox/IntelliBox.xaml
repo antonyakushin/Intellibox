@@ -29,7 +29,7 @@ OTHER DEALINGS IN THE SOFTWARE.
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ctrl="clr-namespace:System.Windows.Controls.Custom">
     <UserControl.Resources>
-        <ctrl:AlternateBackgroundConverter x:Key="rowBackgroundConverter" OddRowBrush="LightGray" />
+        <ctrl:AlternateBackgroundConverter x:Key="rowBackgroundConverter" OddRowBrush="LightGray"  />
 
         <Style TargetType="{x:Type ListViewItem}">
             <Setter Property="Background">
@@ -55,7 +55,7 @@ OTHER DEALINGS IN THE SOFTWARE.
         <Popup StaysOpen="False" MinWidth="30" MaxWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=ResultListMaxWidth, Mode=OneWay}"
                MaxHeight="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=ResultListMaxHeight, Mode=OneWay}"
                PlacementTarget="{Binding ElementName=PART_EDITFIELD}"
-               IsOpen="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=ShowResults}">
+               IsOpen="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=ShowPopup}">
 
             <ListView Name="lstSearchItems"
                       ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=Items}"

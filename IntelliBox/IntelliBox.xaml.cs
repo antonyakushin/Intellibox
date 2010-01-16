@@ -71,7 +71,7 @@ namespace System.Windows.Controls.Custom {
             DependencyProperty.Register("SelectedValue", typeof(object), typeof(IntelliBox), new UIPropertyMetadata(null));
 
         public static readonly DependencyProperty ShowResultsProperty =
-            DependencyProperty.Register("ShowResults", typeof(bool), typeof(IntelliBox), new UIPropertyMetadata(false));
+            DependencyProperty.Register("ShowPopup", typeof(bool), typeof(IntelliBox), new UIPropertyMetadata(false));
 
         private static Type[] _baseTypes = new[] {
             typeof(bool), typeof(byte), typeof(sbyte), typeof(char), typeof(decimal),
@@ -84,6 +84,7 @@ namespace System.Windows.Controls.Custom {
         private Type _previousResultType;
         private string _lastTextValue;
         private Binding _selectedValueBinding;
+        private Binding _displayedValueBinding;
 
         public ObservableCollection<DataColumn> Columns {
             get;
@@ -100,8 +101,15 @@ namespace System.Windows.Controls.Custom {
         }
 
         public Binding DisplayedValueBinding {
-            get;
-            set;
+            get {
+                return _displayedValueBinding;
+            }
+            set {
+                if (value != _displayedValueBinding) {
+                    _displayedValueBinding = value;
+                    OnDisplayedValueBindingChanged();
+                }
+            }
         }
 
         public bool ExplicitlyIncludeColumns {
@@ -211,16 +219,7 @@ namespace System.Windows.Controls.Custom {
             }
         }
 
-        private void OnSelectedValueBindingChanged() {
-            if (SelectedValueBinding == null) {
-                BindingOperations.ClearBinding(this, SelectedValueProperty);
-            }
-            else {
-                this.SetBinding(SelectedValueProperty, ConstructBindingForSelected(SelectedValueBinding));
-            }
-        }
-
-        private bool ShowResults {
+        private bool ShowPopup {
             get {
                 return (bool)GetValue(ShowResultsProperty);
             }
@@ -240,6 +239,11 @@ namespace System.Windows.Controls.Custom {
         public IntelliBox() {
             _lastTimeSearchRecievedUtc = DateTime.Now.ToUniversalTime(); // make sure the field is never null
             Columns = new ObservableCollection<DataColumn>();
+
+            //set up default bindings
+            OnSelectedValueBindingChanged();
+            OnDisplayedValueBindingChanged();
+
             InitializeComponent();
         }
 
@@ -306,33 +310,51 @@ namespace System.Windows.Controls.Custom {
         }
 
         private void CloseSearchResults() {
-            ShowResults = false;
+            ShowPopup = false;
             noResultsPopup.IsOpen = false;
         }
 
         private Binding ConstructBindingForHighlighted(Binding template) {
-            var bind = Clone(template);
-            if (bind.ElementName != null)
-                bind.ElementName = null;
+            Binding bind;
+            if (template != null) {
+                bind = Clone(template);
+                if (bind.ElementName != null)
+                    bind.ElementName = null;
 
-            if (bind.RelativeSource != null)
-                bind.RelativeSource = null;
+                if (bind.RelativeSource != null)
+                    bind.RelativeSource = null;
 
-            bind.Path = new PropertyPath("HighlightedItem." + bind.Path.Path, bind.Path.PathParameters);
-            bind.Source = this;
+                string path = "." + bind.Path.Path ?? string.Empty;
+
+                bind.Path = new PropertyPath("HighlightedItem" + path, bind.Path.PathParameters);
+                bind.Source = this;
+            }
+            else {
+                bind = new Binding("HighlightedItem");
+                bind.Source = this;
+            }
             return bind;
         }
 
         private Binding ConstructBindingForSelected(Binding template) {
-            var bind = Clone(template);
-            if (bind.ElementName != null)
-                bind.ElementName = null;
+            Binding bind;
+            if (template != null) {
+                bind = Clone(template);
+                if (bind.ElementName != null)
+                    bind.ElementName = null;
 
-            if (bind.RelativeSource != null)
-                bind.RelativeSource = null;
+                if (bind.RelativeSource != null)
+                    bind.RelativeSource = null;
 
-            bind.Path = new PropertyPath("SelectedItem." + bind.Path.Path, bind.Path.PathParameters);
-            bind.Source = this;
+                string path = "." + bind.Path.Path ?? string.Empty;
+                bind.Path = new PropertyPath("SelectedItem" + path, bind.Path.PathParameters);
+                bind.Source = this;
+            }
+            else {
+                bind = new Binding("SelectedItem");
+                bind.Source = this;
+            }
+
             return bind;
         }
 
@@ -469,6 +491,7 @@ namespace System.Windows.Controls.Custom {
             var text = PART_EDITFIELD.Text;
             BindingOperations.ClearBinding(PART_EDITFIELD, TextBox.TextProperty); // so that it can bind to the Highlighted item if the user starts typing again
             PART_EDITFIELD.Text = text;
+            PART_EDITFIELD.CaretIndex = text.Length;
 
             if (Items != null) {
                 Items = null;
@@ -483,9 +506,20 @@ namespace System.Windows.Controls.Custom {
             }
         }
 
+        private void OnDisplayedValueBindingChanged() {
+            if (PART_EDITFIELD != null) {
+                PART_EDITFIELD.SetBinding(TextBox.TextProperty, ConstructBindingForHighlighted(DisplayedValueBinding));
+            }
+        }
+
         private void OnListItemMouseUp(object sender, MouseButtonEventArgs e) {
             SelectCurrentItem();
             CloseSearchResults();
+        }
+
+        private void OnSelectedValueBindingChanged() {
+            var bind = ConstructBindingForSelected(SelectedValueBinding);
+            this.SetBinding(SelectedValueProperty, bind);
         }
 
         private void OnTextBoxKeyUp(object sender, KeyEventArgs e) {
@@ -510,7 +544,7 @@ namespace System.Windows.Controls.Custom {
         }
 
         private void OnTextBoxPreviewKeyDown(object sender, KeyEventArgs e) {
-            if (!HasDataProvider || !ShowResults)
+            if (!HasDataProvider || !ShowPopup)
                 return;
 
             if (IsCancelKey(e.Key)) {
@@ -535,7 +569,7 @@ namespace System.Windows.Controls.Custom {
 
             _lastTimeSearchRecievedUtc = startTimeUtc;
 
-            ShowResults = false;
+            ShowPopup = false;
 
             var list = results.ToList();
             noResultsPopup.IsOpen = list.Count < 1;
@@ -548,7 +582,7 @@ namespace System.Windows.Controls.Custom {
                     lstSearchItems.View = ConstructGridView(Items[0]);
                 }
                 lstSearchItems.SelectedIndex = 0;
-                ShowResults = true;
+                ShowPopup = true;
             }
         }
 
@@ -558,8 +592,6 @@ namespace System.Windows.Controls.Custom {
 
         private void UpdateSearchBoxText(bool useSelectedItem) {
             //this is hacky, but the other alternative is to evaluate a propery path manually
-            if (DisplayedValueBinding == null)
-                return;
 
             var exp = BindingOperations.GetBindingExpressionBase(PART_EDITFIELD, TextBox.TextProperty);
             if (exp == null) {
