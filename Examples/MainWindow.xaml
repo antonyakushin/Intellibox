@@ -44,7 +44,6 @@ OTHER DEALINGS IN THE SOFTWARE.
         <TabItem Header="Single Column List"
                  ToolTip="Demonstrates displaying a single-column list of simple Types.">
             <StackPanel>
-                <TextBox Width="300" />
                 <TextBlock>//TODO place explanatory text here</TextBlock>
                 <local:BasicSearchResultsCtrl Provider="{Binding ElementName=mainWin, Path=SingleColumnResults}" />
             </StackPanel>
