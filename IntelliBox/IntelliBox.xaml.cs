@@ -88,6 +88,7 @@ namespace System.Windows.Controls.Custom {
         public static readonly DependencyProperty ShowResultsProperty =
             DependencyProperty.Register("ShowPopup", typeof(bool), typeof(IntelliBox), new UIPropertyMetadata(false));
 
+
         private static Type[] _baseTypes = new[] {
             typeof(bool), typeof(byte), typeof(sbyte), typeof(char), typeof(decimal),
             typeof(double), typeof(float),
@@ -412,6 +413,29 @@ namespace System.Windows.Controls.Custom {
             };
         }
 
+        private void CancelSelection() {
+            _lastTextValue = null;
+            UpdateSearchBoxText(true);
+            
+            CloseSearchResults();
+
+            if (Items != null) {
+                Items = null;
+            }
+        }
+
+        private void ChooseCurrentItem() {
+            SetSelectedItem(lstSearchItems.SelectedItem);
+            _lastTextValue = null;
+            UpdateSearchBoxText(true);
+            
+            CloseSearchResults();
+
+            if (Items != null) {
+                Items = null;
+            }
+        }
+
         private void ClearSelectedItem() {
             SetSelectedItem(null);
             CloseSearchResults();
@@ -542,6 +566,10 @@ namespace System.Windows.Controls.Custom {
             return key == Key.Escape;
         }
 
+        private bool IsChooseCurrentItemKey(Key pressed) {
+            return pressed == Key.Enter || pressed == Key.Return || pressed == Key.Tab;
+        }
+
         private bool IsNavigationKey(Key pressed) {
             return pressed == Key.Down
                 || pressed == Key.Up
@@ -549,26 +577,6 @@ namespace System.Windows.Controls.Custom {
                 || pressed == Key.NumPad2
                 || pressed == Key.PageUp    //TODO need to handle navigation keys that skip items
                 || pressed == Key.PageDown;
-        }
-
-        private bool IsSelectCurrentItemKey(Key pressed) {
-            return pressed == Key.Enter || pressed == Key.Return || pressed == Key.Tab;
-        }
-
-        private void SelectCurrentItem() {
-            SetSelectedItem(lstSearchItems.SelectedItem);
-            CloseSearchResults();
-            _lastTextValue = null;
-
-            UpdateSearchBoxText(true);
-
-            if (DataProvider != null) {
-                DataProvider.CancelAllSearches();
-            }
-
-            if (Items != null) {
-                Items = null;
-            }
         }
 
         private void SetSelectedItem(object value) {
@@ -590,7 +598,7 @@ namespace System.Windows.Controls.Custom {
         }
 
         private void OnListItemMouseDoubleClick(object sender, MouseButtonEventArgs e) {
-            SelectCurrentItem();
+            ChooseCurrentItem();
             CloseSearchResults();
         }
 
@@ -620,7 +628,7 @@ namespace System.Windows.Controls.Custom {
             if (!HasDataProvider)
                 return;
 
-            if (IsCancelKey(e.Key) || IsSelectCurrentItemKey(e.Key) || IsNavigationKey(e.Key)) {
+            if (IsCancelKey(e.Key) || IsChooseCurrentItemKey(e.Key) || IsNavigationKey(e.Key)) {
                 return;
             }
 
@@ -645,12 +653,12 @@ namespace System.Windows.Controls.Custom {
                 return;
 
             if (IsCancelKey(e.Key)) {
-                CloseSearchResults();
+                CancelSelection();
                 return;
             }
 
-            if (IsSelectCurrentItemKey(e.Key)) {
-                SelectCurrentItem();
+            if (IsChooseCurrentItemKey(e.Key)) {
+                ChooseCurrentItem();
                 return;
             }
 
@@ -690,11 +698,12 @@ namespace System.Windows.Controls.Custom {
                 : this.DisplayTextFromHighlightedItem;
 
             PART_EDITFIELD.Text = text;
-            PART_EDITFIELD.CaretIndex = text.Length;
+            if (!string.IsNullOrEmpty(text)) {
+                PART_EDITFIELD.CaretIndex = text.Length;
+            }
         }
 
         private void PART_EDITFIELD_GotFocus(object sender, RoutedEventArgs e) {
-            System.Diagnostics.Trace.WriteLine("PART_EDITFIELD_GotFocus");
             if (SelectAllOnFocus) {
                 PART_EDITFIELD.SelectAll();
             }
@@ -702,8 +711,15 @@ namespace System.Windows.Controls.Custom {
 
         private void lstSearchItems_PreviewKeyDown(object sender, KeyEventArgs e) {
             if (IsCancelKey(e.Key)) {
-                CloseSearchResults();
+                CancelSelection();
                 return;
+            }
+        }
+
+        private void Popup_PreviewMouseButton(object sender, MouseButtonEventArgs e) {
+            var pop = sender as System.Windows.Controls.Primitives.Popup;
+            if (pop != null && pop.IsOpen == false) {
+                CancelSelection();
             }
         }
     }
