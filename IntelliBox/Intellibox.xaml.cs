@@ -55,7 +55,8 @@ namespace System.Windows.Controls {
         /// Identifies the <see cref="DataProviderProperty"/> Dependancy Property.
         /// </summary>
         public static readonly DependencyProperty DataProviderProperty =
-            DependencyProperty.Register("DataProvider", typeof(IIntelliboxResultsProvider), typeof(IntelliBox), new UIPropertyMetadata(null));
+            DependencyProperty.Register("DataProvider", typeof(IIntelliboxResultsProvider), typeof(IntelliBox),
+            new UIPropertyMetadata(new PropertyChangedCallback(OnDataProviderChanged)));
 
         /// <summary>
         /// For Internal Use Only. Identifies the <see cref="DisplayTextFromHighlightedItemProperty"/> Dependancy Property.
@@ -141,6 +142,17 @@ namespace System.Windows.Controls {
         public static readonly DependencyProperty ShowResultsProperty =
             DependencyProperty.Register("ShowPopup", typeof(bool), typeof(IntelliBox), new UIPropertyMetadata(false));
 
+
+        private static void OnDataProviderChanged(DependencyObject receiver, DependencyPropertyChangedEventArgs args) {
+            var ib = receiver as IntelliBox;
+            if (ib != null && args != null && args.NewValue is IIntelliboxResultsProvider) {
+                ib.OnDataProviderChanged(args.NewValue as IIntelliboxResultsProvider);
+            }
+        }
+
+        private void OnDataProviderChanged(IIntelliboxResultsProvider provider) {
+            SearchProvider = new IntelliboxAsyncProvider(provider.DoSearch);
+        }
 
         private static Type[] _baseTypes = new[] {
             typeof(bool), typeof(byte), typeof(sbyte), typeof(char), typeof(decimal),
@@ -240,7 +252,7 @@ namespace System.Windows.Controls {
 
         private bool HasDataProvider {
             get {
-                return DataProvider != null;
+                return DataProvider != null && SearchProvider != null;
             }
         }
 
@@ -381,6 +393,14 @@ namespace System.Windows.Controls {
         }
 
         /// <summary>
+        /// The Search provider that will actually perform the search
+        /// </summary>
+        private IntelliboxAsyncProvider SearchProvider {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// When true, all of the text in the field will be selected when the control gets focus.
         /// </summary>
         public bool SelectAllOnFocus {
@@ -473,7 +493,7 @@ namespace System.Windows.Controls {
         private void CancelSelection() {
             _lastTextValue = null;
             UpdateSearchBoxText(true);
-            
+
             CloseSearchResults();
 
             if (Items != null) {
@@ -485,7 +505,7 @@ namespace System.Windows.Controls {
             SetSelectedItem(lstSearchItems.SelectedItem);
             _lastTextValue = null;
             UpdateSearchBoxText(true);
-            
+
             CloseSearchResults();
 
             if (Items != null) {
@@ -502,8 +522,8 @@ namespace System.Windows.Controls {
             ShowPopup = false;
             noResultsPopup.IsOpen = false;
 
-            if (DataProvider != null) {
-                DataProvider.CancelAllSearches();
+            if (SearchProvider != null) {
+                SearchProvider.CancelAllSearches();
             }
         }
 
@@ -668,7 +688,7 @@ namespace System.Windows.Controls {
 
                 var style = new Style(typeof(ListViewItem));
                 style.Setters.Add(new Setter(ListViewItem.BackgroundProperty, bind));
-                
+
                 var sett = new EventSetter(ListViewItem.MouseDoubleClickEvent, new MouseButtonEventHandler(OnListItemMouseDoubleClick));
                 style.Setters.Add(sett);
 
@@ -700,7 +720,8 @@ namespace System.Windows.Controls {
                     var search = DisableWhitespaceTrim
                         ? _lastTextValue
                         : _lastTextValue.Trim();
-                    DataProvider.BeginSearchAsync(search, DateTime.Now.ToUniversalTime(), MaxResults, Tag, ProcessSearchResults);
+
+                    SearchProvider.BeginSearchAsync(search, DateTime.Now.ToUniversalTime(), MaxResults, Tag, ProcessSearchResults);
                 }
             }
         }

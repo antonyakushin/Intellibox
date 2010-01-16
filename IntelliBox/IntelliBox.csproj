@@ -68,6 +68,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IntelliboxAsyncProvider.cs" />
     <Compile Include="IntelliboxRowColorizer.cs" />
     <Compile Include="IntelliboxAlternateRowColorizer.cs" />
     <Compile Include="BindingBaseFactory.cs" />

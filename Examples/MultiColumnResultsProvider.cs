@@ -47,9 +47,9 @@ namespace Examples {
         }
 
 
-        public void BeginSearchAsync(string searchTerm, DateTime startTimeUtc, int maxResults, object tag, Action<DateTime, IEnumerable<object>> whenDone) {
+        public IEnumerable<object> DoSearch(string searchTerm, int maxResults, object tag) {
             ConstructResultSet();
-            whenDone(startTimeUtc, _results.Cast<object>());
+            return _results.Cast<object>();
         }
 
         public void CancelAllSearches() {

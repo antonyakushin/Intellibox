@@ -29,10 +29,11 @@ using System.Text;
 using System.Windows.Controls;
 
 namespace Examples {
+
     public class NoSearchResultsProvider : IIntelliboxResultsProvider {
-        
-        public void BeginSearchAsync(string searchTerm, DateTime startTimeUtc, int maxResults, object tag, Action<DateTime, IEnumerable<object>> whenDone) {
-            whenDone(startTimeUtc, new List<object>());
+
+        public IEnumerable<object> DoSearch(string searchTerm, int maxResults, object tag) {
+            return new List<object>();
         }
 
         public void CancelAllSearches() {
