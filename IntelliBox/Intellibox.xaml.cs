@@ -464,14 +464,14 @@ namespace System.Windows.Controls {
         /// and retrieve results from the <see cref="DataProvider"/>.
         /// </summary>
         public IntelliBox() {
+            InitializeComponent();
+
             _lastTimeSearchRecievedUtc = DateTime.Now.ToUniversalTime(); // make sure the field is never null
             Columns = new IntelliboxColumnCollection();
 
-            //set up default bindings
+            //setting up the default bindings in case the user doesn't set bindings themselves
             OnSelectedValueBindingChanged();
             OnDisplayedValueBindingChanged();
-
-            InitializeComponent();
 
             RowColorizer = new IntelliboxAlternateRowColorizer() {
                 OddRowBrush = Brushes.Gainsboro
@@ -547,7 +547,7 @@ namespace System.Windows.Controls {
 
             var left = temp.Where(a => a.Col != null && a.Col.Position != null).OrderBy(a => a.Col.Position);
             var right = temp.Except(left);
-
+            
             var props = left.Concat(right);
 
             foreach (var p in props) {
