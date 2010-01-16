@@ -86,11 +86,20 @@ namespace System.Windows.Controls.Custom {
         private BindingBase _selectedValueBinding;
         private BindingBase _displayedValueBinding;
 
-        public ObservableCollection<DataColumn> Columns {
+        /// <summary>
+        /// The columns in the search result set to display. When <see cref="ExplicitlyIncludeColumns"/>
+        /// is set to true, then only the <see cref="DataColumn"/>s in this collection will be shown.
+        /// Setting <see cref="HideColumnHeaders"/> to true will prevent column headers from being shown.
+        /// </summary>
+        public DataColumnCollection Columns {
             get;
             set;
         }
 
+        /// <summary>
+        /// This is the <see cref="ISearchResultsProvider"/> that the <see cref="IntelliBox"/> uses
+        /// to ask for search results. This is a Dependancy Property.
+        /// </summary>
         public ISearchResultsProvider DataProvider {
             get {
                 return (ISearchResultsProvider)GetValue(DataProviderProperty);
@@ -100,6 +109,15 @@ namespace System.Windows.Controls.Custom {
             }
         }
 
+        /// <summary>
+        /// A binding expression that determines which column in the search result set
+        /// displays its value in the text field. Typically, the value displayed should
+        /// correspond to the column the <see cref="DataProvider"/> searches on. This binding
+        /// expression can be different from the on in the <see cref="SelectedValueBinding"/>.
+        /// If this property is NULL, then an entire row from the search result set displays
+        /// its value in the text field.
+        /// This is a Dependancy Property.
+        /// </summary>
         public BindingBase DisplayedValueBinding {
             get {
                 return _displayedValueBinding;
@@ -113,6 +131,11 @@ namespace System.Windows.Controls.Custom {
             }
         }
 
+        /// <summary>
+        /// When <see cref="True"/>, only the <see cref="DataColumn"/>s in the <see cref="Columns"/> collection
+        /// will display in the search results set. When <see cref="False"/>, all the columns in the search result set
+        /// will show, but any columns in the <see cref="Columns"/> collection then override specific columns.
+        /// </summary>
         public bool ExplicitlyIncludeColumns {
             get;
             set;
@@ -130,6 +153,9 @@ namespace System.Windows.Controls.Custom {
             }
         }
 
+        /// <summary>
+        /// When <see cref="True"/>, columns in the search result set will not have headers. This is a Dependancy Property.
+        /// </summary>
         public bool HideColumnHeaders {
             get {
                 return (bool)GetValue(HideColumnHeadersProperty);
@@ -157,6 +183,10 @@ namespace System.Windows.Controls.Custom {
             }
         }
 
+        /// <summary>
+        /// Gets or sets the maximum number of results that the <see cref="IntelliBox"/> asks
+        /// its <see cref="ISearchResultsProvider"/> for. This is a Dependancy Property.
+        /// </summary>
         public int MaxResults {
             get {
                 return (int)GetValue(MaxResultsProperty);
@@ -166,6 +196,10 @@ namespace System.Windows.Controls.Custom {
             }
         }
 
+        /// <summary>
+        /// Gets or sets the maximum height that the search results popup is allowed to have.
+        /// Defaults to 150. This is a Dependancy Property.
+        /// </summary>
         public double PopupMaxHeight {
             get {
                 return (double)GetValue(PopupMaxHeightProperty);
@@ -175,6 +209,10 @@ namespace System.Windows.Controls.Custom {
             }
         }
 
+        /// <summary>
+        /// Gets or sets the maximum width that the search results popup is allowed to have.
+        /// Defaults to 400. This is a Dependancy Property.
+        /// </summary>
         public double PopupMaxWidth {
             get {
                 return (double)GetValue(PopupMaxWidthProperty);
@@ -184,11 +222,18 @@ namespace System.Windows.Controls.Custom {
             }
         }
 
+        /// <summary>
+        /// When true, all of the text in the field will be selected when the control gets focus.
+        /// </summary>
         public bool SelectAllOnFocus {
             get;
             set;
         }
 
+        /// <summary>
+        /// The data row from the search result set that the user has most recently selected and confirmed.
+        /// This is a Dependancy Property.
+        /// </summary>
         public object SelectedItem {
             get {
                 return (object)GetValue(SelectedItemProperty);
@@ -198,6 +243,10 @@ namespace System.Windows.Controls.Custom {
             }
         }
 
+        /// <summary>
+        /// A value out of the <see cref="SelectedItem"/>. The exact value depends on
+        /// the <see cref="SelectedValueBinding"/> property. This is a Dependancy Property.
+        /// </summary>
         public object SelectedValue {
             get {
                 return (object)GetValue(SelectedValueProperty);
@@ -207,7 +256,14 @@ namespace System.Windows.Controls.Custom {
             }
         }
 
-
+        /// <summary>
+        /// A binding expression that determines what <see cref="SelectedValue"/>
+        /// will be chosen out of the <see cref="SelectedItem"/>. If this property is
+        /// NULL, then the entire <see cref="SelectedItem"/> is chosen as the <see cref="SelectedValue"/>.
+        /// This property exists so that the <see cref="SelectedValue" /> can differ from the
+        /// value displayed in the text field.
+        /// This is a Dependancy Property.
+        /// </summary>
         public BindingBase SelectedValueBinding {
             get {
                 return _selectedValueBinding;
@@ -239,7 +295,7 @@ namespace System.Windows.Controls.Custom {
 
         public IntelliBox() {
             _lastTimeSearchRecievedUtc = DateTime.Now.ToUniversalTime(); // make sure the field is never null
-            Columns = new ObservableCollection<DataColumn>();
+            Columns = new DataColumnCollection();
 
             //set up default bindings
             OnSelectedValueBindingChanged();
@@ -251,8 +307,6 @@ namespace System.Windows.Controls.Custom {
             SetSelectedItem(null);
             CloseSearchResults();
         }
-
-        
 
         private void CloseSearchResults() {
             ShowPopup = false;
