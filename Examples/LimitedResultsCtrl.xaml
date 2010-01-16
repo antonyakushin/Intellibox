@@ -50,7 +50,7 @@ OTHER DEALINGS IN THE SOFTWARE.
             <auto:IntelliBox
                 Width="200" Name="autoBox"
                 DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=Provider}"
-                MaxResults="2"
+                MaxResults="3"
             />
         </StackPanel>
     </StackPanel>

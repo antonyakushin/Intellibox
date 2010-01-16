@@ -62,16 +62,16 @@ namespace System.Windows.Controls.Custom {
             DependencyProperty.Register("ResultsHeight", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(200d));
 
         public static readonly DependencyProperty ResultsMaxHeightProperty =
-            DependencyProperty.Register("ResultsMaxHeight", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(DependencyProperty.UnsetValue));
+            DependencyProperty.Register("ResultsMaxHeight", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(double.MaxValue));
 
         public static readonly DependencyProperty ResultsMaxWidthProperty =
-            DependencyProperty.Register("ResultsMaxWidth", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(DependencyProperty.UnsetValue));
+            DependencyProperty.Register("ResultsMaxWidth", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(double.MaxValue));
 
         public static readonly DependencyProperty ResultsMinHeightProperty =
-            DependencyProperty.Register("ResultsMinHeight", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(DependencyProperty.UnsetValue));
+            DependencyProperty.Register("ResultsMinHeight", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(0d));
 
         public static readonly DependencyProperty ResultsMinWidthProperty =
-                    DependencyProperty.Register("ResultsMinWidth", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(DependencyProperty.UnsetValue));
+                    DependencyProperty.Register("ResultsMinWidth", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(0d));
 
         public static readonly DependencyProperty ResultsWidthProperty =
             DependencyProperty.Register("ResultsWidth", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(400d));
