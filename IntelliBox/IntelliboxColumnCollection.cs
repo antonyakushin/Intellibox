@@ -26,7 +26,7 @@ using System.Collections.ObjectModel;
 
 namespace System.Windows.Controls {
     /// <summary>
-    /// Represents an observable collection of <see cref="DataColumn"/>s.
+    /// Represents an observable collection of <see cref="IntelliboxColumn"/>s.
     /// This class exists becuase XAML pre-2009 spec doesn't support the instantiation of generic types.
     /// </summary>
     public class IntelliboxColumnCollection : ObservableCollection<IntelliboxColumn> {

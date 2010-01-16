@@ -31,19 +31,21 @@ namespace System.Windows.Controls {
     public interface IIntelliboxResultsProvider {
 
         /// <summary>
-        /// Tell the <see cref="ISearchResultsProvider" /> to begin searching for the <paramref name="searchTerm"/>. Use the <paramref name="whenDone"/>
+        /// Tell the <see cref="IIntelliboxResultsProvider" /> to begin searching for the <paramref name="searchTerm"/>. Use the <paramref name="whenDone"/>
         /// parameter to give the results back to the <see cref="IntelliBox" /> when the search is completed. The <see cref="DateTime" />
         /// parameter to the <paramref name="whenDone"/> action should be the <paramref name="startTimeUtc"/> parameter.
         /// </summary>
         /// <param name="searchTerm">The text in the search box at the time the search was requested.</param>
         /// <param name="startTimeUtc">The UTC timestamp of when the search was requested. The <see cref="IntelliBox"/> control uses the timestamp to make sure it doesn't show stale results. </param>
         /// <param name="maxResults">The maximum number of search results the <see cref="IntelliBox"/> wants returned.</param>
-        /// <param name="extraInfo">This is the value of the Tag property of the <see cref="IntelliBox"/> control at the time the search was started. Use the Tag property to pass any custom data to your <see cref="ISearchResultsProvider" />.</param>
+        /// <param name="extraInfo">This is the value of the Tag property of the <see cref="IntelliBox"/> control at the time the search was started. Use the Tag property to pass any custom data to your <see cref="IIntelliboxResultsProvider" />.</param>
         /// <param name="whenDone">A method callback that gives the <see cref="IntelliBox" /> the results of the search.</param>
         void BeginSearchAsync(string searchTerm, DateTime startTimeUtc, int maxResults, object extraInfo, Action<DateTime, IEnumerable<object>> whenDone);
 
+        //void Search(IntelliBoxSearchState state);
+
         /// <summary>
-        /// Tell the <see cref="ISearchResultsProvider" /> to cancel any searches running in the background.
+        /// Tell the <see cref="IIntelliboxResultsProvider" /> to cancel any searches running in the background.
         /// </summary>
         void CancelAllSearches();
     }
