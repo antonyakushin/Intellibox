@@ -110,6 +110,15 @@ namespace System.Windows.Controls.Custom {
         }
 
         /// <summary>
+        /// When <see cref="True"/>, the text in the text field will NOT be trimmed for
+        /// whitespace prior to being passed to the <see cref="DataProvider"/>.
+        /// </summary>
+        public bool DisableWhitespaceTrim {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// A binding expression that determines which column in the search result set
         /// displays its value in the text field. Typically, the value displayed should
         /// correspond to the column the <see cref="DataProvider"/> searches on. This binding
@@ -499,7 +508,10 @@ namespace System.Windows.Controls.Custom {
                     ClearSelectedItem();
                 }
                 else {
-                    DataProvider.BeginSearchAsync(_lastTextValue, DateTime.Now.ToUniversalTime(), MaxResults, Tag, ProcessSearchResults);
+                    var search = DisableWhitespaceTrim
+                        ? _lastTextValue
+                        : _lastTextValue.Trim();
+                    DataProvider.BeginSearchAsync(search, DateTime.Now.ToUniversalTime(), MaxResults, Tag, ProcessSearchResults);
                 }
             }
         }
