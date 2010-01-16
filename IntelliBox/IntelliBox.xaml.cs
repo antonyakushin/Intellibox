@@ -557,6 +557,11 @@ namespace System.Windows.Controls.Custom {
             _lastTextValue = null;
 
             UpdateSearchBoxText(true);
+
+            if (DataProvider != null) {
+                DataProvider.CancelAllSearches();
+            }
+
             if (Items != null) {
                 Items = null;
             }
