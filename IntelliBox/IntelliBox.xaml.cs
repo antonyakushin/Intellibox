@@ -252,62 +252,7 @@ namespace System.Windows.Controls.Custom {
             CloseSearchResults();
         }
 
-        private Binding Clone(Binding template) {
-            var bind = new Binding() {
-                BindingGroupName = template.BindingGroupName,
-                BindsDirectlyToSource = template.BindsDirectlyToSource,
-                Converter = template.Converter,
-                ConverterCulture = template.ConverterCulture,
-                ConverterParameter = template.ConverterParameter,
-                FallbackValue = template.FallbackValue,
-                IsAsync = template.IsAsync,
-                Mode = template.Mode,
-                NotifyOnSourceUpdated = template.NotifyOnSourceUpdated,
-                NotifyOnTargetUpdated = template.NotifyOnTargetUpdated,
-                NotifyOnValidationError = template.NotifyOnValidationError,
-                Path = template.Path,
-                StringFormat = template.StringFormat,
-                TargetNullValue = template.TargetNullValue,
-                UpdateSourceExceptionFilter = template.UpdateSourceExceptionFilter,
-                UpdateSourceTrigger = template.UpdateSourceTrigger,
-                ValidatesOnDataErrors = template.ValidatesOnDataErrors,
-                ValidatesOnExceptions = template.ValidatesOnExceptions,
-                XPath = template.XPath
-
-            };
-
-            if (!string.IsNullOrEmpty(template.ElementName))
-                bind.ElementName = template.ElementName;
-
-            if (template.RelativeSource != null)
-                bind.RelativeSource = template.RelativeSource;
-
-            if (template.Source != null)
-                bind.Source = template.Source;
-
-            for (int i = 0; i < template.ValidationRules.Count; i++) {
-                bind.ValidationRules.Add(template.ValidationRules[i]);
-            }
-
-            return bind;
-        }
-
-        private GridViewColumn Clone(DataColumn original) {
-            //TODO need to copy bindings over, if any exist
-            var copy = new GridViewColumn() {
-                CellTemplate = original.CellTemplate, //DP
-                CellTemplateSelector = original.CellTemplateSelector, //DP
-                DisplayMemberBinding = original.DisplayMemberBinding,
-                Header = original.Header, //DP
-                HeaderContainerStyle = original.HeaderContainerStyle, //DP
-                HeaderStringFormat = original.HeaderStringFormat, //DP
-                HeaderTemplate = original.HeaderTemplate, //DP
-                HeaderTemplateSelector = original.HeaderTemplateSelector, //DP
-                Width = original.Width //DP
-            };
-
-            return copy;
-        }
+        
 
         private void CloseSearchResults() {
             ShowPopup = false;
@@ -317,7 +262,7 @@ namespace System.Windows.Controls.Custom {
         private Binding ConstructBindingForHighlighted(Binding template) {
             Binding bind;
             if (template != null) {
-                bind = Clone(template);
+                bind = CloneHelper.Clone(template);
                 if (bind.ElementName != null)
                     bind.ElementName = null;
 
@@ -339,7 +284,7 @@ namespace System.Windows.Controls.Custom {
         private Binding ConstructBindingForSelected(Binding template) {
             Binding bind;
             if (template != null) {
-                bind = Clone(template);
+                bind = CloneHelper.Clone(template);
                 if (bind.ElementName != null)
                     bind.ElementName = null;
 
@@ -376,7 +321,7 @@ namespace System.Windows.Controls.Custom {
 
             if (ExplicitlyIncludeColumns && Columns != null && Columns.Count > 0) {
                 foreach (var col in Columns.Where(c => !c.Hide).OrderBy(c => c.Position ?? int.MaxValue)) {
-                    view.Columns.Add(Clone(col));
+                    view.Columns.Add(CloneHelper.Clone(col));
                 }
                 return view;
             }
@@ -396,7 +341,7 @@ namespace System.Windows.Controls.Custom {
             foreach (var p in props) {
                 if (p.Col != null) {
                     if (!p.Col.Hide) {
-                        var gvc = Clone(p.Col);
+                        var gvc = CloneHelper.Clone(p.Col);
 
                         if (gvc.Header == null) { // TODO check if this is bound to anything
                             gvc.Header = p.Name;
