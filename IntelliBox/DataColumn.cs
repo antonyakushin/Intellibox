@@ -23,7 +23,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
 
-namespace System.Windows.Controls.Custom {
+namespace System.Windows.Controls {
     /// <summary>
     /// Represents a column that displays data from an <see cref="ISearchResultsProvider"/> result set.
     /// </summary>

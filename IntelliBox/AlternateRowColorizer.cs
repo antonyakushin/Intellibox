@@ -24,7 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Windows.Media;
 
-namespace System.Windows.Controls.Custom {
+namespace System.Windows.Controls {
     /// <summary>
     /// Provides a simple way to color the even rows of a ListBox with one color and the odd rows with another.
     /// </summary>

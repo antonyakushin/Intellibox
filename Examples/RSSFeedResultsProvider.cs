@@ -29,7 +29,7 @@ using System.Text;
 using System.Net;
 using System.IO;
 using System.Xml;
-using System.Windows.Controls.Custom;
+using System.Windows.Controls;
 
 namespace Examples {
 

@@ -25,7 +25,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace System.Windows.Controls.Custom {
+namespace System.Windows.Controls {
     /// <summary>
     /// Provides an abstract implementation of an <see cref="IValueConverter"/> that converts a ListBoxItem
     /// into a Brush based on the index of the ListBoxItem in its parent collection.

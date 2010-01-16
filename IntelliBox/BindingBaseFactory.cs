@@ -24,7 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Windows.Data;
 
-namespace System.Windows.Controls.Custom {
+namespace System.Windows.Controls {
     internal static class BindingBaseFactory {
 
         private static BindingBase ConstructBinding(IntelliBox source, BindingBase template, string propertyName) {
