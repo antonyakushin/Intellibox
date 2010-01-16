@@ -84,7 +84,7 @@ namespace System.Windows.Controls {
             throw new ArgumentOutOfRangeException("original", "Unrecognized type: " + original.GetType().ToString());
         }
 
-        public static GridViewColumn Clone(DataColumn original) {
+        public static GridViewColumn Clone(IntelliBoxColumn original) {
             if (original == null)
                 throw new ArgumentNullException("original");
 

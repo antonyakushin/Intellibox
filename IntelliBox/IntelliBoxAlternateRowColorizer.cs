@@ -22,13 +22,36 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
-using System.Collections.ObjectModel;
+using System.Windows.Media;
 
 namespace System.Windows.Controls {
     /// <summary>
-    /// Represents an observable collection of <see cref="DataColumn"/>s.
-    /// This class exists becuase XAML pre-2009 spec doesn't support the instantiation of generic types.
+    /// Provides a simple way to color the even rows of a ListBox with one color and the odd rows with another.
     /// </summary>
-    public class DataColumnCollection : ObservableCollection<DataColumn> {
+    public sealed class IntelliBoxAlternateRowColorizer : IntelliBoxRowColorizer {
+
+        /// <summary>
+        /// The <see cref="Brush"/> to use on even numbered rows (0,2,4,6,...)
+        /// </summary>
+        public Brush EvenRowBrush {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// The <see cref="Brush"/> to use on odd numbered rows (1,3,5,7,...)
+        /// </summary>
+        public Brush OddRowBrush {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Returns the brushes that this object wants to use to colorize the background of each row in a ListBox control.
+        /// </summary>
+        /// <returns>An array that contains the values of the <see cref="EvenRowBrush"/> and <see cref="OddRowBrush"/> at the time of the call.</returns>
+        protected override Brush[] GetBrushes() {
+            return new[] { EvenRowBrush, OddRowBrush };
+        }
     }
 }

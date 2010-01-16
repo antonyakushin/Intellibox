@@ -21,7 +21,7 @@ namespace System.Windows.Controls {
         }
     }
 
-    class AsyncProvider : ISearchResultsProvider {
+    class AsyncProvider : IIntelliBoxResultsProvider {
 
         private Func<string, int, object, IEnumerable<object>> callback;
         private Dictionary<Guid, BackgroundWorker> activesearches;

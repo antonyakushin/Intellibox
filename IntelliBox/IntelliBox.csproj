@@ -68,14 +68,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractRowColorizer.cs" />
-    <Compile Include="AlternateRowColorizer.cs" />
+    <Compile Include="IntelliBoxRowColorizer.cs" />
+    <Compile Include="IntelliBoxAlternateRowColorizer.cs" />
     <Compile Include="BindingBaseFactory.cs" />
     <Compile Include="CloneHelper.cs" />
-    <Compile Include="DataColumn.cs" />
-    <Compile Include="DataColumnCollection.cs" />
+    <Compile Include="IntelliBoxColumn.cs" />
+    <Compile Include="IntelliBoxCollection.cs" />
     <Compile Include="IntelliboxSearchState.cs" />
-    <Compile Include="ISearchResultsProvider.cs" />
+    <Compile Include="IIntelliBoxResultsProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

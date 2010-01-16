@@ -126,13 +126,13 @@ OTHER DEALINGS IN THE SOFTWARE.
                                      SelectedValueBinding="{Binding Link}"
                                      DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResultsRss}">
                         <auto:IntelliBox.Columns>
-                            <auto:DataColumn ForProperty="Title"
+                            <auto:IntelliBoxColumn ForProperty="Title"
                                              Width="125"
                                              Header="Title" />
-                            <auto:DataColumn ForProperty="Description"
+                            <auto:IntelliBoxColumn ForProperty="Description"
                                              Width="200"
                                              Header="Description of Issue" />
-                            <auto:DataColumn ForProperty="Category"
+                            <auto:IntelliBoxColumn ForProperty="Category"
                                              Width="100"
                                              />
                         </auto:IntelliBox.Columns>
@@ -172,10 +172,10 @@ OTHER DEALINGS IN THE SOFTWARE.
                                      SelectedValueBinding="{Binding PersonID}"
                         DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
                         <auto:IntelliBox.Columns>
-                            <auto:DataColumn ForProperty="Age"
+                            <auto:IntelliBoxColumn ForProperty="Age"
                                              Width="125"
                                              Header="Person's Age" />
-                            <auto:DataColumn ForProperty="PersonID"
+                            <auto:IntelliBoxColumn ForProperty="PersonID"
                                              Hide="True" />
                         </auto:IntelliBox.Columns>
                     </auto:IntelliBox>
@@ -214,8 +214,8 @@ OTHER DEALINGS IN THE SOFTWARE.
                                               ExplicitlyIncludeColumns="True"
                         DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
                         <auto:IntelliBox.Columns>
-                            <auto:DataColumn DisplayMemberBinding="{Binding FirstName}" Width="150" Header="First Name" />
-                            <auto:DataColumn DisplayMemberBinding="{Binding LastName}" Width="75" Header="Last Name" />
+                            <auto:IntelliBoxColumn DisplayMemberBinding="{Binding FirstName}" Width="150" Header="First Name" />
+                            <auto:IntelliBoxColumn DisplayMemberBinding="{Binding LastName}" Width="75" Header="Last Name" />
                         </auto:IntelliBox.Columns>
                     </auto:IntelliBox>
                 </StackPanel>
@@ -256,11 +256,11 @@ OTHER DEALINGS IN THE SOFTWARE.
                         DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
 
                         <auto:IntelliBox.Columns>
-                            <auto:DataColumn ForProperty="Weight"
+                            <auto:IntelliBoxColumn ForProperty="Weight"
                                              Position="2" />
-                            <auto:DataColumn ForProperty="Age"
+                            <auto:IntelliBoxColumn ForProperty="Age"
                                              Position="1" />
-                            <auto:DataColumn ForProperty="NetWorth"
+                            <auto:IntelliBoxColumn ForProperty="NetWorth"
                                              Position="3" />
                         </auto:IntelliBox.Columns>
                     </auto:IntelliBox>
