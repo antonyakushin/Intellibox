@@ -83,8 +83,8 @@ namespace System.Windows.Controls.Custom {
         private DateTime _lastTimeSearchRecievedUtc;
         private Type _previousResultType;
         private string _lastTextValue;
-        private Binding _selectedValueBinding;
-        private Binding _displayedValueBinding;
+        private BindingBase _selectedValueBinding;
+        private BindingBase _displayedValueBinding;
 
         public ObservableCollection<DataColumn> Columns {
             get;
@@ -100,7 +100,7 @@ namespace System.Windows.Controls.Custom {
             }
         }
 
-        public Binding DisplayedValueBinding {
+        public BindingBase DisplayedValueBinding {
             get {
                 return _displayedValueBinding;
             }
@@ -208,7 +208,7 @@ namespace System.Windows.Controls.Custom {
         }
 
 
-        public Binding SelectedValueBinding {
+        public BindingBase SelectedValueBinding {
             get {
                 return _selectedValueBinding;
             }
@@ -257,50 +257,6 @@ namespace System.Windows.Controls.Custom {
         private void CloseSearchResults() {
             ShowPopup = false;
             noResultsPopup.IsOpen = false;
-        }
-
-        private Binding ConstructBindingForHighlighted(Binding template) {
-            Binding bind;
-            if (template != null) {
-                bind = CloneHelper.Clone(template);
-                if (bind.ElementName != null)
-                    bind.ElementName = null;
-
-                if (bind.RelativeSource != null)
-                    bind.RelativeSource = null;
-
-                string path = "." + bind.Path.Path ?? string.Empty;
-
-                bind.Path = new PropertyPath("HighlightedItem" + path, bind.Path.PathParameters);
-                bind.Source = this;
-            }
-            else {
-                bind = new Binding("HighlightedItem");
-                bind.Source = this;
-            }
-            return bind;
-        }
-
-        private Binding ConstructBindingForSelected(Binding template) {
-            Binding bind;
-            if (template != null) {
-                bind = CloneHelper.Clone(template);
-                if (bind.ElementName != null)
-                    bind.ElementName = null;
-
-                if (bind.RelativeSource != null)
-                    bind.RelativeSource = null;
-
-                string path = "." + bind.Path.Path ?? string.Empty;
-                bind.Path = new PropertyPath("SelectedItem" + path, bind.Path.PathParameters);
-                bind.Source = this;
-            }
-            else {
-                bind = new Binding("SelectedItem");
-                bind.Source = this;
-            }
-
-            return bind;
         }
 
         private GridView ConstructGridView(object item) {
@@ -459,7 +415,7 @@ namespace System.Windows.Controls.Custom {
 
         private void OnDisplayedValueBindingChanged() {
             if (PART_EDITFIELD != null) {
-                PART_EDITFIELD.SetBinding(TextBox.TextProperty, ConstructBindingForHighlighted(DisplayedValueBinding));
+                PART_EDITFIELD.SetBinding(TextBox.TextProperty, BindingBaseFactory.ConstructBindingForHighlighted(this, DisplayedValueBinding));
             }
         }
 
@@ -469,7 +425,7 @@ namespace System.Windows.Controls.Custom {
         }
 
         private void OnSelectedValueBindingChanged() {
-            var bind = ConstructBindingForSelected(SelectedValueBinding);
+            var bind = BindingBaseFactory.ConstructBindingForSelected(this, SelectedValueBinding);
             this.SetBinding(SelectedValueProperty, bind);
         }
 
@@ -547,10 +503,8 @@ namespace System.Windows.Controls.Custom {
             var exp = BindingOperations.GetBindingExpressionBase(PART_EDITFIELD, TextBox.TextProperty);
             if (exp == null) {
                 var bind = useSelectedItem
-                    ? ConstructBindingForSelected(DisplayedValueBinding)
-                    : ConstructBindingForHighlighted(DisplayedValueBinding);
-                bind.Mode = BindingMode.OneTime; //setting to OneTime means that it updates only when I want it to -- despite the normal meaning of 'Explicit'
-                bind.UpdateSourceTrigger = UpdateSourceTrigger.Explicit;
+                    ? BindingBaseFactory.ConstructBindingForSelected(this, DisplayedValueBinding)
+                    : BindingBaseFactory.ConstructBindingForHighlighted(this, DisplayedValueBinding);
 
                 BindingOperations.SetBinding(PART_EDITFIELD, TextBox.TextProperty, bind);
             }
