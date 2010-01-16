@@ -15,6 +15,7 @@
         <PDBFiles Include="$(Configuration)\*.pdb" />
         <ReleaseFiles Include="$(Configuration)\*.exe" Exclude="$(Configuration)\*vshost.exe"/>
         <ReleaseFiles Include="$(Configuration)\*.dll" />
+        <ReleaseFiles Include="$(Configuration)\IntelliBox.xml" />
     </ItemGroup>
     
     
