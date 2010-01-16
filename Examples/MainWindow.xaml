@@ -99,7 +99,9 @@ OTHER DEALINGS IN THE SOFTWARE.
         <TabItem Header="Multi-Column List - RSS"
                  ToolTip="Demonstrates displaying a multi-column list From an RSS Feed.">
             <StackPanel>
-                <TextBlock>//TODO -- joe feser you need to explain this one</TextBlock>
+                <TextBlock TextWrapping="Wrap">This example uses the Yahoo Traffic RSS Feed to return results 
+					for traffic conditions in zip code 10101. Example searches that will return results are "Closed" 
+					, "Street" and "Construction"</TextBlock>
                 <TextBlock />
 
                 <StackPanel Orientation="Horizontal">
