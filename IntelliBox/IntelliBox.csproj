@@ -69,6 +69,7 @@
     <Compile Include="BindingBaseFactory.cs" />
     <Compile Include="CloneHelper.cs" />
     <Compile Include="DataColumn.cs" />
+    <Compile Include="DataColumnCollection.cs" />
     <Compile Include="ISearchResultsProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

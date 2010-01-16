@@ -22,35 +22,35 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
-using System.Windows;
-using System.Windows.Controls;
 
 namespace System.Windows.Controls.Custom {
+    /// <summary>
+    /// Represents a column that displays data from an <see cref="ISearchResultsProvider"/> result set.
+    /// </summary>
     public class DataColumn : GridViewColumn {
-        public static readonly DependencyProperty ForPropertyProperty =
-            DependencyProperty.Register("ForProperty", typeof(string), typeof(DataColumn), new UIPropertyMetadata(null));
-
-        public static readonly DependencyProperty HideProperty =
-            DependencyProperty.Register("Hide", typeof(bool), typeof(DataColumn), new UIPropertyMetadata(false));
-
+        /// <summary>
+        /// Associates this column with a property on a result set data row. The data row property name that 
+        /// matches this string will be hidden or positioned based on the <seealso cref="Hide"/> and <seealso cref="Position"/> values.
+        /// </summary>
         public string ForProperty {
-            get {
-                return (string)GetValue(ForPropertyProperty);
-            }
-            set {
-                SetValue(ForPropertyProperty, value);
-            }
+            get;
+            set;
         }
 
+        /// <summary>
+        /// When <see cref="True"/>, this column will not be shown in the result set. This property is useful
+        /// if you only want to hide a few columns of the result set; otherwise you're
+        /// probably better off just listing all the columns explicitly.
+        /// </summary>
         public bool Hide {
-            get {
-                return (bool)GetValue(HideProperty);
-            }
-            set {
-                SetValue(HideProperty, value);
-            }
+            get;
+            set;
         }
 
+        /// <summary>
+        /// When set, controls the left-to-right position of this column in the result set.
+        /// Lower numbers sort farther to the left. NULL values sort to the right.
+        /// </summary>
         public int? Position {
             get;
             set;
