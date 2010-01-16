@@ -90,7 +90,52 @@ OTHER DEALINGS IN THE SOFTWARE.
             </StackPanel>
         </TabItem>
 
-        <TabItem Header="Overriding Columns"
+		<TabItem Header="Multi-Column List - RSS"
+				 ToolTip="Demonstrates displaying a multi-column list From an RSS Feed.">
+			<StackPanel>
+				<TextBlock>//TODO place explanatory text here</TextBlock>
+				<TextBlock />
+
+				<StackPanel Orientation="Horizontal">
+					<TextBlock>Selected Value:</TextBlock>
+					<TextBlock Text="{Binding ElementName=multiColumnRss, Path=SelectedValue}" />
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal">
+					<TextBlock>Selected Item:</TextBlock>
+					<TextBlock Text="{Binding ElementName=multiColumnRss, Path=SelectedItem}" />
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal">
+					<TextBlock>Highlighted Item:</TextBlock>
+					<TextBlock Text="{Binding ElementName=multiColumnRss, Path=HighlightedItem}" />
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock VerticalAlignment="Center"
+							   Margin="0,0,6,0">Search:</TextBlock>
+					<auto:IntelliBox Width="200"
+									 Name="multiColumnRss"
+									 DisplayedValueBinding="{Binding Title}"
+									 ExplicitlyIncludeColumns="True"
+									 SelectedValueBinding="{Binding Link}"
+									 DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResultsRss}">
+						<auto:IntelliBox.Columns>
+							<auto:DataColumn ForProperty="Title"
+											 Width="125"
+											 Header="Title" />
+							<auto:DataColumn ForProperty="Description"
+											 Width="200"
+											 Header="Description of Issue" />
+							<auto:DataColumn ForProperty="Category"
+											 Width="100"
+											 />
+						</auto:IntelliBox.Columns>
+					</auto:IntelliBox>
+				</StackPanel>
+			</StackPanel>
+		</TabItem>
+
+		<TabItem Header="Overriding Columns"
                  ToolTip="Demonstrates how to override the header title and width of specific columns, while leaving the others untouched.">
             <StackPanel>
                 <TextBlock>//TODO place explanatory text here</TextBlock>
