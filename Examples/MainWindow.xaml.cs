@@ -55,6 +55,10 @@ namespace Examples {
             private set;
         }
 
+        public ISearchResultsProvider MultiColumnResultsRss {
+            get;
+            private set;
+        }
 
         public ISearchResultsProvider InvertSingleColumnResults {
             get;
@@ -65,6 +69,7 @@ namespace Examples {
             NoSearchResults = new NoSearchResultsProvider();
             SingleColumnResults = new SingleColumnResultsProvider();
             MultiColumnResults = new MultiColumnResultsProvider();
+            MultiColumnResultsRss = new RSSFeedResultsProvider();
             InvertSingleColumnResults = new InvertedSingleColumnResultsProvider();
 
             InitializeComponent();
