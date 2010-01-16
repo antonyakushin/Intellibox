@@ -27,7 +27,7 @@ namespace System.Windows.Controls {
     /// <summary>
     /// Represents a column that displays data from an <see cref="ISearchResultsProvider"/> result set.
     /// </summary>
-    public class DataColumn : GridViewColumn {
+    public class IntelliBoxColumn : GridViewColumn {
         /// <summary>
         /// Associates this column with a property on a result set data row. The data row property name that 
         /// matches this string will be hidden or positioned based on the <seealso cref="Hide"/> and <seealso cref="Position"/> values.

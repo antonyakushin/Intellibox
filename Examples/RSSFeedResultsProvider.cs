@@ -34,7 +34,7 @@ using System.ComponentModel;
 
 namespace Examples {
 
-    public class RSSFeedResultsProvider : ISearchResultsProvider {
+    public class RSSFeedResultsProvider : IIntelliBoxResultsProvider {
 
         #region Data "Access" of results
 
