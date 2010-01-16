@@ -29,6 +29,7 @@ using System.Text;
 using System.Windows.Controls;
 
 namespace Examples {
+
     public class SingleColumnResultsProvider : IIntelliboxResultsProvider {
 
         private List<string> _results;
@@ -52,15 +53,13 @@ namespace Examples {
             return preResults.OrderByDescending(s => s.Length);
         }
 
-        public void BeginSearchAsync(string searchTerm, DateTime startTimeUtc, int maxResults, object tag, Action<DateTime, IEnumerable<object>> whenDone) {
+        public IEnumerable<object> DoSearch(string searchTerm, int maxResults, object tag) {
             ConstructDataSource();
-
-            whenDone(startTimeUtc,
-                _results.Where(term => term.StartsWith(searchTerm)).Take(maxResults).Cast<object>() );
+            return _results.Where(term => term.StartsWith(searchTerm)).Take(maxResults).Cast<object>();
         }
 
         public void CancelAllSearches() {
-            
+
         }
     }
 }

@@ -31,7 +31,8 @@ using System.Windows.Controls;
 namespace Examples {
     public class NestedResultsProvider :IIntelliboxResultsProvider {
 
-        public void BeginSearchAsync(string searchTerm, DateTime startTimeUtc, int maxResults, object tag, Action<DateTime, IEnumerable<object>> whenDone) {
+        public IEnumerable<object> DoSearch(string searchTerm, int maxResults, object tag) {
+            return new List<object>();
         }
 
         public void CancelAllSearches() {

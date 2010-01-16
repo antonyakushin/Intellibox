@@ -112,64 +112,12 @@ namespace Examples {
 
         #region ISearchResultsProvider Members
 
-        public void BeginSearchAsync(string searchTerm, DateTime startTimeUtc, int maxResults,
-            object extraInfo, Action<DateTime, IEnumerable<object>> whenDone) {
+        public IEnumerable<object> DoSearch(string searchTerm, int maxResults, object tag) {
 
-            //This is the object that I am thinking we pass into the BeginSearchAsync Method
-            var state = new IntelliBoxSearchState() {
-                ResultsCallBack = whenDone,
-                ExtraInfo = extraInfo,
-                MaxResults = maxResults,
-                SearchTerm = searchTerm,
-                StartTimeUtc = startTimeUtc
-            };
-
-            //Call Search with the local callback that will be called on a background thread.
-            state.Search(SearchCallback);
-
-            //BackgroundWorker bw = new BackgroundWorker() {
-            //    WorkerSupportsCancellation = true
-            //};
-
-            //bw.DoWork += new DoWorkEventHandler(bw_DoWork);
-            //bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompleted);
-            //bw.RunWorkerAsync(state);
-        }
-
-        /// <summary>
-        /// Search for the results and Call Done
-        /// </summary>
-        /// <param name="state"></param>
-        public void SearchCallback(IntelliBoxSearchState state) {
-            var results = getRSSfeed()
-                .Where(term => term.Title.IndexOf(state.SearchTerm, StringComparison.OrdinalIgnoreCase) > -1
-                    || term.Description.IndexOf(state.SearchTerm, StringComparison.OrdinalIgnoreCase) > -1)
-                    .Take(state.MaxResults).Cast<object>();
-            //Tell the State that we are done and pass in the results.
-            state.Done(results);
-        }
-
-        //void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
-        //    //if someone did not cancel the search
-        //    if (!e.Cancelled) {
-        //        IntelliBoxSearchState result = e.Result as IntelliBoxSearchState;
-        //        result.CallBack(result.StartTimeUtc, result.Results); 
-        //    }
-        //}
-
-        //void bw_DoWork(object sender, DoWorkEventArgs e) {
-
-        //    IntelliBoxSearchState arg = e.Argument as IntelliBoxSearchState;
-        //    var results = getRSSfeed();
-        //    arg.Results =results
-        //            .Where(term => term.Title.IndexOf(arg.SearchTerm, StringComparison.OrdinalIgnoreCase) > -1
-        //            || term.Description.IndexOf(arg.SearchTerm, StringComparison.OrdinalIgnoreCase) > -1)
-        //            .Take(arg.MaxResults).Cast<object>();
-        //    e.Result = arg;
-        //}
-
-        public void CancelAllSearches() {
-
+            return getRSSfeed()
+                .Where(term => term.Title.IndexOf(searchTerm, StringComparison.OrdinalIgnoreCase) > -1
+                    || term.Description.IndexOf(searchTerm, StringComparison.OrdinalIgnoreCase) > -1)
+                    .Take(maxResults).Cast<object>();
         }
 
         #endregion
