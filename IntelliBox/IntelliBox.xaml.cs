@@ -420,6 +420,10 @@ namespace System.Windows.Controls.Custom {
         private void CloseSearchResults() {
             ShowPopup = false;
             noResultsPopup.IsOpen = false;
+
+            if (DataProvider != null) {
+                DataProvider.CancelAllSearches();
+            }
         }
 
         private GridView ConstructGridView(object item) {
