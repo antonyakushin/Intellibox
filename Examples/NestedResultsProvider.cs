@@ -26,7 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows.Controls.Custom;
+using System.Windows.Controls;
 
 namespace Examples {
     public class NestedResultsProvider :ISearchResultsProvider {

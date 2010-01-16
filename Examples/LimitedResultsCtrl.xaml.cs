@@ -24,7 +24,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Custom;
 
 namespace Examples {
     public partial class LimitedResultsCtrl : UserControl {

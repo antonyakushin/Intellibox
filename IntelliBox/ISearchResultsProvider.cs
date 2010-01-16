@@ -24,16 +24,16 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Collections.Generic;
 
-namespace System.Windows.Controls.Custom {
+namespace System.Windows.Controls {
     /// <summary>
-    /// 
+    /// Defines the interface contract between an <see cref="IntelliBox"/> and its <see cref="IntelliBox.DataProvider" />.
     /// </summary>
     public interface ISearchResultsProvider {
 
         /// <summary>
         /// Tell the <see cref="ISearchResultsProvider" /> to begin searching for the <paramref name="searchTerm"/>. Use the <paramref name="whenDone"/>
         /// parameter to give the results back to the <see cref="IntelliBox" /> when the search is completed. The <see cref="DateTime" />
-        /// paramter to the <paramref name="whenDone"/> action should be the <paramref name="startTimeUtc"/> parameter.
+        /// parameter to the <paramref name="whenDone"/> action should be the <paramref name="startTimeUtc"/> parameter.
         /// </summary>
         /// <param name="searchTerm">The text in the search box at the time the search was requested.</param>
         /// <param name="startTimeUtc">The UTC timestamp of when the search was requested. The <see cref="IntelliBox"/> control uses the timestamp to make sure it doesn't show stale results. </param>

@@ -22,26 +22,35 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
+using System.Linq;
+using System.Reflection;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Reflection;
-using System.Linq;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 
-
-namespace System.Windows.Controls.Custom {
-
+namespace System.Windows.Controls {
+    /// <summary>
+    /// An implementation of the MS Access 'Lookup' field for WPF that uses the Provider pattern.
+    /// <list type="bullet">
+    ///     <listheader>
+    ///         <description>Features</description>
+    ///     </listheader>
+    ///     <item>
+    ///         <description>Text shown in the search field can be different from the value selected by the user.</description>
+    ///     </item>
+    ///     <item>
+    ///         <description>Fully supports syncronous and asyncronous searches.</description>
+    ///     </item>
+    ///     <item>
+    ///         <description>Displayed columns can be fully customized.</description>
+    ///     </item>
+    ///     <item>
+    ///         <description>Supports search cancelation.</description>
+    ///     </item>
+    /// </list>
+    /// 
+    /// </summary>
     public partial class IntelliBox : UserControl {
         /// <summary>
         /// Identifies the <see cref="DataProviderProperty"/> Dependancy Property.
@@ -172,7 +181,7 @@ namespace System.Windows.Controls.Custom {
         }
 
         /// <summary>
-        /// When True, the text in the text field will NOT be trimmed for
+        /// When True, the text in the search field will NOT be trimmed for
         /// whitespace prior to being passed to the <see cref="DataProvider"/>.
         /// </summary>
         public bool DisableWhitespaceTrim {
