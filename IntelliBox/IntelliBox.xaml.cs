@@ -58,11 +58,11 @@ namespace System.Windows.Controls.Custom {
         public static readonly DependencyProperty MaxResultsProperty =
             DependencyProperty.Register("MaxResults", typeof(int), typeof(IntelliBox), new UIPropertyMetadata(10));
 
-        public static readonly DependencyProperty ResultListMaxHeightProperty =
-            DependencyProperty.Register("ResultListMaxHeight", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(150d));
+        public static readonly DependencyProperty PopupMaxHeightProperty =
+            DependencyProperty.Register("PopupMaxHeight", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(150d));
 
-        public static readonly DependencyProperty ResultListMaxWidthProperty =
-            DependencyProperty.Register("ResultListMaxWidth", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(400d));
+        public static readonly DependencyProperty PopupMaxWidthProperty =
+            DependencyProperty.Register("PopupMaxWidth", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(400d));
 
         public static readonly DependencyProperty SelectedItemProperty =
             DependencyProperty.Register("SelectedItem", typeof(object), typeof(IntelliBox), new UIPropertyMetadata(null));
@@ -166,21 +166,21 @@ namespace System.Windows.Controls.Custom {
             }
         }
 
-        public double ResultListMaxHeight {
+        public double PopupMaxHeight {
             get {
-                return (double)GetValue(ResultListMaxHeightProperty);
+                return (double)GetValue(PopupMaxHeightProperty);
             }
             set {
-                SetValue(ResultListMaxHeightProperty, value);
+                SetValue(PopupMaxHeightProperty, value);
             }
         }
 
-        public double ResultListMaxWidth {
+        public double PopupMaxWidth {
             get {
-                return (double)GetValue(ResultListMaxWidthProperty);
+                return (double)GetValue(PopupMaxWidthProperty);
             }
             set {
-                SetValue(ResultListMaxWidthProperty, value);
+                SetValue(PopupMaxWidthProperty, value);
             }
         }
 

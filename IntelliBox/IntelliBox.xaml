@@ -52,8 +52,9 @@ OTHER DEALINGS IN THE SOFTWARE.
                  PreviewKeyDown="OnTextBoxPreviewKeyDown"
                  KeyUp="OnTextBoxKeyUp"
                  GotFocus="PART_EDITFIELD_GotFocus"/>
-        <Popup StaysOpen="False" MinWidth="30" MaxWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=ResultListMaxWidth, Mode=OneWay}"
-               MaxHeight="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=ResultListMaxHeight, Mode=OneWay}"
+        <Popup StaysOpen="False" MinWidth="30"
+               MaxWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=PopupMaxWidth, Mode=OneWay}"
+               MaxHeight="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=PopupMaxHeight, Mode=OneWay}"
                PlacementTarget="{Binding ElementName=PART_EDITFIELD}"
                IsOpen="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=ShowPopup}">
 
