@@ -22,6 +22,7 @@
         <SourceFiles Include="Examples\**\*.*" Exclude="Examples\.svn\**\*.*;Examples\obj\**\*.*"/>
         <SourceFiles Include="IntelliBox\**\*.*" Exclude="IntelliBox\.svn\**\*.*;IntelliBox\obj\**\*.*"/>
 
+        <HelpFiles Include="Help\**\*.*" />
     </ItemGroup>
     
     
@@ -49,7 +50,7 @@
                  StopOnFirstFailure="true" />
     </Target>
 
-    <Target Name="CreateInstallers">
+    <Target Name="CreateInstallers" DependsOnTargets="CreateDocumentation">
         <CreateItem Include="@(SourceFiles -> 'source/%(identity)')" >
             <Output ItemName="dest_SourceFiles"
                     TaskParameter="Include" />
@@ -74,11 +75,7 @@
         <Copy SourceFiles="@(ExampleFiles)"
               DestinationFiles="@(dest_ExampleFiles)" />
 
-        <ItemGroup>
-            <ZipFiles Include="source/**/*.*;lib/**/*.*;example/**/*.*" />
-        </ItemGroup>
-        
-        <Zip Files="@(ZipFiles)"
+        <Zip Files="@(dest_SourceFiles);@(dest_LibFiles);@(dest_ExampleFiles);@(HelpFiles);"
              ZipFileName="IntelliBox-$(Version).zip" />
 
         <Exec Command="rmdir /S /Q example" />
@@ -86,6 +83,15 @@
         <Exec Command="rmdir /S /Q source" />
     </Target>
 
+    <Target Name="CreateDocumentation">
+        <ItemGroup>
+            <HelpFiles Include="Help\**\*.*" />
+        </ItemGroup>
+        
+        <Zip Files="@(HelpFiles)"
+             ZipFileName="IntelliBoxHelp-$(Version).zip" />
+    </Target>
+    
     <Target Name="Clean">
         <!-- must clean up from the previous build -->
         <Exec Command="IF NOT EXIST Installers. MKDIR Installers" />
