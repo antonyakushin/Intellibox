@@ -5,19 +5,23 @@
     
     <PropertyGroup>
         <SolutionFile>IntelliBox.sln</SolutionFile>
-        <SandcastlePath></SandcastlePath>
         <Configuration>Debug</Configuration>
         <Version>1.0.0.0</Version>
     </PropertyGroup>
     
     <ItemGroup>
         <AssemblyInfoFiles Include="IntelliBox\Properties\CommonAssemblyInfo.cs" />
-        
-        <PDBFiles Include="$(Configuration)\*.pdb" />
-        <ReleaseFiles Include="$(Configuration)\*.exe" Exclude="$(Configuration)\*vshost.exe"/>
-        <ReleaseFiles Include="$(Configuration)\*.dll" />
-        <ReleaseFiles Include="$(Configuration)\IntelliBox.xml" />
-        <ReleaseFiles Include="$(Configuration)\*.chm" />
+
+        <LibFiles Include="$(Configuration)\IntelliBox.*" />
+        <LibFiles Include="$(Configuration)\*.chm" />
+
+        <ExampleFiles Include="$(Configuration)\*.exe" Exclude="$(Configuration)\*vshost.exe"/>
+        <ExampleFiles Include="$(Configuration)\*.dll" />
+
+        <SourceFiles Include="*.proj;*.sln;*.shfbproj" />
+        <SourceFiles Include="Examples\**\*.*" Exclude="Examples\.svn\**\*.*;Examples\obj\**\*.*"/>
+        <SourceFiles Include="IntelliBox\**\*.*" Exclude="IntelliBox\.svn\**\*.*;IntelliBox\obj\**\*.*"/>
+
     </ItemGroup>
     
     
@@ -40,15 +44,46 @@
     <Target Name="BuildForRelease" DependsOnTargets="Build;CreateInstallers" />
     
     <Target Name="Build" DependsOnTargets="Clean;SetVersionNumber">
-        <MSBuild Projects="$(SolutionFile)" Targets="Rebuild" Properties="Configuration=$(Configuration);Platform=Any CPU" StopOnFirstFailure="true" />
+        <MSBuild Projects="$(SolutionFile)" Targets="Rebuild"
+                 Properties="Configuration=$(Configuration);Platform=Any CPU"
+                 StopOnFirstFailure="true" />
     </Target>
 
     <Target Name="CreateInstallers">
-        <Zip Files="@(PDBFiles)" Flatten="True"
-             ZipFileName="Installers\IntelliBox-$(Version)-PDBs.zip" />
+        <CreateItem Include="@(SourceFiles -> 'source/%(identity)')" >
+            <Output ItemName="dest_SourceFiles"
+                    TaskParameter="Include" />
+        </CreateItem>
 
-        <Zip Files="@(ReleaseFiles)" Flatten="True"
-             ZipFileName="Installers\IntelliBox-$(Version).zip" />
+        <CreateItem Include="@(LibFiles -> 'lib/%(filename)%(extension)')" >
+            <Output ItemName="dest_LibFiles"
+                    TaskParameter="Include" />
+        </CreateItem>
+
+        <CreateItem Include="@(ExampleFiles -> 'example/%(filename)%(extension)')" >
+            <Output ItemName="dest_ExampleFiles"
+                    TaskParameter="Include" />
+        </CreateItem>
+        
+        <Copy SourceFiles="@(SourceFiles)"
+              DestinationFiles="@(dest_SourceFiles)" />
+
+        <Copy SourceFiles="@(LibFiles)"
+              DestinationFiles="@(dest_LibFiles)" />
+
+        <Copy SourceFiles="@(ExampleFiles)"
+              DestinationFiles="@(dest_ExampleFiles)" />
+
+        <ItemGroup>
+            <ZipFiles Include="source/**/*.*;lib/**/*.*;example/**/*.*" />
+        </ItemGroup>
+        
+        <Zip Files="@(ZipFiles)"
+             ZipFileName="IntelliBox-$(Version).zip" />
+
+        <Exec Command="rmdir /S /Q example" />
+        <Exec Command="rmdir /S /Q lib" />
+        <Exec Command="rmdir /S /Q source" />
     </Target>
 
     <Target Name="Clean">
