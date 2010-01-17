@@ -30,6 +30,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Diagnostics;
 using System.Collections;
+using System.Windows.Threading;
 
 namespace System.Windows.Controls {
     /// <summary>
@@ -646,34 +647,23 @@ namespace System.Windows.Controls {
 
                     var selectedItem = Items[nextIndex];
 
-                    lstSearchItems.SelectedItem = selectedItem;
-                    lstSearchItems.ScrollIntoView(selectedItem);
-
-                    //does not solve issue
-                    //http://www.cwithb.com/2009/04/virtualized-wpf-listbox-scrolling-because-scrollintoview-doesnt-always-work/
-
-                    //ScrollViewer sv = FindVisualChild<ScrollViewer>(lstSearchItems);
-
-                    //if (sv != null) {
-                    //    if (goDown) {
-                    //        sv.LineDown();
-                    //    }
-                    //    else {
-                    //        sv.LineUp();
-                    //    }
-                    //}
-                    //else {
-                    //    //lstSearchItems.BeginInit();
-                    //    lstSearchItems.SelectedItem = selectedItem;
-                    //    lstSearchItems.ScrollIntoView(selectedItem);
-                    //    //lstSearchItems.EndInit();                    
-                    //}
+                    //i used this solution parially
+                    //http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=324064
+                    //the only way I have been able to solve the lockups is to use the background priority
+                    //the default still causes lockups.
+                    //be very careful changing this line
+                    Dispatcher.BeginInvoke(new Action<object>(SelectNewItem), DispatcherPriority.Background, selectedItem);
 
                     return true;
                 }
             }
 
             return false;
+        }
+
+        private void SelectNewItem(object selectedItem) {
+            lstSearchItems.SelectedItem = selectedItem;
+            lstSearchItems.ScrollIntoView(selectedItem);
         }
 
         private childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject {
