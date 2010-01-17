@@ -644,14 +644,52 @@ namespace System.Windows.Controls {
                             nextIndex = 0;
                     }
 
-                    lstSearchItems.SelectedIndex = nextIndex;
-                    lstSearchItems.ScrollIntoView(lstSearchItems.SelectedItem);
+                    var selectedItem = Items[nextIndex];
+
+                    lstSearchItems.SelectedItem = selectedItem;
+                    lstSearchItems.ScrollIntoView(selectedItem);
+
+                    //does not solve issue
+                    //http://www.cwithb.com/2009/04/virtualized-wpf-listbox-scrolling-because-scrollintoview-doesnt-always-work/
+
+                    //ScrollViewer sv = FindVisualChild<ScrollViewer>(lstSearchItems);
+
+                    //if (sv != null) {
+                    //    if (goDown) {
+                    //        sv.LineDown();
+                    //    }
+                    //    else {
+                    //        sv.LineUp();
+                    //    }
+                    //}
+                    //else {
+                    //    //lstSearchItems.BeginInit();
+                    //    lstSearchItems.SelectedItem = selectedItem;
+                    //    lstSearchItems.ScrollIntoView(selectedItem);
+                    //    //lstSearchItems.EndInit();                    
+                    //}
 
                     return true;
                 }
             }
 
             return false;
+        }
+
+        private childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++) {
+                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+                if (child != null && child is childItem) {
+                    return (childItem)child;
+                }
+                else {
+                    childItem childOfChild = FindVisualChild<childItem>(child);
+                    if (childOfChild != null) {
+                        return childOfChild;
+                    }
+                }
+            }
+            return null;
         }
 
         private bool IsBaseType(object item) {
