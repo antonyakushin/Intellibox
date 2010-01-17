@@ -43,7 +43,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                  GotFocus="PART_EDITFIELD_GotFocus"/>
         <Popup StaysOpen="False"
                PlacementTarget="{Binding ElementName=PART_EDITFIELD}"
-               IsOpen="{Binding Path=ShowPopup, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+               IsOpen="{Binding Path=ShowResults, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
                
                MaxHeight="{Binding Path=ResultsMaxHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
                MaxWidth="{Binding Path=ResultsMaxWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"

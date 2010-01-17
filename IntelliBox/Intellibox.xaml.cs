@@ -140,7 +140,7 @@ namespace System.Windows.Controls {
         /// For Internal Use Only. Identifies the <see cref="ShowResultsProperty"/> Dependancy Property.
         /// </summary>
         protected static readonly DependencyProperty ShowResultsProperty =
-            DependencyProperty.Register("ShowPopup", typeof(bool), typeof(IntelliBox), new UIPropertyMetadata(false));
+            DependencyProperty.Register("ShowResults", typeof(bool), typeof(IntelliBox), new UIPropertyMetadata(false));
 
         private static Type[] _baseTypes = new[] {
             typeof(bool), typeof(byte), typeof(sbyte), typeof(char), typeof(decimal),
@@ -455,7 +455,7 @@ namespace System.Windows.Controls {
             }
         }
 
-        private bool ShowPopup {
+        private bool ShowResults {
             get {
                 return (bool)GetValue(ShowResultsProperty);
             }
@@ -526,7 +526,7 @@ namespace System.Windows.Controls {
         private void CloseSearchResults() {
             CancelAllSearchesAction();
 
-            ShowPopup = false;
+            ShowResults = false;
             noResultsPopup.IsOpen = false;
         }
 
@@ -734,7 +734,7 @@ namespace System.Windows.Controls {
         }
 
         private void OnTextBoxPreviewKeyDown(object sender, KeyEventArgs e) {
-            if (!HasDataProvider || !ShowPopup)
+            if (!HasDataProvider || !ShowResults)
                 return;
 
             if (IsCancelKey(e.Key)) {
@@ -759,7 +759,7 @@ namespace System.Windows.Controls {
 
             _lastTimeSearchRecievedUtc = startTimeUtc;
 
-            ShowPopup = false;
+            ShowResults = false;
 
             var list = results.ToList();
             noResultsPopup.IsOpen = list.Count < 1;
@@ -772,7 +772,7 @@ namespace System.Windows.Controls {
                     lstSearchItems.View = ConstructGridView(Items[0]);
                 }
                 lstSearchItems.SelectedIndex = 0;
-                ShowPopup = true;
+                ShowResults = true;
             }
         }
 
