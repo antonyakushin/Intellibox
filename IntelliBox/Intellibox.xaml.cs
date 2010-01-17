@@ -55,9 +55,6 @@ namespace System.Windows.Controls {
     /// </summary>
     public partial class IntelliBox : UserControl {
 
-        //make sure we can't get overlapping events
-        private object LockObject = new object();
-
         /// <summary>
         /// Identifies the <see cref="DataProviderProperty"/> Dependancy Property.
         /// </summary>
@@ -619,53 +616,58 @@ namespace System.Windows.Controls {
             }
         }
 
-        private bool HighlightNextItem(Key pressed) {
+        private void HighlightNextItem(Key pressed) {
             if (lstSearchItems != null && HasItems) {
-                //see if we can get rid of the random freezing of the app with you rapid cycle the rows.
-                lock (LockObject) {
-                    //Debug.WriteLine("HighlightNextItem" + pressed.ToString());
-                    var goDown = pressed == Key.Tab || pressed == Key.Down || pressed == Key.NumPad2 || pressed == Key.PageDown;
-                    var nextIndex = goDown
-                        ? lstSearchItems.SelectedIndex + GetIncrementValueForKey(pressed)
-                        : lstSearchItems.SelectedIndex - GetIncrementValueForKey(pressed);
+                Dispatcher.BeginInvoke(new Action<Key>(SelectNewItem), DispatcherPriority.Background, pressed);
+            }
+        }
 
-                    int maxIndex = Items.Count - 1; //dangerous, since the list could be really large
+        private void SelectNewItem(Key pressed) {
+            //Debug.WriteLine("HighlightNextItem" + pressed.ToString());
+            var goDown = pressed == Key.Tab || pressed == Key.Down || pressed == Key.NumPad2 || pressed == Key.PageDown;
+            var nextIndex = goDown
+                ? lstSearchItems.SelectedIndex + GetIncrementValueForKey(pressed)
+                : lstSearchItems.SelectedIndex - GetIncrementValueForKey(pressed);
 
-                    if (nextIndex < 0) {
-                        if (lstSearchItems.SelectedIndex != 0)
-                            nextIndex = 0;
-                        else
-                            nextIndex = maxIndex;
-                    }
+            int maxIndex = Items.Count - 1; //dangerous, since the list could be really large
 
-                    if (nextIndex >= maxIndex) {
-                        if (lstSearchItems.SelectedIndex != maxIndex)
-                            nextIndex = maxIndex;
-                        else
-                            nextIndex = 0;
-                    }
-
-                    var selectedItem = Items[nextIndex];
-
-                    //i used this solution parially
-                    //http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=324064
-                    //the only way I have been able to solve the lockups is to use the background priority
-                    //the default still causes lockups.
-                    //be very careful changing this line
-                    Dispatcher.BeginInvoke(new Action<object>(SelectNewItem), DispatcherPriority.Background, selectedItem);
-
-                    return true;
-                }
+            if (nextIndex < 0) {
+                if (lstSearchItems.SelectedIndex != 0)
+                    nextIndex = 0;
+                else
+                    nextIndex = maxIndex;
             }
 
-            return false;
-        }
+            if (nextIndex >= maxIndex) {
+                if (lstSearchItems.SelectedIndex != maxIndex)
+                    nextIndex = maxIndex;
+                else
+                    nextIndex = 0;
+            }
 
-        private void SelectNewItem(object selectedItem) {
+            var selectedItem = Items[nextIndex];
+
+            //i used this solution parially
+            //http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=324064
+            //the only way I have been able to solve the lockups is to use the background priority
+            //the default still causes lockups.
+            //be very careful changing this line
+            //Dispatcher.BeginInvoke(new Action<object>(SelectNewItem), DispatcherPriority.Background, selectedItem);
             lstSearchItems.SelectedItem = selectedItem;
             lstSearchItems.ScrollIntoView(selectedItem);
+
         }
 
+        ///// <summary>
+        ///// Select the new item using the Dispatcher to keep the ui from locking up the cpu for 10-30 seconds at a time.
+        ///// </summary>
+        ///// <param name="selectedItem"></param>
+        //private void SelectNewItem(object selectedItem) {
+        //    lstSearchItems.SelectedItem = selectedItem;
+        //    lstSearchItems.ScrollIntoView(selectedItem);
+        //}
+
+        //try to use this for paging support.
         private childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++) {
                 DependencyObject child = VisualTreeHelper.GetChild(obj, i);
