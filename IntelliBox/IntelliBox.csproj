@@ -68,6 +68,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DelegateCommand.cs" />
     <Compile Include="IntelliboxAsyncProvider.cs" />
     <Compile Include="IntelliboxRowColorizer.cs" />
     <Compile Include="IntelliboxAlternateRowColorizer.cs" />
