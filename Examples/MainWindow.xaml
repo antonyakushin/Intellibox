@@ -83,7 +83,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 				<StackPanel Orientation="Horizontal">
 					<TextBlock>Highlighted Value:</TextBlock>
-					<TextBlock Name="one" Text="{Binding ElementName=multiColumn, Path=DisplayTextFromHighlightedItem}" />
+					<TextBlock Name="one"
+							   Text="{Binding ElementName=multiColumn, Path=DisplayTextFromHighlightedItem}" />
 				</StackPanel>
 				<StackPanel Orientation="Horizontal">
 					<TextBlock VerticalAlignment="Center"
@@ -119,12 +120,14 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 				<StackPanel Orientation="Horizontal">
 					<TextBlock>Highlighted Value:</TextBlock>
-					<TextBlock Name="two" Text="{Binding ElementName=multiColumnRss, Path=DisplayTextFromHighlightedItem}" />
+					<TextBlock Name="two"
+							   Text="{Binding ElementName=multiColumnRss, Path=DisplayTextFromHighlightedItem}" />
 				</StackPanel>
 				<StackPanel Orientation="Horizontal">
 					<TextBlock VerticalAlignment="Center"
 							   Margin="0,0,6,0">Search:</TextBlock>
 					<auto:IntelliBox Width="200"
+									 ResultsHeight="80"
 									 Name="multiColumnRss"
 									 DisplayedValueBinding="{Binding Title}"
 									 ExplicitlyIncludeColumns="True"
@@ -167,7 +170,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 				<StackPanel Orientation="Horizontal">
 					<TextBlock>Highlighted Value:</TextBlock>
-					<TextBlock Name="three" Text="{Binding ElementName=overrideColumn, Path=DisplayTextFromHighlightedItem}" />
+					<TextBlock Name="three"
+							   Text="{Binding ElementName=overrideColumn, Path=DisplayTextFromHighlightedItem}" />
 				</StackPanel>
 				<StackPanel Orientation="Horizontal">
 					<TextBlock VerticalAlignment="Center"
@@ -210,7 +214,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 				<StackPanel Orientation="Horizontal">
 					<TextBlock>Highlighted Value:</TextBlock>
-					<TextBlock Name="four" Text="{Binding ElementName=overrideAllColumn, Path=DisplayTextFromHighlightedItem}" />
+					<TextBlock Name="four"
+							   Text="{Binding ElementName=overrideAllColumn, Path=DisplayTextFromHighlightedItem}" />
 				</StackPanel>
 				<StackPanel Orientation="Horizontal">
 					<TextBlock VerticalAlignment="Center"
@@ -258,7 +263,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 				<StackPanel Orientation="Horizontal">
 					<TextBlock>Highlighted Value:</TextBlock>
-					<TextBlock Name="five" Text="{Binding ElementName=positionColumn, Path=DisplayTextFromHighlightedItem}" />
+					<TextBlock Name="five"
+							   Text="{Binding ElementName=positionColumn, Path=DisplayTextFromHighlightedItem}" />
 				</StackPanel>
 				<StackPanel Orientation="Horizontal">
 					<TextBlock VerticalAlignment="Center"
@@ -303,12 +309,14 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 				<StackPanel Orientation="Horizontal">
 					<TextBlock>Highlighted Value:</TextBlock>
-					<TextBlock Name="six" Text="{Binding ElementName=lightspeedBox, Path=DisplayTextFromHighlightedItem}" />
+					<TextBlock Name="six"
+							   Text="{Binding ElementName=lightspeedBox, Path=DisplayTextFromHighlightedItem}" />
 				</StackPanel>
 				<StackPanel Orientation="Horizontal">
 					<TextBlock VerticalAlignment="Center"
 							   Margin="0,0,6,0">Search:</TextBlock>
 					<auto:IntelliBox Width="200"
+									 ResultsHeight="80"
 									 ExplicitlyIncludeColumns="True"
 									 Name="lightspeedBox"
 									 DisplayedValueBinding="{Binding ProductName}"
