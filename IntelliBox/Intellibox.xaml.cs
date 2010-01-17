@@ -526,12 +526,10 @@ namespace System.Windows.Controls {
         }
 
         private void CloseSearchResults() {
+            CancelAllSearchesAction();
+
             ShowPopup = false;
             noResultsPopup.IsOpen = false;
-
-            if (SearchProvider != null) {
-                SearchProvider.CancelAllSearches();
-            }
         }
 
         private GridView ConstructGridView(object item) {
@@ -696,7 +694,6 @@ namespace System.Windows.Controls {
 
         private void OnListItemMouseDoubleClick(object sender, MouseButtonEventArgs e) {
             ChooseCurrentItem();
-            CloseSearchResults();
         }
 
         private void OnRowColorizerChanged() {
