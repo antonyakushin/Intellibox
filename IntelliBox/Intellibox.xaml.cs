@@ -498,8 +498,7 @@ namespace System.Windows.Controls {
         }
 
         private void CancelSelection() {
-            _lastTextValue = null;
-            UpdateSearchBoxText(true);
+            _lastTextValue = UpdateSearchBoxText(true);
 
             CloseSearchResults();
 
@@ -509,10 +508,9 @@ namespace System.Windows.Controls {
         }
 
         private void ChooseCurrentItem() {
-            SetSelectedItem(lstSearchItems.SelectedItem);
-            _lastTextValue = null;
-            UpdateSearchBoxText(true);
-
+            this.SelectedItem = lstSearchItems.SelectedItem;
+            _lastTextValue= UpdateSearchBoxText(true);
+            
             CloseSearchResults();
 
             if (Items != null) {
@@ -521,7 +519,7 @@ namespace System.Windows.Controls {
         }
 
         private void ClearSelectedItem() {
-            SetSelectedItem(null);
+            this.SelectedItem = null;
             CloseSearchResults();
         }
 
@@ -665,14 +663,6 @@ namespace System.Windows.Controls {
                 || pressed == Key.PageDown;
         }
 
-        private void SetSelectedItem(object value) {
-            this.SelectedItem = value;
-            var exp = BindingOperations.GetBindingExpression(this, SelectedValueProperty);
-            if (exp != null) {
-                exp.UpdateTarget();
-            }
-        }
-
         private static void OnDataProviderChanged(DependencyObject receiver, DependencyPropertyChangedEventArgs args) {
             var ib = receiver as IntelliBox;
             if (ib != null && args != null && args.NewValue is IIntelliboxResultsProvider) {
@@ -786,7 +776,7 @@ namespace System.Windows.Controls {
             }
         }
 
-        private void UpdateSearchBoxText(bool useSelectedItem) {
+        private string UpdateSearchBoxText(bool useSelectedItem) {
 
             var text = useSelectedItem
                 ? this.DisplayTextFromSelectedItem
@@ -796,6 +786,8 @@ namespace System.Windows.Controls {
             if (!string.IsNullOrEmpty(text)) {
                 PART_EDITFIELD.CaretIndex = text.Length;
             }
+
+            return text;
         }
 
         private void PART_EDITFIELD_GotFocus(object sender, RoutedEventArgs e) {
