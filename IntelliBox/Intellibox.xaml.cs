@@ -28,6 +28,8 @@ using System.Reflection;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Diagnostics;
+using System.Collections;
 
 namespace System.Windows.Controls {
     /// <summary>
@@ -51,6 +53,10 @@ namespace System.Windows.Controls {
     /// </list>
     /// </summary>
     public partial class IntelliBox : UserControl {
+
+        //make sure we can't get overlapping events
+        private object LockObject = new object();
+
         /// <summary>
         /// Identifies the <see cref="DataProviderProperty"/> Dependancy Property.
         /// </summary>
@@ -80,7 +86,7 @@ namespace System.Windows.Controls {
         /// For Internal Use Only. Identifies the <see cref="ItemsProperty"/> Dependancy Property.
         /// </summary>
         protected static readonly DependencyProperty ItemsProperty =
-            DependencyProperty.Register("Items", typeof(List<object>), typeof(IntelliBox), new UIPropertyMetadata(null));
+            DependencyProperty.Register("Items", typeof(IList), typeof(IntelliBox), new UIPropertyMetadata(null));
 
         /// <summary>
         /// Identifies the <see cref="MaxResultsProperty"/> Dependancy Property.
@@ -275,9 +281,9 @@ namespace System.Windows.Controls {
             }
         }
 
-        private List<object> Items {
+        private IList Items {
             get {
-                return (List<object>)GetValue(ItemsProperty);
+                return (IList)GetValue(ItemsProperty);
             }
             set {
                 SetValue(ItemsProperty, value);
@@ -532,11 +538,14 @@ namespace System.Windows.Controls {
 
         private GridView ConstructGridView(object item) {
             var view = new GridView();
-            if (HideColumnHeaders || IsBaseType(item)) {
+
+            bool isBaseType = IsBaseType(item);
+
+            if (isBaseType || HideColumnHeaders) {
                 view.ColumnHeaderContainerStyle = ZeroHeightColumnHeader;
             }
 
-            if (IsBaseType(item)) {
+            if (isBaseType) {
                 var gvc = new GridViewColumn();
                 gvc.Header = item.GetType().Name;
 
@@ -553,12 +562,12 @@ namespace System.Windows.Controls {
                 return view;
             }
 
-            var typeProperties = from p in item.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                                 where p.CanRead && p.CanWrite
-                                 select new {
-                                     Name = p.Name,
-                                     Column = Columns.FirstOrDefault(c => p.Name.Equals(c.ForProperty))
-                                 };
+            var typeProperties = (from p in item.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                                  where p.CanRead && p.CanWrite
+                                  select new {
+                                      Name = p.Name,
+                                      Column = Columns.FirstOrDefault(c => p.Name.Equals(c.ForProperty))
+                                  }).ToList();
 
             //This is a shortcut to sort the nulls to the back of the list instead of the front
             //we did this instead of creating an IComparer.
@@ -611,31 +620,35 @@ namespace System.Windows.Controls {
 
         private bool HighlightNextItem(Key pressed) {
             if (lstSearchItems != null && HasItems) {
-                var goDown = pressed == Key.Tab || pressed == Key.Down || pressed == Key.NumPad2 || pressed == Key.PageDown;
-                var nextIndex = goDown
-                    ? lstSearchItems.SelectedIndex + GetIncrementValueForKey(pressed)
-                    : lstSearchItems.SelectedIndex - GetIncrementValueForKey(pressed);
+                //see if we can get rid of the random freezing of the app with you rapid cycle the rows.
+                lock (LockObject) {
+                    //Debug.WriteLine("HighlightNextItem" + pressed.ToString());
+                    var goDown = pressed == Key.Tab || pressed == Key.Down || pressed == Key.NumPad2 || pressed == Key.PageDown;
+                    var nextIndex = goDown
+                        ? lstSearchItems.SelectedIndex + GetIncrementValueForKey(pressed)
+                        : lstSearchItems.SelectedIndex - GetIncrementValueForKey(pressed);
 
-                int maxIndex = this.Items.Count - 1; //dangerous, since the list could be really large
+                    int maxIndex = Items.Count - 1; //dangerous, since the list could be really large
 
-                if (nextIndex < 0) {
-                    if (lstSearchItems.SelectedIndex != 0)
-                        nextIndex = 0;
-                    else
-                        nextIndex = maxIndex;
+                    if (nextIndex < 0) {
+                        if (lstSearchItems.SelectedIndex != 0)
+                            nextIndex = 0;
+                        else
+                            nextIndex = maxIndex;
+                    }
+
+                    if (nextIndex >= maxIndex) {
+                        if (lstSearchItems.SelectedIndex != maxIndex)
+                            nextIndex = maxIndex;
+                        else
+                            nextIndex = 0;
+                    }
+
+                    lstSearchItems.SelectedIndex = nextIndex;
+                    lstSearchItems.ScrollIntoView(lstSearchItems.SelectedItem);
+
+                    return true;
                 }
-
-                if (nextIndex >= maxIndex) {
-                    if (lstSearchItems.SelectedIndex != maxIndex)
-                        nextIndex = maxIndex;
-                    else
-                        nextIndex = 0;
-                }
-
-                lstSearchItems.SelectedIndex = nextIndex;
-                lstSearchItems.ScrollIntoView(lstSearchItems.SelectedItem);
-
-                return true;
             }
 
             return false;
@@ -667,7 +680,7 @@ namespace System.Windows.Controls {
             var ib = receiver as IntelliBox;
             if (ib != null && args != null && args.NewValue is IIntelliboxResultsProvider) {
                 var provider = args.NewValue as IIntelliboxResultsProvider;
-
+                //Create the wrapper used to make the calls async. This hides the details from the user.
                 ib.SearchProvider = new IntelliboxAsyncProvider(provider.DoSearch);
             }
         }
@@ -724,6 +737,7 @@ namespace System.Windows.Controls {
                     ClearSelectedItem();
                 }
                 else {
+                    //Determine if we need to trim the search string or not before passing it to the provider.
                     var search = DisableWhitespaceTrim
                         ? _lastTextValue
                         : _lastTextValue.Trim();
@@ -761,7 +775,16 @@ namespace System.Windows.Controls {
 
             ShowResults = false;
 
-            var list = results.ToList();
+            //optimization to keep from making a copy of the list
+            IList list = null;
+
+            if (results is IList) {
+                list = results as IList;
+            }
+            else {
+                list = results.ToList();
+            }
+
             noResultsPopup.IsOpen = list.Count < 1;
             Items = list;
 
