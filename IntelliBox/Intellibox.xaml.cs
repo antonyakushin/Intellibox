@@ -215,7 +215,7 @@ namespace System.Windows.Controls {
                 return _displayedValueBinding;
             }
             set {
-                if (value != _displayedValueBinding) {
+                if (_displayedValueBinding != value) {
                     _displayedValueBinding = value;
                     //the call is commented out so that people can type w/o the displayed value overwriting what they're trying to do
                     OnDisplayedValueBindingChanged();
@@ -386,7 +386,7 @@ namespace System.Windows.Controls {
                 return _rowColorizer;
             }
             set {
-                if (value != _rowColorizer) {
+                if (_rowColorizer != value) {
                     _rowColorizer = value;
                     OnRowColorizerChanged();
                 }
@@ -448,7 +448,7 @@ namespace System.Windows.Controls {
                 return _selectedValueBinding;
             }
             set {
-                if (value != _selectedValueBinding) {
+                if (_selectedValueBinding != value) {
                     _selectedValueBinding = value;
                     OnSelectedValueBindingChanged();
                 }
@@ -509,8 +509,8 @@ namespace System.Windows.Controls {
 
         private void ChooseCurrentItem() {
             this.SelectedItem = lstSearchItems.SelectedItem;
-            _lastTextValue= UpdateSearchBoxText(true);
-            
+            _lastTextValue = UpdateSearchBoxText(true);
+
             CloseSearchResults();
 
             if (Items != null) {
@@ -554,19 +554,19 @@ namespace System.Windows.Controls {
             }
 
             var typeProperties = from p in item.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                       where p.CanRead && p.CanWrite
-                       select new {
-                           Name = p.Name,
-                           Column = Columns.FirstOrDefault(c => p.Name.Equals(c.ForProperty))
-                       };
+                                 where p.CanRead && p.CanWrite
+                                 select new {
+                                     Name = p.Name,
+                                     Column = Columns.FirstOrDefault(c => p.Name.Equals(c.ForProperty))
+                                 };
 
             //This is a shortcut to sort the nulls to the back of the list instead of the front
             //we did this instead of creating an IComparer.
             var typesWithPositions = typeProperties
                 .Where(a => a.Column != null && a.Column.Position != null).OrderBy(a => a.Column.Position);
-            
+
             var typesWithoutPositions = typeProperties.Except(typesWithPositions);
-            
+
             var sortedProperties = typesWithPositions.Concat(typesWithoutPositions);
 
             foreach (var currentProperty in sortedProperties) {
