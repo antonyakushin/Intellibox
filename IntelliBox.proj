@@ -76,7 +76,7 @@
               DestinationFiles="@(dest_ExampleFiles)" />
 
         <Zip Files="@(dest_SourceFiles);@(dest_LibFiles);@(dest_ExampleFiles);@(HelpFiles);"
-             ZipFileName="IntelliBox-$(Version).zip" />
+             ZipFileName="Intellibox-$(Version).zip" />
 
         <Exec Command="rmdir /S /Q example" />
         <Exec Command="rmdir /S /Q lib" />
@@ -89,7 +89,7 @@
         </ItemGroup>
         
         <Zip Files="@(HelpFiles)"
-             ZipFileName="IntelliBoxHelp-$(Version).zip" />
+             ZipFileName="IntelliboxHelp-$(Version).zip" />
     </Target>
     
     <Target Name="Clean">
