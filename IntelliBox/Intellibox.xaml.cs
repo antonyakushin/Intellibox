@@ -149,12 +149,25 @@ namespace System.Windows.Controls {
             typeof(string)
         };
 
+        private ICommand _cancelAllSearches;
         private DateTime _lastTimeSearchRecievedUtc;
         private Type _previousResultType;
         private string _lastTextValue;
         private BindingBase _selectedValueBinding;
         private BindingBase _displayedValueBinding;
         private IntelliboxRowColorizer _rowColorizer;
+
+        /// <summary>
+        /// Cancel all pending searches for the provider.
+        /// </summary>
+        public ICommand CancelAllSearches {
+            get {
+                if (_cancelAllSearches == null) {
+                    _cancelAllSearches = new DelegateCommand(CancelAllSearchesAction);
+                }
+                return _cancelAllSearches;
+            }
+        }
 
         /// <summary>
         /// The columns in the search result set to display. When <see cref="ExplicitlyIncludeColumns"/>
@@ -476,6 +489,12 @@ namespace System.Windows.Controls {
             RowColorizer = new IntelliboxAlternateRowColorizer() {
                 OddRowBrush = Brushes.Gainsboro
             };
+        }
+
+        private void CancelAllSearchesAction() {
+            if (SearchProvider != null) {
+                SearchProvider.CancelAllSearches();
+            }
         }
 
         private void CancelSelection() {
