@@ -23,253 +23,311 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 -->
-<Window
-    x:Class="Examples.MainWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:Examples"
-    xmlns:auto="clr-namespace:System.Windows.Controls;assembly=IntelliBox"
-    x:Name="mainWin"
-    Title="Usage examples for the Intellibox"
-    WindowStartupLocation="CenterScreen"
-    Width="600" Height="500" Margin="6">
-    <TabControl TabStripPlacement="Left">
-        <TabItem Header="No Search Results"
-                 ToolTip="Shows what happens when no search results are avalable.">
-            <StackPanel>
-                <TextBlock>Type anything.</TextBlock>
-                <TextBlock>This example shows what happens when no search results are available.</TextBlock>
-                <local:BasicSearchResultsCtrl Provider="{Binding ElementName=mainWin, Path=NoSearchResults}" />
-            </StackPanel>
-        </TabItem>
+<Window x:Class="Examples.MainWindow"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:local="clr-namespace:Examples"
+		xmlns:auto="clr-namespace:System.Windows.Controls;assembly=IntelliBox"
+		x:Name="mainWin"
+		Title="Usage examples for the Intellibox"
+		WindowStartupLocation="CenterScreen"
+		Width="709"
+		Height="500"
+		Margin="6">
+	<TabControl TabStripPlacement="Left">
+		<TabItem Header="No Search Results"
+				 ToolTip="Shows what happens when no search results are avalable.">
+			<StackPanel>
+				<TextBlock>Type anything.</TextBlock>
+				<TextBlock>This example shows what happens when no search results are available.</TextBlock>
+				<local:BasicSearchResultsCtrl Provider="{Binding ElementName=mainWin, Path=NoSearchResults}" />
+			</StackPanel>
+		</TabItem>
 
-        <TabItem Header="Single Column List"
-                 ToolTip="Demonstrates displaying a single-column list of simple Types.">
-            <StackPanel>
-                <TextBlock>Type any of the letters of the alphabet 'a' through 'z' (lowercase).</TextBlock>
-                <TextBlock>This example demonstrates a provider that returns a single-column results list of a built in type.</TextBlock>
-                <local:BasicSearchResultsCtrl Provider="{Binding ElementName=mainWin, Path=SingleColumnResults}" />
-            </StackPanel>
-        </TabItem>
+		<TabItem Header="Single Column List"
+				 ToolTip="Demonstrates displaying a single-column list of simple Types.">
+			<StackPanel>
+				<TextBlock>Type any of the letters of the alphabet 'a' through 'z' (lowercase).</TextBlock>
+				<TextBlock>This example demonstrates a provider that returns a single-column results list of a built in type.</TextBlock>
+				<local:BasicSearchResultsCtrl Provider="{Binding ElementName=mainWin, Path=SingleColumnResults}" />
+			</StackPanel>
+		</TabItem>
 
-        <TabItem Header="Limiting result set"
-                 ToolTip="Demonstrates how to limit the maximum number of results returned by a search.">
+		<TabItem Header="Limiting result set"
+				 ToolTip="Demonstrates how to limit the maximum number of results returned by a search.">
 
-            <StackPanel>
-                <TextBlock>Type any of the letters of the alphabet 'a' through 'z' (lowercase).</TextBlock>
-                <TextBlock>This example demonstrates how to change the maximum number of results the IntelliBox asks for.</TextBlock>
-                <local:LimitedResultsCtrl Provider="{Binding ElementName=mainWin, Path=InvertSingleColumnResults}" />
-            </StackPanel>
-        </TabItem>
+			<StackPanel>
+				<TextBlock>Type any of the letters of the alphabet 'a' through 'z' (lowercase).</TextBlock>
+				<TextBlock>This example demonstrates how to change the maximum number of results the IntelliBox asks for.</TextBlock>
+				<local:LimitedResultsCtrl Provider="{Binding ElementName=mainWin, Path=InvertSingleColumnResults}" />
+			</StackPanel>
+		</TabItem>
 
-        <TabItem Header="Multi-Column List"
-                 ToolTip="Demonstrates displaying a multi-column list of simple Types.">
-            <StackPanel>
-                <TextBlock>Type anything. The provider in this example always returns the same result set.</TextBlock>
-                <TextBlock>This example demonstrates how, without any configuration, the IntelliBox does</TextBlock>
-                <TextBlock>something reasonable with a multi-column result set.</TextBlock>
-                <TextBlock />
+		<TabItem Header="Multi-Column List"
+				 ToolTip="Demonstrates displaying a multi-column list of simple Types.">
+			<StackPanel>
+				<TextBlock>Type anything. The provider in this example always returns the same result set.</TextBlock>
+				<TextBlock>This example demonstrates how, without any configuration, the IntelliBox does</TextBlock>
+				<TextBlock>something reasonable with a multi-column result set.</TextBlock>
+				<TextBlock />
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Selected Value:</TextBlock>
-                    <TextBlock Text="{Binding ElementName=multiColumn, Path=SelectedValue}" />
-                </StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock>Selected Value:</TextBlock>
+					<TextBlock Text="{Binding ElementName=multiColumn, Path=SelectedValue}" />
+				</StackPanel>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Selected Item:</TextBlock>
-                    <TextBlock Text="{Binding ElementName=multiColumn, Path=SelectedItem}" />
-                </StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock>Selected Item:</TextBlock>
+					<TextBlock Text="{Binding ElementName=multiColumn, Path=SelectedItem}" />
+				</StackPanel>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Highlighted Value:</TextBlock>
-                    <TextBlock Text="{Binding ElementName=multiColumn, Path=DisplayTextFromHighlightedItem}" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Margin="0,0,6,0">Search:</TextBlock>
-                    <auto:IntelliBox Width="200" Name="multiColumn"
-                                     DisplayedValueBinding="{Binding FirstName}"
-                                     SelectedValueBinding="{Binding PersonID}"
-                        DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
+				<StackPanel Orientation="Horizontal">
+					<TextBlock>Highlighted Value:</TextBlock>
+					<TextBlock Text="{Binding ElementName=multiColumn, Path=DisplayTextFromHighlightedItem}" />
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock VerticalAlignment="Center"
+							   Margin="0,0,6,0">Search:</TextBlock>
+					<auto:IntelliBox Width="200"
+									 Name="multiColumn"
+									 DisplayedValueBinding="{Binding FirstName}"
+									 SelectedValueBinding="{Binding PersonID}"
+									 DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
 
-                    </auto:IntelliBox>
-                </StackPanel>
-            </StackPanel>
-        </TabItem>
+					</auto:IntelliBox>
+				</StackPanel>
+			</StackPanel>
+		</TabItem>
 
-        <TabItem Header="Multi-Column List - RSS"
-                 ToolTip="Demonstrates displaying a multi-column list From an RSS Feed.">
-            <StackPanel>
-                <TextBlock TextWrapping="Wrap">This example uses the Yahoo Traffic RSS Feed to return results 
+		<TabItem Header="Multi-Column List - RSS"
+				 ToolTip="Demonstrates displaying a multi-column list From an RSS Feed.">
+			<StackPanel>
+				<TextBlock TextWrapping="Wrap">This example uses the Yahoo Traffic RSS Feed to return results 
 					for traffic conditions in zip code 10101. Example searches that will return results are "Closed" 
 					, "Street" and "Construction"</TextBlock>
-                <TextBlock />
+				<TextBlock />
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Selected Value:</TextBlock>
-                    <TextBlock Text="{Binding ElementName=multiColumnRss, Path=SelectedValue}" />
-                </StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock>Selected Value:</TextBlock>
+					<TextBlock Text="{Binding ElementName=multiColumnRss, Path=SelectedValue}" />
+				</StackPanel>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Selected Item:</TextBlock>
-                    <TextBlock Text="{Binding ElementName=multiColumnRss, Path=SelectedItem}" />
-                </StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock>Selected Item:</TextBlock>
+					<TextBlock Text="{Binding ElementName=multiColumnRss, Path=SelectedItem}" />
+				</StackPanel>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Highlighted Value:</TextBlock>
-                    <TextBlock Text="{Binding ElementName=multiColumnRss, Path=DisplayTextFromHighlightedItem}" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center"
-                               Margin="0,0,6,0">Search:</TextBlock>
-                    <auto:IntelliBox Width="200"
-                                     Name="multiColumnRss"
-                                     DisplayedValueBinding="{Binding Title}"
-                                     ExplicitlyIncludeColumns="True"
-                                     SelectedValueBinding="{Binding Link}"
-                                     DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResultsRss}">
-                        <auto:IntelliBox.Columns>
-                            <auto:IntelliboxColumn ForProperty="Title"
-                                             Width="125"
-                                             Header="Title" />
-                            <auto:IntelliboxColumn ForProperty="Description"
-                                             Width="200"
-                                             Header="Description of Issue" />
-                            <auto:IntelliboxColumn ForProperty="Category"
-                                             Width="100"
-                                             />
-                        </auto:IntelliBox.Columns>
-                    </auto:IntelliBox>
-                </StackPanel>
-            </StackPanel>
-        </TabItem>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock>Highlighted Value:</TextBlock>
+					<TextBlock Text="{Binding ElementName=multiColumnRss, Path=DisplayTextFromHighlightedItem}" />
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock VerticalAlignment="Center"
+							   Margin="0,0,6,0">Search:</TextBlock>
+					<auto:IntelliBox Width="200"
+									 Name="multiColumnRss"
+									 DisplayedValueBinding="{Binding Title}"
+									 ExplicitlyIncludeColumns="True"
+									 SelectedValueBinding="{Binding Link}"
+									 DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResultsRss}">
+						<auto:IntelliBox.Columns>
+							<auto:IntelliboxColumn ForProperty="Title"
+												   Width="125"
+												   Header="Title" />
+							<auto:IntelliboxColumn ForProperty="Description"
+												   Width="200"
+												   Header="Description of Issue" />
+							<auto:IntelliboxColumn ForProperty="Category"
+												   Width="100" />
+						</auto:IntelliBox.Columns>
+					</auto:IntelliBox>
+				</StackPanel>
+			</StackPanel>
+		</TabItem>
 
-        <TabItem Header="Overriding Columns"
-                 ToolTip="Demonstrates how to override the header title and width of specific columns, while leaving the others untouched.">
-            <StackPanel>
-                <TextBlock>Type anything. The provider in this example always returns the same result set.</TextBlock>
-                <TextBlock>This example demonstrates how to hide or change the width of some columns</TextBlock>
-                <TextBlock>without having to deal with all the columns in the result set. As a bonus! this</TextBlock>
-                <TextBlock>example also demonstrates how easy it is to bind the selected value and the</TextBlock>
-                <TextBlock>value displayed in the edit field to different columns.</TextBlock>
-                <TextBlock />
+		<TabItem Header="Overriding Columns"
+				 ToolTip="Demonstrates how to override the header title and width of specific columns, while leaving the others untouched.">
+			<StackPanel>
+				<TextBlock>Type anything. The provider in this example always returns the same result set.</TextBlock>
+				<TextBlock>This example demonstrates how to hide or change the width of some columns</TextBlock>
+				<TextBlock>without having to deal with all the columns in the result set. As a bonus! this</TextBlock>
+				<TextBlock>example also demonstrates how easy it is to bind the selected value and the</TextBlock>
+				<TextBlock>value displayed in the edit field to different columns.</TextBlock>
+				<TextBlock />
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Selected Value:</TextBlock>
-                    <TextBlock Text="{Binding ElementName=overrideColumn, Path=SelectedValue}" />
-                </StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock>Selected Value:</TextBlock>
+					<TextBlock Text="{Binding ElementName=overrideColumn, Path=SelectedValue}" />
+				</StackPanel>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Selected Item:</TextBlock>
-                    <TextBlock Text="{Binding ElementName=overrideColumn, Path=SelectedItem}" />
-                </StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock>Selected Item:</TextBlock>
+					<TextBlock Text="{Binding ElementName=overrideColumn, Path=SelectedItem}" />
+				</StackPanel>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Highlighted Value:</TextBlock>
-                    <TextBlock Text="{Binding ElementName=overrideColumn, Path=DisplayTextFromHighlightedItem}" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Margin="0,0,6,0">Search:</TextBlock>
-                    <auto:IntelliBox Width="200" Name="overrideColumn"
-                                     DisplayedValueBinding="{Binding FirstName}"
-                                     SelectedValueBinding="{Binding PersonID}"
-                        DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
-                        <auto:IntelliBox.Columns>
-                            <auto:IntelliboxColumn ForProperty="Age"
-                                             Width="125"
-                                             Header="Person's Age" />
-                            <auto:IntelliboxColumn ForProperty="PersonID"
-                                             Hide="True" />
-                        </auto:IntelliBox.Columns>
-                    </auto:IntelliBox>
-                </StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock>Highlighted Value:</TextBlock>
+					<TextBlock Text="{Binding ElementName=overrideColumn, Path=DisplayTextFromHighlightedItem}" />
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock VerticalAlignment="Center"
+							   Margin="0,0,6,0">Search:</TextBlock>
+					<auto:IntelliBox Width="200"
+									 Name="overrideColumn"
+									 DisplayedValueBinding="{Binding FirstName}"
+									 SelectedValueBinding="{Binding PersonID}"
+									 DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
+						<auto:IntelliBox.Columns>
+							<auto:IntelliboxColumn ForProperty="Age"
+												   Width="125"
+												   Header="Person's Age" />
+							<auto:IntelliboxColumn ForProperty="PersonID"
+												   Hide="True" />
+						</auto:IntelliBox.Columns>
+					</auto:IntelliBox>
+				</StackPanel>
 
-                <!-- -->
-                <!-- this one shows how to explicitly specify columns when you're interested in not showing most of the columns -->
-                <!-- -->
+				<!-- -->
+				<!-- this one shows how to explicitly specify columns when you're interested in not showing most of the columns -->
+				<!-- -->
 
-                <TextBlock />
-                <TextBlock>Type anything. The provider in this example always returns the same result set.</TextBlock>
-                <TextBlock>This example demonstrates how to make the IntelliBox show only the columns that you</TextBlock>
-                <TextBlock>want it to show. As a bonus! it also demonstrates that you can bind the selected value</TextBlock>
-                <TextBlock>to a column that isn't being shown.</TextBlock>
-                <TextBlock />
+				<TextBlock />
+				<TextBlock>Type anything. The provider in this example always returns the same result set.</TextBlock>
+				<TextBlock>This example demonstrates how to make the IntelliBox show only the columns that you</TextBlock>
+				<TextBlock>want it to show. As a bonus! it also demonstrates that you can bind the selected value</TextBlock>
+				<TextBlock>to a column that isn't being shown.</TextBlock>
+				<TextBlock />
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Selected Value:</TextBlock>
-                    <TextBlock Text="{Binding ElementName=overrideAllColumn, Path=SelectedValue}" />
-                </StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock>Selected Value:</TextBlock>
+					<TextBlock Text="{Binding ElementName=overrideAllColumn, Path=SelectedValue}" />
+				</StackPanel>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Selected Item:</TextBlock>
-                    <TextBlock Text="{Binding ElementName=overrideAllColumn, Path=SelectedItem}" />
-                </StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock>Selected Item:</TextBlock>
+					<TextBlock Text="{Binding ElementName=overrideAllColumn, Path=SelectedItem}" />
+				</StackPanel>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Highlighted Value:</TextBlock>
-                    <TextBlock Text="{Binding ElementName=overrideAllColumn, Path=DisplayTextFromHighlightedItem}" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Margin="0,0,6,0">Search:</TextBlock>
-                    <auto:IntelliBox Width="200" Name="overrideAllColumn"
-                                              DisplayedValueBinding="{Binding FirstName}"
-                                              SelectedValueBinding="{Binding PersonID}"
-                                              ExplicitlyIncludeColumns="True"
-                        DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
-                        <auto:IntelliBox.Columns>
-                            <auto:IntelliboxColumn DisplayMemberBinding="{Binding FirstName}" Width="150" Header="First Name" />
-                            <auto:IntelliboxColumn DisplayMemberBinding="{Binding LastName}" Width="75" Header="Last Name" />
-                        </auto:IntelliBox.Columns>
-                    </auto:IntelliBox>
-                </StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock>Highlighted Value:</TextBlock>
+					<TextBlock Text="{Binding ElementName=overrideAllColumn, Path=DisplayTextFromHighlightedItem}" />
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock VerticalAlignment="Center"
+							   Margin="0,0,6,0">Search:</TextBlock>
+					<auto:IntelliBox Width="200"
+									 Name="overrideAllColumn"
+									 DisplayedValueBinding="{Binding FirstName}"
+									 SelectedValueBinding="{Binding PersonID}"
+									 ExplicitlyIncludeColumns="True"
+									 DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
+						<auto:IntelliBox.Columns>
+							<auto:IntelliboxColumn DisplayMemberBinding="{Binding FirstName}"
+												   Width="150"
+												   Header="First Name" />
+							<auto:IntelliboxColumn DisplayMemberBinding="{Binding LastName}"
+												   Width="75"
+												   Header="Last Name" />
+						</auto:IntelliBox.Columns>
+					</auto:IntelliBox>
+				</StackPanel>
 
-            </StackPanel>
+			</StackPanel>
 
-        </TabItem>
+		</TabItem>
 
-        <TabItem Header="Altering Column Position"
-                 ToolTip="Demonstrates how to alter the natural position of the displayed columns.">
+		<TabItem Header="Altering Column Position"
+				 ToolTip="Demonstrates how to alter the natural position of the displayed columns.">
 
-            <StackPanel>
+			<StackPanel>
 
-                <TextBlock>Type anything. The provider in this example always returns the same result set.</TextBlock>
-                <TextBlock>This example demonstrates how to use the 'Position' property to change the</TextBlock>
-                <TextBlock>default positioning and order of columns in a multi-column result set.</TextBlock>
-                <TextBlock />
+				<TextBlock>Type anything. The provider in this example always returns the same result set.</TextBlock>
+				<TextBlock>This example demonstrates how to use the 'Position' property to change the</TextBlock>
+				<TextBlock>default positioning and order of columns in a multi-column result set.</TextBlock>
+				<TextBlock />
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Selected Value:</TextBlock>
-                    <TextBlock Text="{Binding ElementName=positionColumn, Path=SelectedValue}" />
-                </StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock>Selected Value:</TextBlock>
+					<TextBlock Text="{Binding ElementName=positionColumn, Path=SelectedValue}" />
+				</StackPanel>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Selected Item:</TextBlock>
-                    <TextBlock Text="{Binding ElementName=positionColumn, Path=SelectedItem}" />
-                </StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock>Selected Item:</TextBlock>
+					<TextBlock Text="{Binding ElementName=positionColumn, Path=SelectedItem}" />
+				</StackPanel>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Highlighted Value:</TextBlock>
-                    <TextBlock Text="{Binding ElementName=positionColumn, Path=DisplayTextFromHighlightedItem}" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Margin="0,0,6,0">Search:</TextBlock>
-                    <auto:IntelliBox Width="200" Name="positionColumn"
-                                              DisplayedValueBinding="{Binding FirstName}"
-                                              SelectedValueBinding="{Binding PersonID}"
-                        DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
+				<StackPanel Orientation="Horizontal">
+					<TextBlock>Highlighted Value:</TextBlock>
+					<TextBlock Text="{Binding ElementName=positionColumn, Path=DisplayTextFromHighlightedItem}" />
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock VerticalAlignment="Center"
+							   Margin="0,0,6,0">Search:</TextBlock>
+					<auto:IntelliBox Width="200"
+									 Name="positionColumn"
+									 DisplayedValueBinding="{Binding FirstName}"
+									 SelectedValueBinding="{Binding PersonID}"
+									 DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
 
-                        <auto:IntelliBox.Columns>
-                            <auto:IntelliboxColumn ForProperty="Weight"
-                                             Position="2" />
-                            <auto:IntelliboxColumn ForProperty="Age"
-                                             Position="1" />
-                            <auto:IntelliboxColumn ForProperty="NetWorth"
-                                             Position="3" />
-                        </auto:IntelliBox.Columns>
-                    </auto:IntelliBox>
-                </StackPanel>
+						<auto:IntelliBox.Columns>
+							<auto:IntelliboxColumn ForProperty="Weight"
+												   Position="2" />
+							<auto:IntelliboxColumn ForProperty="Age"
+												   Position="1" />
+							<auto:IntelliboxColumn ForProperty="NetWorth"
+												   Position="3" />
+						</auto:IntelliBox.Columns>
+					</auto:IntelliBox>
+				</StackPanel>
 
-            </StackPanel>
+			</StackPanel>
 
-        </TabItem>
-    </TabControl>
+		</TabItem>
+
+		<TabItem Header="Multi-Column Northwind Product DB"
+				 ToolTip="Demonstrates displaying a multi-column list of simple Types returned from a database provider.">
+			<StackPanel>
+				<TextBlock TextWrapping="Wrap">This example shows how you can use an ORM like LightSpeed to query
+				a database and return results.</TextBlock>
+				<TextBlock>Product Search</TextBlock>
+
+				<StackPanel Orientation="Horizontal">
+					<TextBlock>Selected Value:</TextBlock>
+					<TextBlock Text="{Binding ElementName=lightspeedBox, Path=SelectedValue}" />
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal">
+					<TextBlock>Selected Item:</TextBlock>
+					<TextBlock Text="{Binding ElementName=lightspeedBox, Path=SelectedItem}" />
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal">
+					<TextBlock>Highlighted Value:</TextBlock>
+					<TextBlock Text="{Binding ElementName=lightspeedBox, Path=DisplayTextFromHighlightedItem}" />
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock VerticalAlignment="Center"
+							   Margin="0,0,6,0">Search:</TextBlock>
+					<auto:IntelliBox Width="200"
+									 ExplicitlyIncludeColumns="True"
+									 Name="lightspeedBox"
+									 DisplayedValueBinding="{Binding ProductName}"
+									 SelectedValueBinding="{Binding ProductId}"
+									 DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=SqlServerCeProvider}">
+						<auto:IntelliBox.Columns>
+							<auto:IntelliboxColumn DisplayMemberBinding="{Binding ProductName}"
+												   Width="150"
+												   Header="Product Name" />
+							<auto:IntelliboxColumn DisplayMemberBinding="{Binding UnitPrice}"
+												   Width="75"
+												   Header="Unit Price" />
+							<auto:IntelliboxColumn DisplayMemberBinding="{Binding Supplier.CompanyName}"
+												   Width="125"
+												   Header="Supplier" />
+						</auto:IntelliBox.Columns>
+					</auto:IntelliBox>
+				</StackPanel>
+			</StackPanel>
+		</TabItem>
+	</TabControl>
 </Window>

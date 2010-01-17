@@ -26,14 +26,10 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace Examples {
+
     public partial class MainWindow : Window {
 
-        public IIntelliboxResultsProvider NoSearchResults {
-            get;
-            private set;
-        }
-
-        public IIntelliboxResultsProvider SingleColumnResults {
+        public IIntelliboxResultsProvider InvertSingleColumnResults {
             get;
             private set;
         }
@@ -48,18 +44,28 @@ namespace Examples {
             private set;
         }
 
-        public IIntelliboxResultsProvider InvertSingleColumnResults {
+        public IIntelliboxResultsProvider NoSearchResults {
+            get;
+            private set;
+        }
+
+        public IIntelliboxResultsProvider SingleColumnResults {
+            get;
+            private set;
+        }
+
+        public IIntelliboxResultsProvider SqlServerCeProvider {
             get;
             private set;
         }
 
         public MainWindow() {
-            NoSearchResults = new NoSearchResultsProvider();
-            SingleColumnResults = new SingleColumnResultsProvider();
+            InvertSingleColumnResults = new InvertedSingleColumnResultsProvider();
             MultiColumnResults = new MultiColumnResultsProvider();
             MultiColumnResultsRss = new RSSFeedResultsProvider();
-            InvertSingleColumnResults = new InvertedSingleColumnResultsProvider();
-
+            NoSearchResults = new NoSearchResultsProvider();
+            SingleColumnResults = new SingleColumnResultsProvider();
+            SqlServerCeProvider = new LightspeedResultsProvider();
             InitializeComponent();
         }
     }

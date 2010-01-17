@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<model dslVersion="1.1.0.0" name="NorthwindLightSpeedModel" targetNamespace="IntelliBox.Examples" databaseProvider="SqlServerCE" connectionString="Data Source=E:\work\Joe\Intellibox\source\trunk\Examples\Northwind.sdf" pluralizedInDatabase="false" mediumTrustCompatibility="false" xmlns="http://namespaces.mindscape.co.nz/lightspeed">
+  <entities>
+    <entity name="Category" identityType="Int32" cacheExpiry="0" tableName="Categories" identityColumnName="Category ID">
+      <entityProperties>
+        <entityProperty name="CategoryName" columnName="Category Name">
+          <validations>
+            <presenceValidation />
+            <lengthValidation minimumLength="0" maximumLength="15" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Description" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="536870911" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Picture" dataType="Blob" isNullable="true" />
+      </entityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="85fedf09-c9e7-457a-982b-4abac2db597a" collectionName="Products" backreferenceName="Category" isNullable="true" columnName="Category ID">
+          <entityMoniker name="/NorthwindLightSpeedModel/Product" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+    <entity name="Supplier" identityType="Int32" cacheExpiry="0" tableName="Suppliers" identityColumnName="Supplier ID">
+      <entityProperties>
+        <entityProperty name="CompanyName" columnName="Company Name">
+          <validations>
+            <presenceValidation />
+            <lengthValidation minimumLength="0" maximumLength="40" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="ContactName" isNullable="true" columnName="Contact Name">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="30" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="ContactTitle" isNullable="true" columnName="Contact Title">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="30" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Address" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="60" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="City" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="15" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Region" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="15" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="PostalCode" isNullable="true" columnName="Postal Code">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="10" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Country" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="15" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Phone" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="24" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Fax" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="24" />
+          </validations>
+        </entityProperty>
+      </entityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="aeb9ee89-4698-48f8-a5df-e43af2b4b6dc" collectionName="Products" backreferenceName="Supplier" isNullable="true" columnName="Supplier ID">
+          <entityMoniker name="/NorthwindLightSpeedModel/Product" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+    <entity name="Customer" identityType="String" cacheExpiry="0" tableName="Customers" identityColumnName="Customer ID">
+      <entityProperties>
+        <entityProperty name="CompanyName" columnName="Company Name">
+          <validations>
+            <presenceValidation />
+            <lengthValidation minimumLength="0" maximumLength="40" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="ContactName" isNullable="true" columnName="Contact Name">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="30" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="ContactTitle" isNullable="true" columnName="Contact Title">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="30" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Address" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="60" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="City" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="15" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Region" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="15" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="PostalCode" isNullable="true" columnName="Postal Code">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="10" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Country" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="15" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Phone" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="24" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Fax" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="24" />
+          </validations>
+        </entityProperty>
+      </entityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="f603d570-64e8-4ce3-9f8b-3d75bba51e23" collectionName="Orders" backreferenceName="Customer" isNullable="false" columnName="Customer ID">
+          <entityMoniker name="/NorthwindLightSpeedModel/Order" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+    <entity name="Employee" identityType="Int32" cacheExpiry="0" tableName="Employees" identityColumnName="Employee ID">
+      <entityProperties>
+        <entityProperty name="LastName" columnName="Last Name">
+          <validations>
+            <presenceValidation />
+            <lengthValidation minimumLength="0" maximumLength="20" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="FirstName" columnName="First Name">
+          <validations>
+            <presenceValidation />
+            <lengthValidation minimumLength="0" maximumLength="10" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Title" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="30" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="BirthDate" dataType="DateTime" isNullable="true" columnName="Birth Date" />
+        <entityProperty name="HireDate" dataType="DateTime" isNullable="true" columnName="Hire Date" />
+        <entityProperty name="Address" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="60" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="City" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="15" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Region" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="15" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="PostalCode" isNullable="true" columnName="Postal Code">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="10" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Country" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="15" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="HomePhone" isNullable="true" columnName="Home Phone">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="24" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Extension" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="4" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Photo" dataType="Blob" isNullable="true" />
+        <entityProperty name="Notes" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="536870911" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="ReportsTo" dataType="Int32" isNullable="true" columnName="Reports To" />
+      </entityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="072b6461-4fda-4cb8-ba18-a8f6ae633543" collectionName="Orders" backreferenceName="Employee" isNullable="true" columnName="Employee ID">
+          <entityMoniker name="/NorthwindLightSpeedModel/Order" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+    <entity name="OrderDetail" identityType="Int32" cacheExpiry="0" tableName="Order Details" identityColumnName="Product ID">
+      <entityProperties>
+        <entityProperty name="UnitPrice" dataType="Decimal" columnName="Unit Price" />
+        <entityProperty name="Quantity" dataType="Int16" />
+        <entityProperty name="Discount" dataType="Single" />
+      </entityProperties>
+      <keys>
+        <identityProperty name="OrderId" dataType="Int32" />
+        <identityProperty name="ProductId" dataType="Int32" />
+      </keys>
+    </entity>
+    <entity name="Order" identityType="Int32" cacheExpiry="0" tableName="Orders" identityColumnName="Order ID">
+      <entityProperties>
+        <entityProperty name="ShipName" isNullable="true" columnName="Ship Name">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="40" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="ShipAddress" isNullable="true" columnName="Ship Address">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="60" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="ShipCity" isNullable="true" columnName="Ship City">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="15" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="ShipRegion" isNullable="true" columnName="Ship Region">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="15" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="ShipPostalCode" isNullable="true" columnName="Ship Postal Code">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="10" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="ShipCountry" isNullable="true" columnName="Ship Country">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="15" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="OrderDate" dataType="DateTime" isNullable="true" columnName="Order Date" />
+        <entityProperty name="RequiredDate" dataType="DateTime" isNullable="true" columnName="Required Date" />
+        <entityProperty name="ShippedDate" dataType="DateTime" isNullable="true" columnName="Shipped Date" />
+        <entityProperty name="Freight" dataType="Decimal" isNullable="true" />
+      </entityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="9937d13d-1edc-49f4-8061-3e5a961348ec" collectionName="OrderDetails" backreferenceName="Order" isNullable="false">
+          <entityMoniker name="/NorthwindLightSpeedModel/OrderDetail" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+    <entity name="Product" identityType="Int32" cacheExpiry="0" tableName="Products" identityColumnName="Product ID">
+      <entityProperties>
+        <entityProperty name="ProductName" columnName="Product Name">
+          <validations>
+            <presenceValidation />
+            <lengthValidation minimumLength="0" maximumLength="40" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="EnglishName" isNullable="true" columnName="English Name">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="40" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="QuantityPerUnit" isNullable="true" columnName="Quantity Per Unit">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="20" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="UnitPrice" dataType="Decimal" isNullable="true" columnName="Unit Price" />
+        <entityProperty name="UnitsInStock" dataType="Int16" isNullable="true" columnName="Units In Stock" />
+        <entityProperty name="UnitsOnOrder" dataType="Int16" isNullable="true" columnName="Units On Order" />
+        <entityProperty name="ReorderLevel" dataType="Int16" isNullable="true" columnName="Reorder Level" />
+        <entityProperty name="Discontinued" dataType="Boolean" />
+      </entityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="fcfc6b91-7bb6-4c9e-9822-55d3df4e9899" collectionName="OrderDetails" backreferenceName="Product" isNullable="false">
+          <entityMoniker name="/NorthwindLightSpeedModel/OrderDetail" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+    <entity name="Shipper" identityType="Int32" cacheExpiry="0" tableName="Shippers" identityColumnName="Shipper ID">
+      <entityProperties>
+        <entityProperty name="CompanyName" columnName="Company Name">
+          <validations>
+            <presenceValidation />
+            <lengthValidation minimumLength="0" maximumLength="40" />
+          </validations>
+        </entityProperty>
+      </entityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="efd8224b-dd08-4141-bf58-bc7d02f6455a" collectionName="Orders" backreferenceName="ShipVia" isNullable="true" columnName="Ship Via">
+          <entityMoniker name="/NorthwindLightSpeedModel/Order" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+  </entities>
+</model>
