@@ -14,14 +14,13 @@
     <RootNamespace>Documentation</RootNamespace>
     <Name>Documentation</Name>
     <!-- SHFB properties -->
-    <OutputPath>.\Debug\</OutputPath>
+    <OutputPath>.\Help\</OutputPath>
     <HtmlHelpName>IntelliBoxDoc</HtmlHelpName>
-    <HelpFileFormat>HtmlHelp1</HelpFileFormat>
+    <HelpFileFormat>Website</HelpFileFormat>
     <KeepLogFile>False</KeepLogFile>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\Debug\IntelliBox.dll" configuration="Debug" />
-      <DocumentationSource sourceFile="..\Debug\IntelliBox.XML" configuration="Debug" />
-    </DocumentationSources>
+      <DocumentationSource sourceFile="Debug\IntelliBox.dll" />
+<DocumentationSource sourceFile="Debug\IntelliBox.xml" /></DocumentationSources>
     <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, TypeParameter, AutoDocumentDispose</MissingTags>
     <HelpTitle>IntelliBox Documentation</HelpTitle>
     <NamingMethod>MemberName</NamingMethod>

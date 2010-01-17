@@ -14,13 +14,14 @@
     <RootNamespace>Documentation</RootNamespace>
     <Name>Documentation</Name>
     <!-- SHFB properties -->
-    <OutputPath>.\Release\</OutputPath>
+    <OutputPath>.\Help\</OutputPath>
     <HtmlHelpName>IntelliBoxDoc</HtmlHelpName>
-    <HelpFileFormat>HtmlHelp1</HelpFileFormat>
+    <HelpFileFormat>Website</HelpFileFormat>
     <KeepLogFile>False</KeepLogFile>
     <DocumentationSources>
       <DocumentationSource sourceFile="Release\IntelliBox.dll" />
-<DocumentationSource sourceFile="Release\IntelliBox.XML" /></DocumentationSources>
+      <DocumentationSource sourceFile="Release\IntelliBox.XML" />
+    </DocumentationSources>
     <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, TypeParameter, AutoDocumentDispose</MissingTags>
     <HelpTitle>IntelliBox Documentation</HelpTitle>
     <NamingMethod>MemberName</NamingMethod>
