@@ -91,7 +91,6 @@
       <DependentUpon>LimitedResultsCtrl.xaml</DependentUpon>
     </Compile>
     <Compile Include="MultiColumnResultsProvider.cs" />
-    <Compile Include="NestedResultsProvider.cs" />
     <Compile Include="NoSearchResultsProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
