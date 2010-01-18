@@ -628,12 +628,24 @@ namespace System.Windows.Controls {
 
         private void HighlightNextItem(Key pressed) {
             if (ResultsList != null && HasItems) {
+                //I used this solution partially
+                //http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=324064
+                //the only way I have been able to solve the lockups is to use the background priority
+                //the default still causes lockups.
+                //be very careful changing this line
                 Dispatcher.BeginInvoke(new Action<Key>(SelectNewItem), DispatcherPriority.Background, pressed);
             }
         }
 
+        /// <summary>
+        /// Because of a bug in .NET, this method should only ever be called from the dispatcher,
+        /// and only ever with 'DispatcherPriority.Background'
+        /// <para>
+        /// See the following link for more details.
+        /// http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=324064
+        /// </para>
+        /// </summary>
         private void SelectNewItem(Key pressed) {
-            //Debug.WriteLine("HighlightNextItem" + pressed.ToString());
             var goDown = pressed == Key.Tab || pressed == Key.Down || pressed == Key.NumPad2 || pressed == Key.PageDown;
             var nextIndex = goDown
                 ? ResultsList.SelectedIndex + GetIncrementValueForKey(pressed)
@@ -657,25 +669,11 @@ namespace System.Windows.Controls {
 
             var selectedItem = Items[nextIndex];
 
-            //i used this solution parially
-            //http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=324064
-            //the only way I have been able to solve the lockups is to use the background priority
-            //the default still causes lockups.
-            //be very careful changing this line
-            //Dispatcher.BeginInvoke(new Action<object>(SelectNewItem), DispatcherPriority.Background, selectedItem);
+            
             ResultsList.SelectedItem = selectedItem;
             ResultsList.ScrollIntoView(selectedItem);
 
         }
-
-        ///// <summary>
-        ///// Select the new item using the Dispatcher to keep the ui from locking up the cpu for 10-30 seconds at a time.
-        ///// </summary>
-        ///// <param name="selectedItem"></param>
-        //private void SelectNewItem(object selectedItem) {
-        //    lstSearchItems.SelectedItem = selectedItem;
-        //    lstSearchItems.ScrollIntoView(selectedItem);
-        //}
 
         //try to use this for paging support.
         private childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject {
