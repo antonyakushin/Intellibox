@@ -53,98 +53,98 @@ namespace System.Windows.Controls {
     ///     </item>
     /// </list>
     /// </summary>
-    public partial class IntelliBox : UserControl {
+    public partial class Intellibox : UserControl {
 
         /// <summary>
         /// Identifies the <see cref="DataProviderProperty"/> Dependancy Property.
         /// </summary>
         public static readonly DependencyProperty DataProviderProperty =
-            DependencyProperty.Register("DataProvider", typeof(IIntelliboxResultsProvider), typeof(IntelliBox),
+            DependencyProperty.Register("DataProvider", typeof(IIntelliboxResultsProvider), typeof(Intellibox),
             new UIPropertyMetadata(new PropertyChangedCallback(OnDataProviderChanged)));
 
         /// <summary>
         /// For Internal Use Only. Identifies the <see cref="DisplayTextFromHighlightedItemProperty"/> Dependancy Property.
         /// </summary>
         protected static readonly DependencyProperty DisplayTextFromHighlightedItemProperty =
-            DependencyProperty.Register("DisplayTextFromHighlightedItem", typeof(string), typeof(IntelliBox), new UIPropertyMetadata(null));
+            DependencyProperty.Register("DisplayTextFromHighlightedItem", typeof(string), typeof(Intellibox), new UIPropertyMetadata(null));
 
         /// <summary>
         /// For Internal Use Only. Identifies the <see cref="DisplayTextFromSelectedItemProperty"/> Dependancy Property.
         /// </summary>
         protected static readonly DependencyProperty DisplayTextFromSelectedItemProperty =
-            DependencyProperty.Register("DisplayTextFromSelectedItem", typeof(string), typeof(IntelliBox), new UIPropertyMetadata(null));
+            DependencyProperty.Register("DisplayTextFromSelectedItem", typeof(string), typeof(Intellibox), new UIPropertyMetadata(null));
 
         /// <summary>
         /// Identifies the <see cref="HideColumnHeadersProperty"/> Dependancy Property.
         /// </summary>
         public static readonly DependencyProperty HideColumnHeadersProperty =
-            DependencyProperty.Register("HideColumnHeaders", typeof(bool), typeof(IntelliBox), new UIPropertyMetadata(false));
+            DependencyProperty.Register("HideColumnHeaders", typeof(bool), typeof(Intellibox), new UIPropertyMetadata(false));
 
         /// <summary>
         /// For Internal Use Only. Identifies the <see cref="ItemsProperty"/> Dependancy Property.
         /// </summary>
         protected static readonly DependencyProperty ItemsProperty =
-            DependencyProperty.Register("Items", typeof(IList), typeof(IntelliBox), new UIPropertyMetadata(null));
+            DependencyProperty.Register("Items", typeof(IList), typeof(Intellibox), new UIPropertyMetadata(null));
 
         /// <summary>
         /// Identifies the <see cref="MaxResultsProperty"/> Dependancy Property.
         /// </summary>
         public static readonly DependencyProperty MaxResultsProperty =
-            DependencyProperty.Register("MaxResults", typeof(int), typeof(IntelliBox), new UIPropertyMetadata(10));
+            DependencyProperty.Register("MaxResults", typeof(int), typeof(Intellibox), new UIPropertyMetadata(10));
 
         /// <summary>
         /// Identifies the <see cref="ResultsHeightProperty"/> Dependancy Property.
         /// </summary>
         public static readonly DependencyProperty ResultsHeightProperty =
-            DependencyProperty.Register("ResultsHeight", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(double.NaN));
+            DependencyProperty.Register("ResultsHeight", typeof(double), typeof(Intellibox), new UIPropertyMetadata(double.NaN));
 
         /// <summary>
         /// Identifies the <see cref="ResultsMaxHeightProperty"/> Dependancy Property.
         /// </summary>
         public static readonly DependencyProperty ResultsMaxHeightProperty =
-            DependencyProperty.Register("ResultsMaxHeight", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(double.PositiveInfinity));
+            DependencyProperty.Register("ResultsMaxHeight", typeof(double), typeof(Intellibox), new UIPropertyMetadata(double.PositiveInfinity));
 
         /// <summary>
         /// Identifies the <see cref="ResultsMaxWidthProperty"/> Dependancy Property.
         /// </summary>
         public static readonly DependencyProperty ResultsMaxWidthProperty =
-            DependencyProperty.Register("ResultsMaxWidth", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(double.PositiveInfinity));
+            DependencyProperty.Register("ResultsMaxWidth", typeof(double), typeof(Intellibox), new UIPropertyMetadata(double.PositiveInfinity));
 
         /// <summary>
         /// Identifies the <see cref="ResultsMinHeightProperty"/> Dependancy Property.
         /// </summary>
         public static readonly DependencyProperty ResultsMinHeightProperty =
-            DependencyProperty.Register("ResultsMinHeight", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(0d));
+            DependencyProperty.Register("ResultsMinHeight", typeof(double), typeof(Intellibox), new UIPropertyMetadata(0d));
 
         /// <summary>
         /// Identifies the <see cref="ResultsMinWidthProperty"/> Dependancy Property.
         /// </summary>
         public static readonly DependencyProperty ResultsMinWidthProperty =
-                    DependencyProperty.Register("ResultsMinWidth", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(0d));
+                    DependencyProperty.Register("ResultsMinWidth", typeof(double), typeof(Intellibox), new UIPropertyMetadata(0d));
 
         /// <summary>
         /// Identifies the <see cref="ResultsWidthProperty"/> Dependancy Property.
         /// </summary>
         public static readonly DependencyProperty ResultsWidthProperty =
-            DependencyProperty.Register("ResultsWidth", typeof(double), typeof(IntelliBox), new UIPropertyMetadata(double.NaN));
+            DependencyProperty.Register("ResultsWidth", typeof(double), typeof(Intellibox), new UIPropertyMetadata(double.NaN));
 
         /// <summary>
         /// Identifies the <see cref="SelectedItemProperty"/> Dependancy Property.
         /// </summary>
         public static readonly DependencyProperty SelectedItemProperty =
-            DependencyProperty.Register("SelectedItem", typeof(object), typeof(IntelliBox), new UIPropertyMetadata(null));
+            DependencyProperty.Register("SelectedItem", typeof(object), typeof(Intellibox), new UIPropertyMetadata(null));
 
         /// <summary>
         /// Identifies the <see cref="SelectedValueProperty"/> Dependancy Property.
         /// </summary>
         public static readonly DependencyProperty SelectedValueProperty =
-            DependencyProperty.Register("SelectedValue", typeof(object), typeof(IntelliBox), new UIPropertyMetadata(null));
+            DependencyProperty.Register("SelectedValue", typeof(object), typeof(Intellibox), new UIPropertyMetadata(null));
 
         /// <summary>
         /// For Internal Use Only. Identifies the <see cref="ShowResultsProperty"/> Dependancy Property.
         /// </summary>
         protected static readonly DependencyProperty ShowResultsProperty =
-            DependencyProperty.Register("ShowResults", typeof(bool), typeof(IntelliBox), new UIPropertyMetadata(false));
+            DependencyProperty.Register("ShowResults", typeof(bool), typeof(Intellibox), new UIPropertyMetadata(false));
 
         private static Type[] _baseTypes = new[] {
             typeof(bool), typeof(byte), typeof(sbyte), typeof(char), typeof(decimal),
@@ -184,7 +184,7 @@ namespace System.Windows.Controls {
         }
 
         /// <summary>
-        /// This is the <see cref="IIntelliboxResultsProvider"/> that the <see cref="IntelliBox"/> uses
+        /// This is the <see cref="IIntelliboxResultsProvider"/> that the <see cref="Intellibox"/> uses
         /// to ask for search results. This is a Dependancy Property.
         /// </summary>
         public IIntelliboxResultsProvider DataProvider {
@@ -289,7 +289,7 @@ namespace System.Windows.Controls {
         }
 
         /// <summary>
-        /// Gets or sets the maximum number of results that the <see cref="IntelliBox"/> asks
+        /// Gets or sets the maximum number of results that the <see cref="Intellibox"/> asks
         /// its <see cref="IIntelliboxResultsProvider"/> for. This is a Dependancy Property.
         /// </summary>
         public int MaxResults {
@@ -477,10 +477,10 @@ namespace System.Windows.Controls {
         }
 
         /// <summary>
-        /// Initializes the <see cref="IntelliBox" />, preparing it to accept data entry
+        /// Initializes the <see cref="Intellibox" />, preparing it to accept data entry
         /// and retrieve results from the <see cref="DataProvider"/>.
         /// </summary>
-        public IntelliBox() {
+        public Intellibox() {
             InitializeComponent();
 
             _lastTimeSearchRecievedUtc = DateTime.Now.ToUniversalTime(); // make sure the field is never null
@@ -707,7 +707,7 @@ namespace System.Windows.Controls {
         }
 
         private static void OnDataProviderChanged(DependencyObject receiver, DependencyPropertyChangedEventArgs args) {
-            var ib = receiver as IntelliBox;
+            var ib = receiver as Intellibox;
             if (ib != null && args != null && args.NewValue is IIntelliboxResultsProvider) {
                 var provider = args.NewValue as IIntelliboxResultsProvider;
                 //Create the wrapper used to make the calls async. This hides the details from the user.
@@ -717,11 +717,11 @@ namespace System.Windows.Controls {
 
         private void OnDisplayedValueBindingChanged() {
             if (lstSearchItems != null) {
-                this.SetBinding(IntelliBox.DisplayTextFromHighlightedItemProperty,
+                this.SetBinding(Intellibox.DisplayTextFromHighlightedItemProperty,
                     BindingBaseFactory.ConstructBindingForHighlighted(this, DisplayedValueBinding));
             }
 
-            this.SetBinding(IntelliBox.DisplayTextFromSelectedItemProperty,
+            this.SetBinding(Intellibox.DisplayTextFromSelectedItemProperty,
                 BindingBaseFactory.ConstructBindingForSelected(this, DisplayedValueBinding));
         }
 

@@ -89,13 +89,13 @@ OTHER DEALINGS IN THE SOFTWARE.
 				<StackPanel Orientation="Horizontal">
 					<TextBlock VerticalAlignment="Center"
 							   Margin="0,0,6,0">Search:</TextBlock>
-					<auto:IntelliBox Width="200"
+					<auto:Intellibox Width="200"
 									 Name="multiColumn"
 									 DisplayedValueBinding="{Binding FirstName}"
 									 SelectedValueBinding="{Binding PersonID}"
 									 DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
 
-					</auto:IntelliBox>
+					</auto:Intellibox>
 				</StackPanel>
 			</StackPanel>
 		</TabItem>
@@ -126,14 +126,14 @@ OTHER DEALINGS IN THE SOFTWARE.
 				<StackPanel Orientation="Horizontal">
 					<TextBlock VerticalAlignment="Center"
 							   Margin="0,0,6,0">Search:</TextBlock>
-					<auto:IntelliBox Width="200"
+					<auto:Intellibox Width="200"
 									 ResultsHeight="80"
 									 Name="multiColumnRss"
 									 DisplayedValueBinding="{Binding Title}"
 									 ExplicitlyIncludeColumns="True"
 									 SelectedValueBinding="{Binding Link}"
 									 DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResultsRss}">
-						<auto:IntelliBox.Columns>
+						<auto:Intellibox.Columns>
 							<auto:IntelliboxColumn ForProperty="Title"
 												   Width="125"
 												   Header="Title" />
@@ -142,8 +142,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 												   Header="Description of Issue" />
 							<auto:IntelliboxColumn ForProperty="Category"
 												   Width="100" />
-						</auto:IntelliBox.Columns>
-					</auto:IntelliBox>
+						</auto:Intellibox.Columns>
+					</auto:Intellibox>
 				</StackPanel>
 			</StackPanel>
 		</TabItem>
@@ -176,19 +176,19 @@ OTHER DEALINGS IN THE SOFTWARE.
 				<StackPanel Orientation="Horizontal">
 					<TextBlock VerticalAlignment="Center"
 							   Margin="0,0,6,0">Search:</TextBlock>
-					<auto:IntelliBox Width="200"
+					<auto:Intellibox Width="200"
 									 Name="overrideColumn"
 									 DisplayedValueBinding="{Binding FirstName}"
 									 SelectedValueBinding="{Binding PersonID}"
 									 DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
-						<auto:IntelliBox.Columns>
+						<auto:Intellibox.Columns>
 							<auto:IntelliboxColumn ForProperty="Age"
 												   Width="125"
 												   Header="Person's Age" />
 							<auto:IntelliboxColumn ForProperty="PersonID"
 												   Hide="True" />
-						</auto:IntelliBox.Columns>
-					</auto:IntelliBox>
+						</auto:Intellibox.Columns>
+					</auto:Intellibox>
 				</StackPanel>
 
 				<!-- -->
@@ -220,21 +220,21 @@ OTHER DEALINGS IN THE SOFTWARE.
 				<StackPanel Orientation="Horizontal">
 					<TextBlock VerticalAlignment="Center"
 							   Margin="0,0,6,0">Search:</TextBlock>
-					<auto:IntelliBox Width="200"
+					<auto:Intellibox Width="200"
 									 Name="overrideAllColumn"
 									 DisplayedValueBinding="{Binding FirstName}"
 									 SelectedValueBinding="{Binding PersonID}"
 									 ExplicitlyIncludeColumns="True"
 									 DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
-						<auto:IntelliBox.Columns>
+						<auto:Intellibox.Columns>
 							<auto:IntelliboxColumn DisplayMemberBinding="{Binding FirstName}"
 												   Width="150"
 												   Header="First Name" />
 							<auto:IntelliboxColumn DisplayMemberBinding="{Binding LastName}"
 												   Width="75"
 												   Header="Last Name" />
-						</auto:IntelliBox.Columns>
-					</auto:IntelliBox>
+						</auto:Intellibox.Columns>
+					</auto:Intellibox>
 				</StackPanel>
 
 			</StackPanel>
@@ -269,21 +269,21 @@ OTHER DEALINGS IN THE SOFTWARE.
 				<StackPanel Orientation="Horizontal">
 					<TextBlock VerticalAlignment="Center"
 							   Margin="0,0,6,0">Search:</TextBlock>
-					<auto:IntelliBox Width="200"
+					<auto:Intellibox Width="200"
 									 Name="positionColumn"
 									 DisplayedValueBinding="{Binding FirstName}"
 									 SelectedValueBinding="{Binding PersonID}"
 									 DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
 
-						<auto:IntelliBox.Columns>
+						<auto:Intellibox.Columns>
 							<auto:IntelliboxColumn ForProperty="Weight"
 												   Position="2" />
 							<auto:IntelliboxColumn ForProperty="Age"
 												   Position="1" />
 							<auto:IntelliboxColumn ForProperty="NetWorth"
 												   Position="3" />
-						</auto:IntelliBox.Columns>
-					</auto:IntelliBox>
+						</auto:Intellibox.Columns>
+					</auto:Intellibox>
 				</StackPanel>
 
 			</StackPanel>
@@ -315,14 +315,14 @@ OTHER DEALINGS IN THE SOFTWARE.
 				<StackPanel Orientation="Horizontal">
 					<TextBlock VerticalAlignment="Center"
 							   Margin="0,0,6,0">Search:</TextBlock>
-					<auto:IntelliBox Width="200"
+					<auto:Intellibox Width="200"
 									 ResultsHeight="80"
 									 ExplicitlyIncludeColumns="True"
 									 Name="lightspeedBox"
 									 DisplayedValueBinding="{Binding ProductName}"
 									 SelectedValueBinding="{Binding ProductId}"
 									 DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=SqlServerCeProvider}">
-						<auto:IntelliBox.Columns>
+						<auto:Intellibox.Columns>
 							<auto:IntelliboxColumn DisplayMemberBinding="{Binding ProductName}"
 												   Width="150"
 												   Header="Product Name" />
@@ -332,8 +332,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 							<auto:IntelliboxColumn DisplayMemberBinding="{Binding Supplier.CompanyName}"
 												   Width="125"
 												   Header="Supplier" />
-						</auto:IntelliBox.Columns>
-					</auto:IntelliBox>
+						</auto:Intellibox.Columns>
+					</auto:Intellibox>
 				</StackPanel>
 			</StackPanel>
 		</TabItem>

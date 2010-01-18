@@ -48,7 +48,7 @@ OTHER DEALINGS IN THE SOFTWARE.
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <TextBlock VerticalAlignment="Center" Margin="0,0,6,0">Search:</TextBlock>
-            <auto:IntelliBox Width="200" Name="autoBox" SelectAllOnFocus="True"
+            <auto:Intellibox Width="200" Name="autoBox" SelectAllOnFocus="True"
             DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=Provider}" />
         </StackPanel>
     </StackPanel>
