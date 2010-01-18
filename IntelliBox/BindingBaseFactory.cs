@@ -27,7 +27,7 @@ using System.Windows.Data;
 namespace System.Windows.Controls {
     internal static class BindingBaseFactory {
 
-        private static BindingBase ConstructBinding(IntelliBox source, BindingBase template, string propertyName) {
+        private static BindingBase ConstructBinding(Intellibox source, BindingBase template, string propertyName) {
             if (source == null)
                 throw new ArgumentNullException("source");
 
@@ -65,7 +65,7 @@ namespace System.Windows.Controls {
             return bind;
         }
 
-        private static void ValidateAndSetSource(IntelliBox source, Binding bind, string propertyName) {
+        private static void ValidateAndSetSource(Intellibox source, Binding bind, string propertyName) {
             if (!string.IsNullOrEmpty(bind.ElementName))
                 throw new ArgumentOutOfRangeException("The IntelliBox control does not support setting 'ElementName' on the DisplayValueBinding or SelectedValueBinding properties.");
 
@@ -81,11 +81,11 @@ namespace System.Windows.Controls {
             bind.Source = source;
         }
 
-        public static BindingBase ConstructBindingForHighlighted(IntelliBox source, BindingBase template) {
+        public static BindingBase ConstructBindingForHighlighted(Intellibox source, BindingBase template) {
             return ConstructBinding(source, template, "lstSearchItems.SelectedItem");
         }
 
-        public static BindingBase ConstructBindingForSelected(IntelliBox source, BindingBase template) {
+        public static BindingBase ConstructBindingForSelected(Intellibox source, BindingBase template) {
             return ConstructBinding(source, template, "SelectedItem");
         }
     }
