@@ -57,8 +57,16 @@ OTHER DEALINGS IN THE SOFTWARE.
 			   PreviewMouseDown="Popup_PreviewMouseButton"
 			   PreviewMouseUp="Popup_PreviewMouseButton">
 
+			<!--
+			This causes even faster lockups
+			VirtualizingStackPanel.IsVirtualizing="True"
+			IsSynchronizedWithCurrentItem="True"
+			ScrollViewer.HorizontalScrollBarVisibility="Auto"
+			ScrollViewer.VerticalScrollBarVisibility="Auto"
+			-->
 
 			<ListView Name="lstSearchItems"
+					  VirtualizingStackPanel.IsVirtualizing="True"
 					  ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=Items}"
 					  PreviewKeyDown="lstSearchItems_PreviewKeyDown" />
 
