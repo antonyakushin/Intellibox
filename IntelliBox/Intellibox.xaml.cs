@@ -302,6 +302,16 @@ namespace System.Windows.Controls {
         }
 
         /// <summary>
+        /// Internal Use Only. Do Not Use. This property exists so that the <see cref="Intellibox"/>
+        /// can run in partial-trust;
+        /// </summary>
+        public ListView ResultsList {
+            get {
+                return lstSearchItems;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the suggested height that the search results popup.
         /// The default value is 200.
         /// This is a Dependancy Property.
@@ -512,7 +522,7 @@ namespace System.Windows.Controls {
         }
 
         private void ChooseCurrentItem() {
-            this.SelectedItem = lstSearchItems.SelectedItem;
+            this.SelectedItem = ResultsList.SelectedItem;
             _lastTextValue = UpdateSearchBoxText(true);
 
             CloseSearchResults();
@@ -617,7 +627,7 @@ namespace System.Windows.Controls {
         }
 
         private void HighlightNextItem(Key pressed) {
-            if (lstSearchItems != null && HasItems) {
+            if (ResultsList != null && HasItems) {
                 Dispatcher.BeginInvoke(new Action<Key>(SelectNewItem), DispatcherPriority.Background, pressed);
             }
         }
@@ -626,20 +636,20 @@ namespace System.Windows.Controls {
             //Debug.WriteLine("HighlightNextItem" + pressed.ToString());
             var goDown = pressed == Key.Tab || pressed == Key.Down || pressed == Key.NumPad2 || pressed == Key.PageDown;
             var nextIndex = goDown
-                ? lstSearchItems.SelectedIndex + GetIncrementValueForKey(pressed)
-                : lstSearchItems.SelectedIndex - GetIncrementValueForKey(pressed);
+                ? ResultsList.SelectedIndex + GetIncrementValueForKey(pressed)
+                : ResultsList.SelectedIndex - GetIncrementValueForKey(pressed);
 
             int maxIndex = Items.Count - 1; //dangerous, since the list could be really large
 
             if (nextIndex < 0) {
-                if (lstSearchItems.SelectedIndex != 0)
+                if (ResultsList.SelectedIndex != 0)
                     nextIndex = 0;
                 else
                     nextIndex = maxIndex;
             }
 
             if (nextIndex >= maxIndex) {
-                if (lstSearchItems.SelectedIndex != maxIndex)
+                if (ResultsList.SelectedIndex != maxIndex)
                     nextIndex = maxIndex;
                 else
                     nextIndex = 0;
@@ -653,8 +663,8 @@ namespace System.Windows.Controls {
             //the default still causes lockups.
             //be very careful changing this line
             //Dispatcher.BeginInvoke(new Action<object>(SelectNewItem), DispatcherPriority.Background, selectedItem);
-            lstSearchItems.SelectedItem = selectedItem;
-            lstSearchItems.ScrollIntoView(selectedItem);
+            ResultsList.SelectedItem = selectedItem;
+            ResultsList.ScrollIntoView(selectedItem);
 
         }
 
@@ -716,7 +726,7 @@ namespace System.Windows.Controls {
         }
 
         private void OnDisplayedValueBindingChanged() {
-            if (lstSearchItems != null) {
+            if (ResultsList != null) {
                 this.SetBinding(Intellibox.DisplayTextFromHighlightedItemProperty,
                     BindingBaseFactory.ConstructBindingForHighlighted(this, DisplayedValueBinding));
             }
@@ -822,9 +832,9 @@ namespace System.Windows.Controls {
                 if (_previousResultType != Items[0].GetType()) {
                     _previousResultType = Items[0].GetType();
 
-                    lstSearchItems.View = ConstructGridView(Items[0]);
+                    ResultsList.View = ConstructGridView(Items[0]);
                 }
-                lstSearchItems.SelectedIndex = 0;
+                ResultsList.SelectedIndex = 0;
                 ShowResults = true;
             }
         }
