@@ -53,8 +53,8 @@ namespace Examples {
             lsCtx.DataProvider = DataProvider.SqlServerCE;
             lsCtx.IdentityMethod = IdentityMethod.IdentityColumn;
             lsCtx.QuoteIdentifiers = true;
-            lsCtx.VerboseLogging = true;
-            lsCtx.Logger = new Mindscape.LightSpeed.Logging.TraceLogger();
+            //lsCtx.VerboseLogging = true;
+            //lsCtx.Logger = new Mindscape.LightSpeed.Logging.TraceLogger();
             return lsCtx;
         }
 
