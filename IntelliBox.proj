@@ -18,11 +18,13 @@
         <ExampleFiles Include="$(Configuration)\*.exe" Exclude="$(Configuration)\*vshost.exe"/>
         <ExampleFiles Include="$(Configuration)\*.dll" />
         <ExampleFiles Include="$(Configuration)\*.sdf" />
+        <ExampleFiles Include="$(Configuration)\*.config" />
 
         <SourceFiles Include="*.proj;*.sln;*.shfbproj" />
         <SourceFiles Include="Examples\**\*.*" Exclude="Examples\.svn\**\*.*;Examples\obj\**\*.*"/>
         <SourceFiles Include="IntelliBox\**\*.*" Exclude="IntelliBox\.svn\**\*.*;IntelliBox\obj\**\*.*"/>
         <SourceFiles Include="References\**\*.*" Exclude="References\.svn\**\*.*;References\obj\**\*.*"/>
+        <SourceFiles Include="IntelliboxL2E\**\*.*" Exclude="IntelliboxL2E\.svn\**\*.*;IntelliboxL2E\obj\**\*.*"/>
 
         <HelpFiles Include="Help\**\*.*" />
     </ItemGroup>
