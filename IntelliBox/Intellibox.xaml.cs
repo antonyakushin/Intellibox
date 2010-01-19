@@ -55,6 +55,8 @@ namespace System.Windows.Controls {
     /// </summary>
     public partial class Intellibox : UserControl {
 
+        private const int MinimumSearchDelayMS = 125;
+
         /// <summary>
         /// Identifies the <see cref="DataProviderProperty"/> Dependancy Property.
         /// </summary>
@@ -91,6 +93,20 @@ namespace System.Windows.Controls {
         /// </summary>
         public static readonly DependencyProperty MaxResultsProperty =
             DependencyProperty.Register("MaxResults", typeof(int), typeof(Intellibox), new UIPropertyMetadata(10));
+
+        /// <summary>
+        /// Identifies the <see cref="MinimumPrefixLengthProperty"/> Dependancy Property.
+        /// </summary>
+        public static readonly DependencyProperty MinimumPrefixLengthProperty =
+            DependencyProperty.Register("MinimumPrefixLength", typeof(int), typeof(Intellibox),
+            new UIPropertyMetadata(1, null, CoerceMinimumPrefixLengthProperty));
+
+        /// <summary>
+        /// Identifies the <see cref="MinimumSearchDelayProperty"/> Dependancy Property. Default is 250 milliseconds.
+        /// </summary>
+        public static readonly DependencyProperty MinimumSearchDelayProperty =
+            DependencyProperty.Register("MinimumSearchDelay", typeof(int), typeof(Intellibox),
+            new UIPropertyMetadata(250, null, CoerceMinimumSearchDelayProperty));
 
         /// <summary>
         /// Identifies the <see cref="ResultsHeightProperty"/> Dependancy Property.
@@ -162,12 +178,24 @@ namespace System.Windows.Controls {
         private IntelliboxRowColorizer _rowColorizer;
 
         /// <summary>
+        /// This event is fired immediately before a new search is started.
+        /// Note that not every <see cref="SearchBeginning"/> event has a matching <see cref="SearchCompleted"/> event.
+        /// </summary>
+        public event Action<string, int, object> SearchBeginning;
+
+        /// <summary>
+        /// This event is fired once a search has completed and the search results have been processed.
+        /// Note that not every <see cref="SearchBeginning"/> event has a matching <see cref="SearchCompleted"/> event.
+        /// </summary>
+        public event Action SearchCompleted;
+
+        /// <summary>
         /// Cancel all pending searches for the provider.
         /// </summary>
         public ICommand CancelAllSearches {
             get {
                 if (_cancelAllSearches == null) {
-                    _cancelAllSearches = new DelegateCommand(CancelAllSearchesAction);
+                    _cancelAllSearches = new DelegateCommand(CancelSelection);
                 }
                 return _cancelAllSearches;
             }
@@ -279,6 +307,12 @@ namespace System.Windows.Controls {
             }
         }
 
+        private bool IsSearchInProgress {
+            get {
+                return SearchTimer != null;
+            }
+        }
+
         private IList Items {
             get {
                 return (IList)GetValue(ItemsProperty);
@@ -298,6 +332,34 @@ namespace System.Windows.Controls {
             }
             set {
                 SetValue(MaxResultsProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// The minimum number of characters to wait for the user to enter before starting the first search.
+        /// After the first search has been started, the <see cref="MinimumSearchDelay"/> property controls how often
+        /// additional searches are performed (assumming that additional text has been entered).
+        /// Minimum value is 1 (one). Defaults to 1 (one);
+        /// </summary>
+        public int MinimumPrefixLength {
+            get {
+                return (int)GetValue(MinimumPrefixLengthProperty);
+            }
+            set {
+                SetValue(MinimumPrefixLengthProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// The number of milliseconds the <see cref="Intellibox"/> control will wait between searches
+        /// when the user is rapidly entering text. Minimum is 125 milliseconds. Defaults to 250 milliseconds.
+        /// </summary>
+        public int MinimumSearchDelay {
+            get {
+                return (int)GetValue(MinimumSearchDelayProperty);
+            }
+            set {
+                SetValue(MinimumSearchDelayProperty, value);
             }
         }
 
@@ -416,6 +478,15 @@ namespace System.Windows.Controls {
         }
 
         /// <summary>
+        /// Using a dispatcher timer so that the 'Tick' event gets posted on the UI thread and
+        /// we don't have to worry about exceptions throwing when accessing UI controls.
+        /// </summary>
+        private DispatcherTimer SearchTimer {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// When true, all of the text in the field will be selected when the control gets focus.
         /// </summary>
         public bool SelectAllOnFocus {
@@ -487,6 +558,23 @@ namespace System.Windows.Controls {
         }
 
         /// <summary>
+        /// Applies the <see cref="DisableWhitespaceTrim"/> property to the <paramref name="input"/> text.
+        /// The return value is always non-null.
+        /// </summary>
+        /// <param name="input">the string to which <see cref="DisableWhitespaceTrim"/> should be applied.</param>
+        /// <returns>
+        /// If <see cref="DisbleWhitespaceTrim"/> is true, returns <paramref name="input"/> unmodified.
+        /// Otherwise the function returns the result of input.Trim(), or string.Empty if input is null.
+        /// </returns>
+        private string ApplyDisableWhitespaceTrim(string input) {
+            // if the entered text isn't supposed to be trimmed, then use it as-is
+            // otherwise Trim() it if it's not null, or set to string.Empty if it is null
+            return DisableWhitespaceTrim
+                    ? input
+                    : (string.IsNullOrEmpty(input) ? string.Empty : input.Trim());
+        }
+
+        /// <summary>
         /// Initializes the <see cref="Intellibox" />, preparing it to accept data entry
         /// and retrieve results from the <see cref="DataProvider"/>.
         /// </summary>
@@ -505,27 +593,37 @@ namespace System.Windows.Controls {
             };
         }
 
-        private void CancelAllSearchesAction() {
-            if (SearchProvider != null) {
-                SearchProvider.CancelAllSearches();
-            }
-        }
-
         private void CancelSelection() {
             _lastTextValue = UpdateSearchBoxText(true);
 
-            CloseSearchResults();
+            OnUserEndedSearchEvent();
 
             if (Items != null) {
                 Items = null;
             }
         }
 
+        private static object CoerceMinimumPrefixLengthProperty(DependencyObject reciever, object val) {
+            var intval = (int)val;
+            if (intval < 1)
+                intval = 1;
+
+            return intval;
+        }
+
+        private static object CoerceMinimumSearchDelayProperty(DependencyObject reciever, object val) {
+            var intval = (int)val;
+            if (intval < MinimumSearchDelayMS)
+                intval = MinimumSearchDelayMS;
+
+            return intval;
+        }
+
         private void ChooseCurrentItem() {
             this.SelectedItem = ResultsList.SelectedItem;
             _lastTextValue = UpdateSearchBoxText(true);
 
-            CloseSearchResults();
+            OnUserEndedSearchEvent();
 
             if (Items != null) {
                 Items = null;
@@ -534,14 +632,7 @@ namespace System.Windows.Controls {
 
         private void ClearSelectedItem() {
             this.SelectedItem = null;
-            CloseSearchResults();
-        }
-
-        private void CloseSearchResults() {
-            CancelAllSearchesAction();
-
-            ShowResults = false;
-            noResultsPopup.IsOpen = false;
+            OnUserEndedSearchEvent();
         }
 
         private GridView ConstructGridView(object item) {
@@ -633,7 +724,7 @@ namespace System.Windows.Controls {
                 //the only way I have been able to solve the lockups is to use the background priority
                 //the default still causes lockups.
                 //be very careful changing this line
-                Dispatcher.BeginInvoke(new Action<Key>(SelectNewItem), DispatcherPriority.Background, pressed);
+                Dispatcher.BeginInvoke(new Action<Key>(HighlightNewItem), DispatcherPriority.Background, pressed);
             }
         }
 
@@ -645,7 +736,7 @@ namespace System.Windows.Controls {
         /// http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=324064
         /// </para>
         /// </summary>
-        private void SelectNewItem(Key pressed) {
+        private void HighlightNewItem(Key pressed) {
             var goDown = pressed == Key.Tab || pressed == Key.Down || pressed == Key.NumPad2 || pressed == Key.PageDown;
             var nextIndex = goDown
                 ? ResultsList.SelectedIndex + GetIncrementValueForKey(pressed)
@@ -669,10 +760,8 @@ namespace System.Windows.Controls {
 
             var selectedItem = Items[nextIndex];
 
-            
             ResultsList.SelectedItem = selectedItem;
             ResultsList.ScrollIntoView(selectedItem);
-
         }
 
         //try to use this for paging support.
@@ -754,6 +843,54 @@ namespace System.Windows.Controls {
             }
         }
 
+        private void OnSearchBeginning(string term, int max, object data) {
+            var e = SearchBeginning;
+            if (e != null) {
+                e(term, max, data);
+            }
+        }
+
+        private void OnSearchCompleted() {
+            var e = SearchCompleted;
+            if (e != null) {
+                e();
+            }
+        }
+
+        /// <summary>
+        /// Called whenever (and ONLY whenever) the user has either
+        /// 1. selected an item from the result set
+        /// 2. decided not to select an item from the result set
+        /// 3. cleared the currently selected item
+        /// </summary>
+        private void OnUserEndedSearchEvent() {
+            if (SearchTimer != null) {
+                SearchTimer.Stop();
+                //setting to null so that when a new search starts, we grab fresh values for the time interval
+                SearchTimer = null;
+            }
+
+            if (SearchProvider != null) {
+                SearchProvider.CancelAllSearches();
+            }
+
+            ShowResults = false;
+            noResultsPopup.IsOpen = false;
+        }
+
+        private void OnSearchTimerTick(object sender, EventArgs e) {
+            if (IsSearchInProgress) {
+                var last = ApplyDisableWhitespaceTrim(_lastTextValue);
+                var current = ApplyDisableWhitespaceTrim(PART_EDITFIELD.Text);
+
+                if (!last.Equals(current)) {
+                    _lastTextValue = current;
+                    OnSearchBeginning(current, MaxResults, Tag);
+                    SearchProvider.BeginSearchAsync(_lastTextValue, DateTime.Now.ToUniversalTime(), MaxResults, Tag, ProcessSearchResults);
+                }
+            }
+        }
+
         private void OnSelectedValueBindingChanged() {
             var bind = BindingBaseFactory.ConstructBindingForSelected(this, SelectedValueBinding);
             this.SetBinding(SelectedValueProperty, bind);
@@ -768,20 +905,8 @@ namespace System.Windows.Controls {
             }
 
             var field = sender as TextBox;
-            if (field != null && _lastTextValue != field.Text) {
-                _lastTextValue = field.Text;
-
-                if (string.IsNullOrEmpty(_lastTextValue)) {
-                    ClearSelectedItem();
-                }
-                else {
-                    //Determine if we need to trim the search string or not before passing it to the provider.
-                    var search = DisableWhitespaceTrim
-                        ? _lastTextValue
-                        : _lastTextValue.Trim();
-
-                    SearchProvider.BeginSearchAsync(search, DateTime.Now.ToUniversalTime(), MaxResults, Tag, ProcessSearchResults);
-                }
+            if (field != null) {
+                PerformSearchActions(field.Text);
             }
         }
 
@@ -802,6 +927,32 @@ namespace System.Windows.Controls {
             if (IsNavigationKey(e.Key)) {
                 HighlightNextItem(e.Key);
                 e.Handled = true;
+            }
+        }
+
+        private void PerformSearchActions(string enteredText) {
+            enteredText = ApplyDisableWhitespaceTrim(enteredText);
+
+            if (enteredText.Equals(_lastTextValue))
+                return;
+
+            if (string.IsNullOrEmpty(enteredText)) {
+                ClearSelectedItem();
+            }
+            else {
+                bool doSearchNow = !IsSearchInProgress && enteredText.Length >= MinimumPrefixLength;
+                if (doSearchNow) {
+                    SearchTimer = new DispatcherTimer(
+                        TimeSpan.FromMilliseconds(MinimumSearchDelay),
+                        DispatcherPriority.Background,
+                        new EventHandler(OnSearchTimerTick),
+                        this.Dispatcher);
+
+                    _lastTextValue = enteredText;
+                    OnSearchBeginning(_lastTextValue, MaxResults, Tag);
+                    SearchProvider.BeginSearchAsync(_lastTextValue, DateTime.Now.ToUniversalTime(), MaxResults, Tag, ProcessSearchResults);
+                    SearchTimer.Start();
+                }
             }
         }
 
@@ -835,6 +986,8 @@ namespace System.Windows.Controls {
                 ResultsList.SelectedIndex = 0;
                 ShowResults = true;
             }
+
+            OnSearchCompleted();
         }
 
         private string UpdateSearchBoxText(bool useSelectedItem) {

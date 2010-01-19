@@ -24,6 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Windows;
 using System.Windows.Controls;
+using System.Collections.ObjectModel;
 
 namespace Examples {
 
@@ -59,6 +60,11 @@ namespace Examples {
             private set;
         }
 
+        public ObservableCollection<string> SearchBeginNotifications {
+            get;
+            set;
+        }
+
         public MainWindow() {
             InvertSingleColumnResults = new InvertedSingleColumnResultsProvider();
             MultiColumnResults = new MultiColumnResultsProvider();
@@ -66,7 +72,14 @@ namespace Examples {
             NoSearchResults = new NoSearchResultsProvider();
             SingleColumnResults = new SingleColumnResultsProvider();
             SqlServerCeProvider = new LightspeedResultsProvider();
+            SearchBeginNotifications = new ObservableCollection<string>();
+
             InitializeComponent();
+        }
+
+        private void searchDelayBox_SearchBeginning(string arg1, int arg2, object arg3) {
+            var text = string.Format("New search. Text:{{{0}}}", arg1);
+            SearchBeginNotifications.Add(text);
         }
     }
 }
