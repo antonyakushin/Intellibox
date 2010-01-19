@@ -563,7 +563,7 @@ namespace System.Windows.Controls {
         /// </summary>
         /// <param name="input">the string to which <see cref="DisableWhitespaceTrim"/> should be applied.</param>
         /// <returns>
-        /// If <see cref="DisbleWhitespaceTrim"/> is true, returns <paramref name="input"/> unmodified.
+        /// If <see cref="DisableWhitespaceTrim"/> is true, returns <paramref name="input"/> unmodified.
         /// Otherwise the function returns the result of input.Trim(), or string.Empty if input is null.
         /// </returns>
         private string ApplyDisableWhitespaceTrim(string input) {
