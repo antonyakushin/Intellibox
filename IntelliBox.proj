@@ -17,10 +17,12 @@
 
         <ExampleFiles Include="$(Configuration)\*.exe" Exclude="$(Configuration)\*vshost.exe"/>
         <ExampleFiles Include="$(Configuration)\*.dll" />
+        <ExampleFiles Include="$(Configuration)\*.sdf" />
 
         <SourceFiles Include="*.proj;*.sln;*.shfbproj" />
         <SourceFiles Include="Examples\**\*.*" Exclude="Examples\.svn\**\*.*;Examples\obj\**\*.*"/>
         <SourceFiles Include="IntelliBox\**\*.*" Exclude="IntelliBox\.svn\**\*.*;IntelliBox\obj\**\*.*"/>
+        <SourceFiles Include="References\**\*.*" Exclude="References\.svn\**\*.*;References\obj\**\*.*"/>
 
         <HelpFiles Include="Help\**\*.*" />
     </ItemGroup>
@@ -31,8 +33,8 @@
         <Message Text="      Version : $(Version)" />
         <Message Text="" />
         <Message Text="---- Available Targets ----" />
-        <Message Text="Build" />
-        <Message Text="    Builds the entire project and places a releasable zip file in the 'Installers' folder." />
+        <Message Text="Build (default target)" />
+        <Message Text="    Builds the entire project." />
         <Message Text="Clean" />
         <Message Text="    Removes all files created by the Build target." />
         <Message Text="BuildForRelease" />
@@ -46,7 +48,7 @@
     
     <Target Name="Build" DependsOnTargets="Clean;SetVersionNumber">
         <MSBuild Projects="$(SolutionFile)" Targets="Rebuild"
-                 Properties="Configuration=$(Configuration);Platform=Any CPU"
+                 Properties="Configuration=$(Configuration);Platform=x86"
                  StopOnFirstFailure="true" />
     </Target>
 
@@ -94,8 +96,7 @@
     
     <Target Name="Clean">
         <!-- must clean up from the previous build -->
-        <Exec Command="IF NOT EXIST Installers. MKDIR Installers" />
-        <Exec Command="del /F /Q Installers\*" />
+        <Exec Command="del /F /Q Intellibox*.zip" />
         
         <Exec Command="IF NOT EXIST $(Configuration). MKDIR $(Configuration)" />
         <Exec Command="del /F /Q $(Configuration)\*" />
