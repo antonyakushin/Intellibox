@@ -126,6 +126,7 @@
     <Compile Include="BasicSearchResultsCtrl.xaml.cs">
       <DependentUpon>BasicSearchResultsCtrl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CurrencyConverter.cs" />
     <Compile Include="InvertedSingleColumnResultsProvider.cs" />
     <Compile Include="LightspeedResultsProvider.cs" />
     <Compile Include="LimitedResultsCtrl.xaml.cs">
