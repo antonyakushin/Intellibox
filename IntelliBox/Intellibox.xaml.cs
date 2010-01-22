@@ -333,7 +333,7 @@ namespace System.Windows.Controls {
             set {
                 SetValue(MaxResultsProperty, value);
             }
-        }
+        } 
 
         /// <summary>
         /// The minimum number of characters to wait for the user to enter before starting the first search.
