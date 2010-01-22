@@ -26,7 +26,6 @@
         <SourceFiles Include="References\**\*.*" Exclude="References\.svn\**\*.*;References\obj\**\*.*"/>
         <SourceFiles Include="IntelliboxL2E\**\*.*" Exclude="IntelliboxL2E\.svn\**\*.*;IntelliboxL2E\obj\**\*.*"/>
 
-        <HelpFiles Include="Help\**\*.*" />
     </ItemGroup>
     
     
@@ -70,6 +69,10 @@
                     TaskParameter="Include" />
         </CreateItem>
         
+        <ItemGroup>
+            <HelpFiles Include="Help\**\*.*" />
+        </ItemGroup>
+        
         <Copy SourceFiles="@(SourceFiles)"
               DestinationFiles="@(dest_SourceFiles)" />
 
@@ -87,13 +90,25 @@
         <Exec Command="rmdir /S /Q source" />
     </Target>
 
-    <Target Name="CreateDocumentation">
+    <Target Name="CreateDocumentation" DependsOnTargets="NeedSandcastleInstalled"
+            Condition="Exists($(SHFBROOT))">
+            
+        <MSBuild Projects="documentation-$(Configuration).shfbproj"
+                 Properties="Configuration=$(Configuration)"
+                 StopOnFirstFailure="true" />
+    
         <ItemGroup>
             <HelpFiles Include="Help\**\*.*" />
         </ItemGroup>
         
         <Zip Files="@(HelpFiles)"
              ZipFileName="IntelliboxHelp-$(Version).zip" />
+    </Target>
+    
+    <Target Name="NeedSandcastleInstalled" Condition="!Exists($(SHFBROOT))">
+        <Warning Text="Sandcastle and the Sandcastle Help File Builder must be installed to create documentation." />
+        <Warning Text="Sandcastle: http://sandcastle.codeplex.com/" />
+        <Warning Text="Sandcastle Help File Builder: http://shfb.codeplex.com/" />
     </Target>
     
     <Target Name="Clean">
