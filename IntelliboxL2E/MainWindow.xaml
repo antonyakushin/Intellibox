@@ -36,7 +36,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 						 Name="lightspeedBox"
 						 DisplayedValueBinding="{Binding Product_Name}"
 						 SelectedValueBinding="{Binding Product_Id}"
-						 DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=LinqToEntitiesProvider}"
+						 DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, 
+					     AncestorType={x:Type Window}}, Path=LinqToEntitiesProvider}"
 						 Height="26"
 						 Margin="12,26,12,0"
 						 VerticalAlignment="Top">
