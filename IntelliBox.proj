@@ -21,10 +21,10 @@
         <ExampleFiles Include="$(Configuration)\*.config" />
 
         <SourceFiles Include="*.proj;*.sln;*.shfbproj" />
-        <SourceFiles Include="Examples\**\*.*" Exclude="Examples\.svn\**\*.*;Examples\obj\**\*.*"/>
-        <SourceFiles Include="IntelliBox\**\*.*" Exclude="IntelliBox\.svn\**\*.*;IntelliBox\obj\**\*.*"/>
+        <SourceFiles Include="Examples\**\*.*" Exclude="Examples\.svn\**\*.*;Examples\Properties\.svn\**\*.*;Examples\obj\**\*.*"/>
+        <SourceFiles Include="IntelliBox\**\*.*" Exclude="IntelliBox\.svn\**\*.*;IntelliBox\Properties\.svn\**\*.*;IntelliBox\obj\**\*.*"/>
         <SourceFiles Include="References\**\*.*" Exclude="References\.svn\**\*.*;References\obj\**\*.*"/>
-        <SourceFiles Include="IntelliboxL2E\**\*.*" Exclude="IntelliboxL2E\.svn\**\*.*;IntelliboxL2E\obj\**\*.*"/>
+        <SourceFiles Include="IntelliboxL2E\**\*.*" Exclude="IntelliboxL2E\.svn\**\*.*;IntelliboxL2E\Properties\.svn\**\*.*;IntelliboxL2E\obj\**\*.*"/>
 
     </ItemGroup>
     
