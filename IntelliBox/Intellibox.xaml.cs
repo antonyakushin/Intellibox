@@ -717,53 +717,6 @@ namespace System.Windows.Controls {
             }
         }
 
-        private void HighlightNextItem(Key pressed) {
-            if (ResultsList != null && HasItems) {
-                //I used this solution partially
-                //http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=324064
-                //the only way I have been able to solve the lockups is to use the background priority
-                //the default still causes lockups.
-                //be very careful changing this line
-                Dispatcher.BeginInvoke(new Action<Key>(HighlightNewItem), DispatcherPriority.Background, pressed);
-            }
-        }
-
-        /// <summary>
-        /// Because of a bug in .NET, this method should only ever be called from the dispatcher,
-        /// and only ever with 'DispatcherPriority.Background'
-        /// <para>
-        /// See the following link for more details.
-        /// http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=324064
-        /// </para>
-        /// </summary>
-        private void HighlightNewItem(Key pressed) {
-            var goDown = pressed == Key.Tab || pressed == Key.Down || pressed == Key.NumPad2 || pressed == Key.PageDown;
-            var nextIndex = goDown
-                ? ResultsList.SelectedIndex + GetIncrementValueForKey(pressed)
-                : ResultsList.SelectedIndex - GetIncrementValueForKey(pressed);
-
-            int maxIndex = Items.Count - 1; //dangerous, since the list could be really large
-
-            if (nextIndex < 0) {
-                if (ResultsList.SelectedIndex != 0)
-                    nextIndex = 0;
-                else
-                    nextIndex = maxIndex;
-            }
-
-            if (nextIndex >= maxIndex) {
-                if (ResultsList.SelectedIndex != maxIndex)
-                    nextIndex = maxIndex;
-                else
-                    nextIndex = 0;
-            }
-
-            var selectedItem = Items[nextIndex];
-
-            ResultsList.SelectedItem = selectedItem;
-            ResultsList.ScrollIntoView(selectedItem);
-        }
-
         //try to use this for paging support.
         private childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++) {
@@ -876,6 +829,7 @@ namespace System.Windows.Controls {
 
             ShowResults = false;
             noResultsPopup.IsOpen = false;
+            PART_EDITFIELD.Focus();
         }
 
         private void OnSearchTimerTick(object sender, EventArgs e) {
@@ -922,11 +876,6 @@ namespace System.Windows.Controls {
             if (IsChooseCurrentItemKey(e.Key)) {
                 ChooseCurrentItem();
                 return;
-            }
-
-            if (IsNavigationKey(e.Key)) {
-                HighlightNextItem(e.Key);
-                e.Handled = true;
             }
         }
 
@@ -983,8 +932,9 @@ namespace System.Windows.Controls {
 
                     ResultsList.View = ConstructGridView(Items[0]);
                 }
-                ResultsList.SelectedIndex = 0;
                 ShowResults = true;
+                ResultsList.SelectedIndex = 0;
+                ResultsList.Focus();
             }
 
             OnSearchCompleted();
@@ -1013,6 +963,10 @@ namespace System.Windows.Controls {
         private void lstSearchItems_PreviewKeyDown(object sender, KeyEventArgs e) {
             if (IsCancelKey(e.Key)) {
                 CancelSelection();
+                return;
+            }
+            if (IsChooseCurrentItemKey(e.Key)) {
+                ChooseCurrentItem();
                 return;
             }
         }
