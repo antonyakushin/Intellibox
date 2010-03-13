@@ -123,6 +123,7 @@
     <Compile Include="..\IntelliBox\Properties\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AppendTextConverter.cs" />
     <Compile Include="BasicSearchResultsCtrl.xaml.cs">
       <DependentUpon>BasicSearchResultsCtrl.xaml</DependentUpon>
     </Compile>
