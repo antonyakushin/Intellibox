@@ -61,7 +61,7 @@ namespace System.Windows.Controls {
                     a.Bindings[i] = ConstructBinding(source, a.Bindings[i], propertyName);
                 }
             }
-            
+
             return bind;
         }
 
@@ -75,9 +75,13 @@ namespace System.Windows.Controls {
             if (bind.XPath != null)
                 throw new ArgumentOutOfRangeException("The IntelliBox control does not support setting XPath binding expressions.");
 
-            string path = "." + bind.Path.Path ?? string.Empty;
+            if (bind.Path == null || bind.Path.Path == null) {
+                bind.Path = new PropertyPath(propertyName);
+            }
+            else {
+                bind.Path = new PropertyPath(propertyName + "." + bind.Path.Path, bind.Path.PathParameters);
+            }
 
-            bind.Path = new PropertyPath(propertyName + path, bind.Path.PathParameters);
             bind.Source = source;
         }
 
