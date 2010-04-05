@@ -25,10 +25,13 @@ OTHER DEALINGS IN THE SOFTWARE.
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace Examples {
 
-    public partial class MainWindow : Window {
+    public partial class MainWindow : Window, INotifyPropertyChanged {
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public IIntelliboxResultsProvider InvertSingleColumnResults {
             get;
@@ -65,6 +68,32 @@ namespace Examples {
             set;
         }
 
+        private string _personFirstNameForTwoWay;
+        public string PersonFirstNameForTwoWay {
+            get {
+                return _personFirstNameForTwoWay;
+            }
+            set {
+                if (_personFirstNameForTwoWay != value) {
+                    _personFirstNameForTwoWay = value;
+                    OnPropertyChanged("PersonFirstNameForTwoWay");
+                }
+            }
+        }
+
+        private string _personFirstNameForOneWay;
+        public string PersonFirstNameForOneWay {
+            get {
+                return _personFirstNameForOneWay;
+            }
+            set {
+                if (_personFirstNameForOneWay != value) {
+                    _personFirstNameForOneWay = value;
+                    OnPropertyChanged("PersonFirstNameForOneWay");
+                }
+            }
+        }
+
         public MainWindow() {
             InvertSingleColumnResults = new InvertedSingleColumnResultsProvider();
             MultiColumnResults = new MultiColumnResultsProvider();
@@ -75,6 +104,13 @@ namespace Examples {
             SearchBeginNotifications = new ObservableCollection<string>();
 
             InitializeComponent();
+        }
+
+        private void OnPropertyChanged(string propertyName) {
+            var e = PropertyChanged;
+            if (e != null) {
+                e(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         private void searchDelayBox_SearchBeginning(string arg1, int arg2, object arg3) {
