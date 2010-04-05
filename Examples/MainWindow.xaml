@@ -457,6 +457,80 @@ OTHER DEALINGS IN THE SOFTWARE.
                                          DataProvider="{Binding Path=SingleColumnResults, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
                     </StackPanel>
                 </TabItem>
+
+                <TabItem Header="SelectedValue TwoWayBinding"
+                         ToolTip="makes sure that the SelectedValue property supports a standard TwoWay binding">
+                    <StackPanel>
+                        <TextBlock TextWrapping="Wrap">
+                            The intellibox should be able to handle twoway bindings from the SelectedValue property
+                            to a property on the data source object.
+                            <LineBreak />
+                            Motivated by: http://intellibox.codeplex.com/WorkItem/View.aspx?WorkItemId=3994
+                        </TextBlock>
+
+                        <TextBlock />
+
+                        <TextBlock>
+                            Type anything. The same list of results is always returned.
+                            <LineBreak />
+                            The value shown in the 'FirstName' field should match the value shown in the textbox.
+                        </TextBlock>
+
+                        <TextBlock />
+
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock Text="First Name: " />
+                            <TextBlock Text="{Binding Path=PersonFirstNameForTwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+                        </StackPanel>
+                        
+                        <TextBlock />
+                        
+                        <auto:Intellibox Width="200"
+                                         HorizontalAlignment="Left"
+                                         DisplayedValueBinding="{Binding FirstName}"
+                                         SelectedValue="{Binding Path=PersonFirstNameForTwoWay, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                         SelectedValueBinding="{Binding Path=FirstName}"
+                                         ResultsMaxHeight="150"
+                                         DataProvider="{Binding Path=MultiColumnResults, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+                    </StackPanel>
+                </TabItem>
+
+                <TabItem Header="SelectedValue OneWayToSource"
+                         ToolTip="makes sure that the SelectedValue property supports a OneWayToSource binding">
+                    <StackPanel>
+                        <TextBlock TextWrapping="Wrap">
+                            The intellibox should be able to handle OneWayToSource bindings from the SelectedValue property to
+                            the data source object.
+                            <LineBreak />
+                            Motivated by: http://intellibox.codeplex.com/WorkItem/View.aspx?WorkItemId=3994
+                        </TextBlock>
+
+                        <TextBlock />
+
+                        <TextBlock>
+                            Type anything. The same list of results is always returned.
+                            <LineBreak />
+                            The value shown in the 'FirstName' field should match the value shown in the textbox.
+                        </TextBlock>
+
+                        <TextBlock />
+
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock Text="First Name: " />
+                            <TextBlock Text="{Binding Path=PersonFirstNameForOneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+                        </StackPanel>
+
+                        <TextBlock />
+                        
+                        <auto:Intellibox Width="200"
+                                         HorizontalAlignment="Left"
+                                         DisplayedValueBinding="{Binding FirstName}"
+                                         SelectedValue="{Binding Path=PersonFirstNameForOneWay, Mode=OneWayToSource, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                         SelectedValueBinding="{Binding Path=FirstName}"
+                                         ResultsMaxHeight="150"
+                                         DataProvider="{Binding Path=MultiColumnResults, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+                    </StackPanel>
+                </TabItem>
             </TabControl>
         </TabItem>
 
