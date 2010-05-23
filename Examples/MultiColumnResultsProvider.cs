@@ -25,7 +25,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Controls;
+using FeserWard.Controls;
 
 namespace Examples {
     public class MultiColumnResultsProvider : IIntelliboxResultsProvider {

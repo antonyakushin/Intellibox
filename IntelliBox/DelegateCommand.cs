@@ -26,7 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 
-namespace System.Windows.Controls {
+namespace FeserWard.Controls {
 
     /// <summary>
     ///     This class allows delegating the commanding logic to methods passed as parameters,

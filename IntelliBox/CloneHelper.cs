@@ -23,8 +23,10 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Windows.Data;
+using System;
+using System.Windows.Controls;
 
-namespace System.Windows.Controls {
+namespace FeserWard.Controls {
     internal static class CloneHelper {
 
         public static Binding Clone(Binding original) {

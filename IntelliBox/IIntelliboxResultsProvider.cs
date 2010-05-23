@@ -24,7 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Collections.Generic;
 
-namespace System.Windows.Controls {
+namespace FeserWard.Controls {
 
     /// <summary>
     /// Defines the interface contract between an <see cref="Intellibox"/> and its <see cref="Intellibox.DataProvider" />.

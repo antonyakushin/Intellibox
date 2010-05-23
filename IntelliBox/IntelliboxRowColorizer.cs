@@ -24,8 +24,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Windows.Data;
 using System.Windows.Media;
+using System;
+using System.Windows.Controls;
 
-namespace System.Windows.Controls {
+namespace FeserWard.Controls {
     /// <summary>
     /// Provides an abstract implementation of an <see cref="IValueConverter"/> that converts a ListBoxItem
     /// into a Brush based on the index of the ListBoxItem in its parent collection.

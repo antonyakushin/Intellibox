@@ -24,7 +24,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 -->
 <UserControl Name="IntelliboxControl"
-			 x:Class="System.Windows.Controls.Intellibox"
+             x:Class="FeserWard.Controls.Intellibox"
 			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:ctrl="clr-namespace:System.Windows.Controls">

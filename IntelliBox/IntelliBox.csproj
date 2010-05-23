@@ -8,7 +8,7 @@
     <ProjectGuid>{1005DE71-8B98-4C78-8EE4-C577F1A64361}</ProjectGuid>
     <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>System.Windows.Controls</RootNamespace>
+    <RootNamespace>FeserWard.Controls</RootNamespace>
     <AssemblyName>Intellibox</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

@@ -1,4 +1,6 @@
-﻿/*
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+/*
 Copyright (c) 2010 Stephen P Ward and Joseph E Feser
 
 Permission is hereby granted, free of charge, to any person
@@ -23,9 +25,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Windows;
-using System.Windows.Controls;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+using FeserWard.Controls;
 
 namespace Examples {
 

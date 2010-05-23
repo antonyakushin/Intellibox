@@ -26,7 +26,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 <Window x:Class="IntelliboxL2E.MainWindow"
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:auto="clr-namespace:System.Windows.Controls;assembly=Intellibox"
+        xmlns:auto="clr-namespace:FeserWard.Controls;assembly=Intellibox"
 		Title="Linq to Entities"
 		Height="325"
 		Width="460">
