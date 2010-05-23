@@ -6,7 +6,7 @@
     <PropertyGroup>
         <SolutionFile>IntelliBox.sln</SolutionFile>
         <Configuration>Debug</Configuration>
-        <Version>1.0.0.0</Version>
+        <Version>1.1.0.0</Version>
     </PropertyGroup>
     
     <ItemGroup>
@@ -90,9 +90,9 @@
         <Exec Command="rmdir /S /Q source" />
     </Target>
 
-    <Target Name="CreateDocumentation" DependsOnTargets="NeedSandcastleInstalled"
-            Condition="Exists($(SHFBROOT))">
-            
+    <Target Name="CreateDocumentation" DependsOnTargets="NeedSandcastleInstalled;CreateDocumentationWork" />
+
+    <Target Name="CreateDocumentationWork" Condition="Exists($(SHFBROOT))">
         <MSBuild Projects="documentation-$(Configuration).shfbproj"
                  Properties="Configuration=$(Configuration)"
                  StopOnFirstFailure="true" />
