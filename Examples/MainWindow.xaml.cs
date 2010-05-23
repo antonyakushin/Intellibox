@@ -68,15 +68,15 @@ namespace Examples {
             set;
         }
 
-        private string _personFirstNameForTwoWay;
-        public string PersonFirstNameForTwoWay {
+        private object _personObjectForOneWay;
+        public object PersonObjectForOneWay {
             get {
-                return _personFirstNameForTwoWay;
+                return _personObjectForOneWay;
             }
             set {
-                if (_personFirstNameForTwoWay != value) {
-                    _personFirstNameForTwoWay = value;
-                    OnPropertyChanged("PersonFirstNameForTwoWay");
+                if (_personObjectForOneWay != value) {
+                    _personObjectForOneWay = value;
+                    OnPropertyChanged("PersonObjectForOneWay");
                 }
             }
         }

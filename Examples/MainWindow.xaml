@@ -458,8 +458,8 @@ OTHER DEALINGS IN THE SOFTWARE.
                     </StackPanel>
                 </TabItem>
 
-                <TabItem Header="SelectedValue TwoWayBinding"
-                         ToolTip="makes sure that the SelectedValue property supports a standard TwoWay binding">
+                <TabItem Header="SelectedItem OneWayToSourceBinding"
+                         ToolTip="makes sure that the Selecteditem property supports a standard OneWayToSource binding">
                     <StackPanel>
                         <TextBlock TextWrapping="Wrap">
                             The intellibox should be able to handle twoway bindings from the SelectedValue property
@@ -480,7 +480,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
                         <StackPanel Orientation="Horizontal" >
                             <TextBlock Text="First Name: " />
-                            <TextBlock Text="{Binding Path=PersonFirstNameForTwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+                            <TextBlock Text="{Binding Path=PersonObjectForOneWay.FirstName, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
                         </StackPanel>
                         
                         <TextBlock />
@@ -488,8 +488,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                         <auto:Intellibox Width="200"
                                          HorizontalAlignment="Left"
                                          DisplayedValueBinding="{Binding FirstName}"
-                                         SelectedValue="{Binding Path=PersonFirstNameForTwoWay, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-                                         SelectedValueBinding="{Binding Path=FirstName}"
+                                         SelectedItem="{Binding Path=PersonObjectForOneWay, Mode=OneWayToSource, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                                          ResultsMaxHeight="150"
                                          DataProvider="{Binding Path=MultiColumnResults, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
                     </StackPanel>

@@ -89,6 +89,12 @@ namespace System.Windows.Controls {
             DependencyProperty.Register("Items", typeof(IList), typeof(Intellibox), new UIPropertyMetadata(null));
 
         /// <summary>
+        /// For Internal Use Only. Identifies the <see cref="IntermediateSelectedValueProperty"/> Dependancy Property.
+        /// </summary>
+        public static readonly DependencyProperty IntermediateSelectedValueProperty =
+            DependencyProperty.Register("IntermediateSelectedValue", typeof(object), typeof(Intellibox), new UIPropertyMetadata(null));
+
+        /// <summary>
         /// Identifies the <see cref="MaxResultsProperty"/> Dependancy Property.
         /// </summary>
         public static readonly DependencyProperty MaxResultsProperty =
@@ -310,6 +316,19 @@ namespace System.Windows.Controls {
         private bool IsSearchInProgress {
             get {
                 return SearchTimer != null;
+            }
+        }
+
+        /// <summary>
+        /// This is the binding target of the <see cref="SelectedValueBinding"/> property,
+        /// so that users of the control can place their own bindings on the <see cref="SelectedValue"/> property.
+        /// </summary>
+        private object IntermediateSelectedValue {
+            get {
+                return (object)GetValue(IntermediateSelectedValueProperty);
+            }
+            set {
+                SetValue(IntermediateSelectedValueProperty, value);
             }
         }
 
@@ -621,6 +640,10 @@ namespace System.Windows.Controls {
 
         private void ChooseCurrentItem() {
             this.SelectedItem = ResultsList.SelectedItem;
+            
+            // have to set this after the SelectedItem property is set
+            this.SelectedValue = IntermediateSelectedValue;
+
             _lastTextValue = UpdateSearchBoxText(true);
 
             OnUserEndedSearchEvent();
@@ -893,7 +916,7 @@ namespace System.Windows.Controls {
 
         private void OnSelectedValueBindingChanged() {
             var bind = BindingBaseFactory.ConstructBindingForSelected(this, SelectedValueBinding);
-            this.SetBinding(SelectedValueProperty, bind);
+            this.SetBinding(IntermediateSelectedValueProperty, bind);
         }
 
         private void OnTextBoxKeyUp(object sender, KeyEventArgs e) {
