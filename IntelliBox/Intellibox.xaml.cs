@@ -31,8 +31,11 @@ using System.Windows.Media;
 using System.Diagnostics;
 using System.Collections;
 using System.Windows.Threading;
+using System.Windows;
+using System;
+using System.Windows.Controls;
 
-namespace System.Windows.Controls {
+namespace FeserWard.Controls {
     /// <summary>
     /// An implementation of the MS Access 'Lookup' field for WPF that uses the Provider pattern.
     /// <list type="bullet">

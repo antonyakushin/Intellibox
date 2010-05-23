@@ -22,8 +22,9 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
+using System.Windows.Controls;
 
-namespace System.Windows.Controls {
+namespace FeserWard.Controls {
     /// <summary>
     /// Represents a column that displays data from an <see cref="IIntelliboxResultsProvider"/> result set.
     /// </summary>

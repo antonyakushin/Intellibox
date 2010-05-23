@@ -24,6 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Windows;
 using System.Windows.Controls;
+using FeserWard.Controls;
 
 namespace Examples {
     public partial class LimitedResultsCtrl : UserControl {

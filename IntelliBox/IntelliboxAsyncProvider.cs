@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 
-namespace System.Windows.Controls {
+namespace FeserWard.Controls {
 
     /// <summary>
     /// Provide a wrapper method so that people do not need to implement an async provider
