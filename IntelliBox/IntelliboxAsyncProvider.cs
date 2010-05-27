@@ -37,6 +37,7 @@ namespace FeserWard.Controls {
             };
             lock (LockObject) {
                 BackgroundWorker wrk = new BackgroundWorker();
+                wrk.WorkerSupportsCancellation = true;
                 wrk.DoWork += new DoWorkEventHandler(wrk_DoWork);
                 wrk.RunWorkerCompleted += new RunWorkerCompletedEventHandler(wrk_RunWorkerCompleted);
                 activesearches.Add(data, wrk);
