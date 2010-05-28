@@ -389,10 +389,12 @@ OTHER DEALINGS IN THE SOFTWARE.
                 </TabItem>
 
                 <TabItem Header="Searches that take a long time"
-                         ToolTip="Demonstrates the ">
+                         ToolTip="Demonstrates how to tell the Intellibox to show the 'waiting for results' message.">
                     <StackPanel>
-                        <TextBlock TextWrapping="Wrap">This example shows how to reduce contention on the backing data storage
-                by changing the default time interval between searches and the minimum number of characters needed to start a search.</TextBlock>
+                        <TextBlock TextWrapping="Wrap">This example shows how to tell the Intellibox control what an excessively long search
+                        is considered to be. After the first search has taken longer than the 'excessively long' time to return, the Intellibox
+                        will show a form with a "Searching..." message and a cancel button.</TextBlock>
+                        
                         <TextBlock>Enter any character from a-z to start searching.</TextBlock>
 
                         <StackPanel Orientation="Horizontal">
@@ -401,6 +403,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                                            Margin="0,0,6,0">Search:</TextBlock>
                                 <auto:Intellibox Width="200"
                                                  Name="resultsDelayedBox"
+                                                 TimeBeforeWaitNotification="100"
                                                  DataProvider="{Binding Path=DelayedResults, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                                                  SearchBeginning="resultsDelayedBox_SearchBeginning" />
                             </StackPanel>
