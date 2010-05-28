@@ -86,7 +86,7 @@ OTHER DEALINGS IN THE SOFTWARE.
             <Border Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
                     BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"
                     BorderThickness="1">
-                <Grid Margin="6">
+                <Grid Margin="6, 2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="10" />
@@ -94,7 +94,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                     </Grid.ColumnDefinitions>
 
                     <Viewbox Grid.Column="0">
-                        <TextBlock >Loading results...</TextBlock>
+                        <TextBlock>Searching...</TextBlock>
                     </Viewbox>
                     <ProgressBar Grid.Column="0"
                                  IsIndeterminate="True" />

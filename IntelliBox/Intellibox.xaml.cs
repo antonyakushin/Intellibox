@@ -585,6 +585,7 @@ namespace FeserWard.Controls {
         /// <summary>
         /// The amount of time (in milliseconds) that the <see cref="Intellibox"/> control
         /// will wait for results to come back before showing the user a "Waiting for results" message.
+        /// Minimum: 0ms, Default: 125ms
         /// </summary>
         public int TimeBeforeWaitNotification {
             get {
