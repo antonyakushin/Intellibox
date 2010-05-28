@@ -1046,14 +1046,13 @@ namespace FeserWard.Controls {
             ShowResults = false;
             waitingForResultsPopup.IsOpen = false;
 
-            var list = (results is IList)
+            Items = (results is IList)
                 ? (IList)results //optimization to keep from making a copy of the list
                 : (IList)results.ToList();
 
-            noResultsPopup.IsOpen = list.Count < 1;
-            Items = list;
+            noResultsPopup.IsOpen = Items.Count < 1;
 
-            if (list.Count > 0) {
+            if (Items.Count > 0) {
                 if (_previousResultType != Items[0].GetType()) {
                     _previousResultType = Items[0].GetType();
 
