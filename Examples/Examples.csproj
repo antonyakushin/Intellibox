@@ -8,7 +8,7 @@
     <ProjectGuid>{5BAB0A85-AEB5-4783-A622-B711B47111B1}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IntelliBox.Examples</RootNamespace>
+    <RootNamespace>Examples</RootNamespace>
     <AssemblyName>Examples</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -134,6 +134,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DelayedResultsProvider.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

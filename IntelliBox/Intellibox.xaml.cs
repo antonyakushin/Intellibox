@@ -118,6 +118,13 @@ namespace FeserWard.Controls {
             new UIPropertyMetadata(250, null, CoerceMinimumSearchDelayProperty));
 
         /// <summary>
+        /// Identifies the <see cref="TimeBeforeWaitNotification"/> Dependancy Property. Default is 125 milliseconds.
+        /// </summary>
+        public static readonly DependencyProperty TimeBeforeWaitNotificationProperty =
+            DependencyProperty.Register("TimeBeforeWaitNotification", typeof(int), typeof(Intellibox),
+            new UIPropertyMetadata(125,null, CoerceTimeBeforeWaitNotificationProperty));
+
+        /// <summary>
         /// Identifies the <see cref="ResultsHeightProperty"/> Dependancy Property.
         /// </summary>
         public static readonly DependencyProperty ResultsHeightProperty =
@@ -316,6 +323,10 @@ namespace FeserWard.Controls {
             }
         }
 
+        /// <summary>
+        /// When true, means that the control is in 'Search' mode.
+        /// i.e. that it is firing searches as the user types and waiting for results.
+        /// </summary>
         private bool IsSearchInProgress {
             get {
                 return SearchTimer != null;
@@ -571,6 +582,24 @@ namespace FeserWard.Controls {
             }
         }
 
+        /// <summary>
+        /// The amount of time (in milliseconds) that the <see cref="Intellibox"/> control
+        /// will wait for results to come back before showing the user a "Waiting for results" message.
+        /// </summary>
+        public int TimeBeforeWaitNotification {
+            get {
+                return (int)GetValue(TimeBeforeWaitNotificationProperty);
+            }
+            set {
+                SetValue(TimeBeforeWaitNotificationProperty, value);
+            }
+        }
+
+        private DispatcherTimer WaitNotificationTimer {
+            get;
+            set;
+        }
+
         private Style ZeroHeightColumnHeader {
             get {
                 var noHeader = new Style(typeof(GridViewColumnHeader));
@@ -639,6 +668,10 @@ namespace FeserWard.Controls {
                 intval = MinimumSearchDelayMS;
 
             return intval;
+        }
+
+        private static object CoerceTimeBeforeWaitNotificationProperty(DependencyObject reciever, object val) {
+            return (int)val < 0 ? 0 : val;
         }
 
         private void ChooseCurrentItem() {
@@ -790,6 +823,7 @@ namespace FeserWard.Controls {
             ResultsList.ScrollIntoView(selectedItem);
         }
 
+        //TODO remove. we are not going to support paging the result set
         //try to use this for paging support.
         private childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++) {
@@ -830,6 +864,7 @@ namespace FeserWard.Controls {
         }
 
         private static void OnDataProviderChanged(DependencyObject receiver, DependencyPropertyChangedEventArgs args) {
+            //TODO changing the search provider really should cancel any searches already in progress
             var ib = receiver as Intellibox;
             if (ib != null && args != null && args.NewValue is IIntelliboxResultsProvider) {
                 var provider = args.NewValue as IIntelliboxResultsProvider;
@@ -896,12 +931,19 @@ namespace FeserWard.Controls {
                 SearchTimer = null;
             }
 
+            if (WaitNotificationTimer != null) {
+                WaitNotificationTimer.Stop();
+                //setting to null so that when a new search starts, we grab fresh values for the time interval
+                WaitNotificationTimer = null;
+            }
+
             if (SearchProvider != null) {
                 SearchProvider.CancelAllSearches();
             }
 
             ShowResults = false;
             noResultsPopup.IsOpen = false;
+            waitingForResultsPopup.IsOpen = false;
         }
 
         private void OnSearchTimerTick(object sender, EventArgs e) {
@@ -974,14 +1016,40 @@ namespace FeserWard.Controls {
                         new EventHandler(OnSearchTimerTick),
                         this.Dispatcher);
 
+                    WaitNotificationTimer = new DispatcherTimer(
+                        TimeSpan.FromMilliseconds(TimeBeforeWaitNotification),
+                        DispatcherPriority.Background,
+                        new EventHandler(OnWaitNotificationTimerTick),
+                        this.Dispatcher);
+
                     _lastTextValue = enteredText;
                     OnSearchBeginning(_lastTextValue, MaxResults, Tag);
                     SearchProvider.BeginSearchAsync(_lastTextValue, DateTime.Now.ToUniversalTime(), MaxResults, Tag, ProcessSearchResults);
+
                     SearchTimer.Start();
+                    WaitNotificationTimer.Start();
                 }
             }
         }
 
+        private void OnWaitNotificationTimerTick(object sender, EventArgs args) {
+            if (WaitNotificationTimer != null) {
+                WaitNotificationTimer.Stop();
+            }
+
+            // this timer only needs to fire once
+            WaitNotificationTimer = null;
+
+            waitingForResultsPopup.IsOpen = IsSearchInProgress && !(ShowResults || noResultsPopup.IsOpen);
+        }
+
+        
+
+        /// <summary>
+        /// Called when a search completes to process the search results.
+        /// </summary>
+        /// <param name="startTimeUtc"></param>
+        /// <param name="results"></param>
         private void ProcessSearchResults(DateTime startTimeUtc, IEnumerable<object> results) {
             if (_lastTimeSearchRecievedUtc > startTimeUtc)
                 return; // this result set isn't fresh, so don't bother processing it
@@ -989,16 +1057,11 @@ namespace FeserWard.Controls {
             _lastTimeSearchRecievedUtc = startTimeUtc;
 
             ShowResults = false;
+            waitingForResultsPopup.IsOpen = false;
 
-            //optimization to keep from making a copy of the list
-            IList list = null;
-
-            if (results is IList) {
-                list = results as IList;
-            }
-            else {
-                list = results.ToList();
-            }
+            var list = (results is IList)
+                ? (IList)results //optimization to keep from making a copy of the list
+                : (IList)results.ToList();
 
             noResultsPopup.IsOpen = list.Count < 1;
             Items = list;

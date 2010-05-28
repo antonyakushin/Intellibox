@@ -388,6 +388,31 @@ OTHER DEALINGS IN THE SOFTWARE.
                     </StackPanel>
                 </TabItem>
 
+                <TabItem Header="Searches that take a long time"
+                         ToolTip="Demonstrates the ">
+                    <StackPanel>
+                        <TextBlock TextWrapping="Wrap">This example shows how to reduce contention on the backing data storage
+                by changing the default time interval between searches and the minimum number of characters needed to start a search.</TextBlock>
+                        <TextBlock>Enter any character from a-z to start searching.</TextBlock>
+
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel>
+                                <TextBlock VerticalAlignment="Center"
+                                           Margin="0,0,6,0">Search:</TextBlock>
+                                <auto:Intellibox Width="200"
+                                                 Name="resultsDelayedBox"
+                                                 DataProvider="{Binding Path=DelayedResults, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                 SearchBeginning="resultsDelayedBox_SearchBeginning" />
+                            </StackPanel>
+                            <StackPanel Margin="10,0,0,0">
+                                <TextBlock>Search begun notifications</TextBlock>
+                                <ListView Width="200"
+                                          Height="250"
+                                          ItemsSource="{Binding Path=ResultsDelayedNotifications, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem>
             </TabControl>
 
         </TabItem>
