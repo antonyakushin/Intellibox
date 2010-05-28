@@ -951,7 +951,11 @@ namespace FeserWard.Controls {
                 var last = ApplyDisableWhitespaceTrim(_lastTextValue);
                 var current = ApplyDisableWhitespaceTrim(PART_EDITFIELD.Text);
 
-                if (!last.Equals(current)) {
+                // we don't want to search for an empty string, but unlike the first search, we don't want
+                // empty search strings to cancel existing searches, because that responsibility
+                // belongs to the the code that kicks off the first search
+                bool startAnotherSearch = !last.Equals(current) && !string.IsNullOrEmpty(current);
+                if (startAnotherSearch) {
                     _lastTextValue = current;
                     OnSearchBeginning(current, MaxResults, Tag);
                     SearchProvider.BeginSearchAsync(_lastTextValue, DateTime.Now.ToUniversalTime(), MaxResults, Tag, ProcessSearchResults);
