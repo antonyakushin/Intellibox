@@ -888,6 +888,18 @@ namespace FeserWard.Controls {
         }
 
         private void OnSearchBeginning(string term, int max, object data) {
+            // we don't want to re-start the timer if it's already been started
+            // or if results are showing
+            if (WaitNotificationTimer == null && !ShowResults) {
+                WaitNotificationTimer = new DispatcherTimer(
+                            TimeSpan.FromMilliseconds(TimeBeforeWaitNotification),
+                            DispatcherPriority.Background,
+                            new EventHandler(OnWaitNotificationTimerTick),
+                            this.Dispatcher);
+
+                WaitNotificationTimer.Start();
+            }
+
             var e = SearchBeginning;
             if (e != null) {
                 e(term, max, data);
@@ -1003,18 +1015,11 @@ namespace FeserWard.Controls {
                         new EventHandler(OnSearchTimerTick),
                         this.Dispatcher);
 
-                    WaitNotificationTimer = new DispatcherTimer(
-                        TimeSpan.FromMilliseconds(TimeBeforeWaitNotification),
-                        DispatcherPriority.Background,
-                        new EventHandler(OnWaitNotificationTimerTick),
-                        this.Dispatcher);
-
                     _lastTextValue = enteredText;
                     OnSearchBeginning(_lastTextValue, MaxResults, Tag);
                     SearchProvider.BeginSearchAsync(_lastTextValue, DateTime.Now.ToUniversalTime(), MaxResults, Tag, ProcessSearchResults);
 
                     SearchTimer.Start();
-                    WaitNotificationTimer.Start();
                 }
             }
         }
@@ -1027,10 +1032,8 @@ namespace FeserWard.Controls {
             // this timer only needs to fire once
             WaitNotificationTimer = null;
 
-            waitingForResultsPopup.IsOpen = IsSearchInProgress && !(ShowResults || noResultsPopup.IsOpen);
+            waitingForResultsPopup.IsOpen = IsSearchInProgress && !ShowResults;
         }
-
-        
 
         /// <summary>
         /// Called when a search completes to process the search results.

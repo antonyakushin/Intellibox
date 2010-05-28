@@ -52,7 +52,7 @@ namespace FeserWard.Controls {
                 activesearches.Remove(data);
             }
             
-            if (!e.Cancelled) {
+            if (!data.WasCanceled) {
                 data.whendone(data.startTimeUtc, data.results);
             }
         }
@@ -60,6 +60,7 @@ namespace FeserWard.Controls {
         void wrk_DoWork(object sender, DoWorkEventArgs e) {
             var data = e.Argument as searchdata;
             data.results = callback(data.searchTerm, data.max, data.extra);
+            data.WasCanceled = (sender as BackgroundWorker).CancellationPending;
             e.Result = data;
         }
 
@@ -77,6 +78,13 @@ namespace FeserWard.Controls {
             public object extra;
             public Action<DateTime, IEnumerable<object>> whendone;
             public IEnumerable<object> results;
+
+            /// <summary>
+            /// have to store the canceled info here b/c the background worker
+            /// throws an exception if you try to acces the e.Result of a
+            /// canceled background task.
+            /// </summary>
+            public bool WasCanceled;
         }
     }
 }

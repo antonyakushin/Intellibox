@@ -22,7 +22,7 @@ namespace Examples {
             set;
         }
 
-        public DelayedResultsProvider() : this(2000) {
+        public DelayedResultsProvider() : this(5000) {
             
         }
 

@@ -86,22 +86,33 @@ OTHER DEALINGS IN THE SOFTWARE.
             <Border Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
                     BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"
                     BorderThickness="1">
-                <Grid Margin="6, 2">
+                <Grid Margin="6, 4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <Viewbox Grid.Column="0">
-                        <TextBlock>Searching...</TextBlock>
-                    </Viewbox>
                     <ProgressBar Grid.Column="0"
-                                 IsIndeterminate="True" />
+                                 IsIndeterminate="True"
+                                 MinWidth="125" />
+                    
+                    <Viewbox Grid.Column="0">
+                        <TextBlock FontStyle="Italic"
+                                   Text="Searching..."
+                                   Foreground="#FF303030"/>
+                    </Viewbox>
 
                     <Button Grid.Column="2"
-                            Command="{Binding CancelAllSearches}"
-                            Content="Cancel Search" />
+                            Command="{Binding Path=CancelAllSearches, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                            ToolTip="Cancel all searches">
+                        <Button.Content>
+                            <TextBlock Text="X"
+                                       Padding="2"
+                                       FontWeight="DemiBold"
+                                       Foreground="Red" />
+                        </Button.Content>
+                    </Button>
                 </Grid>
             </Border>
 
