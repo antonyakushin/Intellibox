@@ -33,6 +33,11 @@ namespace Examples {
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public IIntelliboxResultsProvider DelayedResults {
+            get;
+            private set;
+        }
+
         public IIntelliboxResultsProvider InvertSingleColumnResults {
             get;
             private set;
@@ -68,6 +73,11 @@ namespace Examples {
             set;
         }
 
+        public ObservableCollection<string> ResultsDelayedNotifications {
+            get;
+            set;
+        }
+
         private object _personObjectForOneWay;
         public object PersonObjectForOneWay {
             get {
@@ -95,13 +105,16 @@ namespace Examples {
         }
 
         public MainWindow() {
+            DelayedResults = new DelayedResultsProvider();
             InvertSingleColumnResults = new InvertedSingleColumnResultsProvider();
             MultiColumnResults = new MultiColumnResultsProvider();
             MultiColumnResultsRss = new RSSFeedResultsProvider();
             NoSearchResults = new NoSearchResultsProvider();
             SingleColumnResults = new SingleColumnResultsProvider();
             SqlServerCeProvider = new LightspeedResultsProvider();
+
             SearchBeginNotifications = new ObservableCollection<string>();
+            ResultsDelayedNotifications = new ObservableCollection<string>();
 
             InitializeComponent();
         }
@@ -116,6 +129,11 @@ namespace Examples {
         private void searchDelayBox_SearchBeginning(string arg1, int arg2, object arg3) {
             var text = string.Format("New search. Text:{{{0}}}", arg1);
             SearchBeginNotifications.Add(text);
+        }
+
+        private void resultsDelayedBox_SearchBeginning(string arg1, int arg2, object arg3) {
+            var text = string.Format("New search. Text:{{{0}}}", arg1);
+            ResultsDelayedNotifications.Add(text);
         }
     }
 }
