@@ -89,6 +89,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="WatermarkTextVisibilityConverter.cs" />
     <Compile Include="Intellibox.xaml.cs">
       <DependentUpon>Intellibox.xaml</DependentUpon>
       <SubType>Code</SubType>

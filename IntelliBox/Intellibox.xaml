@@ -26,7 +26,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 <UserControl Name="IntelliboxControl"
              x:Class="FeserWard.Controls.Intellibox"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:FeserWard.Controls">
     <UserControl.Resources>
         <Style TargetType="{x:Type Popup}">
             <Setter Property="Margin"
@@ -36,6 +37,8 @@ OTHER DEALINGS IN THE SOFTWARE.
             <Setter Property="Placement"
                     Value="Bottom" />
         </Style>
+
+        <local:WatermarkTextVisibilityConverter x:Key="watermarkVisibilityConverter" />
     </UserControl.Resources>
 
     <Grid>
@@ -43,6 +46,31 @@ OTHER DEALINGS IN THE SOFTWARE.
                  PreviewKeyDown="OnTextBoxPreviewKeyDown"
                  KeyUp="OnTextBoxKeyUp"
                  GotFocus="PART_EDITFIELD_GotFocus" />
+        <TextBlock Padding="5, 3,0,0"
+                   Focusable="False"
+                   IsHitTestVisible="False"
+                   Foreground="{Binding Path=WatermarkForeground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                   Background="{Binding Path=WatermarkBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                   Text="{Binding Path=WatermarkText, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                   FontFamily="{Binding Path=WatermarkFontFamily, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                   FontSize="{Binding Path=FontSize, ElementName=PART_EDITFIELD}"
+                   FontStretch="{Binding Path=WatermarkFontStretch, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                   FontStyle="{Binding Path=WatermarkFontStyle, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                   FontWeight="{Binding Path=WatermarkFontWeight, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
+            
+            <TextBlock.Visibility>
+                
+                <MultiBinding Converter="{StaticResource watermarkVisibilityConverter}"
+                              ConverterParameter="invert">
+                    <Binding Path="Text"
+                             ElementName="PART_EDITFIELD"/>
+                    <Binding Path="IsKeyboardFocused"
+                             ElementName="PART_EDITFIELD" />
+                    
+                </MultiBinding>
+            </TextBlock.Visibility>
+        </TextBlock>
+
         <Popup Name="IntelliboxPopup1"
                StaysOpen="False"
                PlacementTarget="{Binding ElementName=PART_EDITFIELD}"
@@ -81,8 +109,7 @@ OTHER DEALINGS IN THE SOFTWARE.
         <Popup StaysOpen="False"
                Name="waitingForResultsPopup"
                PlacementTarget="{Binding ElementName=PART_EDITFIELD}"
-               PreviewKeyDown="lstSearchItems_PreviewKeyDown"
-               >
+               PreviewKeyDown="lstSearchItems_PreviewKeyDown">
             <Border Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
                     BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"
                     BorderThickness="1">
@@ -96,11 +123,11 @@ OTHER DEALINGS IN THE SOFTWARE.
                     <ProgressBar Grid.Column="0"
                                  IsIndeterminate="True"
                                  MinWidth="125" />
-                    
+
                     <Viewbox Grid.Column="0">
                         <TextBlock FontStyle="Italic"
                                    Text="Searching..."
-                                   Foreground="#FF303030"/>
+                                   Foreground="#FF303030" />
                     </Viewbox>
 
                     <Button Grid.Column="2"
