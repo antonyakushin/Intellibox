@@ -46,7 +46,8 @@ OTHER DEALINGS IN THE SOFTWARE.
                  PreviewKeyDown="OnTextBoxPreviewKeyDown"
                  KeyUp="OnTextBoxKeyUp"
                  GotFocus="PART_EDITFIELD_GotFocus" />
-        <TextBlock Padding="5, 3,0,0"
+        <TextBlock Margin="1"
+                   Padding="4,2"
                    Focusable="False"
                    IsHitTestVisible="False"
                    Foreground="{Binding Path=WatermarkForeground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"

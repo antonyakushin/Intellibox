@@ -416,6 +416,34 @@ OTHER DEALINGS IN THE SOFTWARE.
                         </StackPanel>
                     </StackPanel>
                 </TabItem>
+
+                <TabItem Header="Showing Watermark text"
+                         ToolTip="">
+                    <StackPanel>
+                        <TextBlock TextWrapping="Wrap">
+                            Demonstrates how to use the WatermarkText (and associated properties) to show a short
+                            message to the user when the Intellibox doesn't have any content.
+                        </TextBlock>
+
+                        <TextBox Text="This is a normal textbox. Notice how you can remove this text just by selecting and deleting it"
+                                 TextWrapping="Wrap"/>
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock VerticalAlignment="Center"
+                                       Margin="0,0,6,0"
+                                       Text="Search: " />
+                            
+                                <auto:Intellibox Width="200"
+                                                 WatermarkText="Results begin with a-z"
+                                                 WatermarkBackground="AliceBlue"
+                                                 WatermarkForeground="Black"
+                                                 WatermarkFontWeight="Heavy"
+                                                 WatermarkFontStretch="UltraExpanded"
+                                                 DataProvider="{Binding Path=SingleColumnResults, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+                            
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem>
             </TabControl>
 
         </TabItem>
