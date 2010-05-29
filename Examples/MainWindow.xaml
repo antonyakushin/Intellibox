@@ -437,8 +437,6 @@ OTHER DEALINGS IN THE SOFTWARE.
                                                  WatermarkText="Results begin with a-z"
                                                  WatermarkBackground="AliceBlue"
                                                  WatermarkForeground="Black"
-                                                 WatermarkFontWeight="Heavy"
-                                                 WatermarkFontStretch="UltraExpanded"
                                                  DataProvider="{Binding Path=SingleColumnResults, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
                             
                         </StackPanel>
