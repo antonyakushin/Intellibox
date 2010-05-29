@@ -184,7 +184,6 @@ namespace FeserWard.Controls {
 
         /// <summary>
         /// Identifies the <see cref="WatermarkBackground"/> Dependancy Property.
-        /// Sets the background <see cref="Brush"/> of the <see cref="WatermarkText"/> when it is displayed.
         /// </summary>
         public static readonly DependencyProperty WatermarkBackgroundProperty = TextElement.BackgroundProperty.AddOwner(
             typeof(Intellibox),
@@ -192,20 +191,16 @@ namespace FeserWard.Controls {
 
         /// <summary>
         /// Identifies the <see cref="WatermarkFontFamily"/> Dependancy Property.
-        /// Sets the <see cref="FontFamily"/> of the <see cref="WatermarkText"/> when it is displayed.
         /// </summary>
         public static readonly DependencyProperty WatermarkFontFamilyProperty = TextElement.FontFamilyProperty.AddOwner(typeof(Intellibox));
 
         /// <summary>
         /// Identifies the <see cref="WatermarkFontStretch"/> Dependancy Property.
-        /// Sets the <see cref="FontStretch"/> of the <see cref="WatermarkText"/> when it is displayed.
         /// </summary>
         public static readonly DependencyProperty WatermarkFontStretchProperty =TextElement.FontStretchProperty.AddOwner(typeof(Intellibox));
 
         /// <summary>
         /// Identifies the <see cref="WatermarkFontStyle"/> Dependancy Property.
-        /// Sets the <see cref="FontStyle"/> of the <see cref="WatermarkText"/> when it is displayed.
-        /// Default is <see cref="FontStyle.Italic"/>.
         /// </summary>
         public static readonly DependencyProperty WatermarkFontStyleProperty = TextElement.FontStyleProperty.AddOwner(
             typeof(Intellibox),
@@ -213,13 +208,11 @@ namespace FeserWard.Controls {
 
         /// <summary>
         /// Identifies the <see cref="WatermarkFontWeight"/> Dependancy Property.
-        /// Sets the <see cref="FontWeight"/> of the <see cref="WatermarkText"/> when it is displayed.
         /// </summary>
         public static readonly DependencyProperty WatermarkFontWeightProperty = TextElement.FontWeightProperty.AddOwner(typeof(Intellibox));
 
         /// <summary>
         /// Identifies the <see cref="WatermarkForeground"/> Dependancy Property.
-        /// Sets the foreground <see cref="Brtush"/> of the <see cref="WatermarkText"/> when it is displayed.
         /// </summary>
         public static readonly DependencyProperty WatermarkForegroundProperty = TextElement.ForegroundProperty.AddOwner(
             typeof(Intellibox),
@@ -227,12 +220,10 @@ namespace FeserWard.Controls {
 
         /// <summary>
         /// Identifies the <see cref="WatermarkText"/> Dependancy Property.
-        /// Sets the text that is displayed when the <see cref="Intellibox"/> doesn't have focus or any entered content.
         /// </summary>
         public static readonly DependencyProperty WatermarkTextProperty =
             DependencyProperty.Register("WatermarkText", typeof(string), typeof(Intellibox), new UIPropertyMetadata(string.Empty));
 
-        
         private static Type[] _baseTypes = new[] {
             typeof(bool), typeof(byte), typeof(sbyte), typeof(char), typeof(decimal),
             typeof(double), typeof(float),
@@ -654,6 +645,92 @@ namespace FeserWard.Controls {
         private DispatcherTimer WaitNotificationTimer {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Sets the background <see cref="Brush"/> of the <see cref="WatermarkText"/> when it is displayed.
+        /// </summary>
+        public Brush WatermarkBackground {
+            get {
+                return (Brush)GetValue(WatermarkBackgroundProperty);
+            }
+            set {
+                SetValue(WatermarkBackgroundProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Sets the <see cref="FontFamily"/> of the <see cref="WatermarkText"/> when it is displayed.
+        /// </summary>
+        public FontFamily WatermarkFontFamily {
+            get {
+                return (FontFamily)GetValue(WatermarkFontFamilyProperty);
+            }
+            set {
+                SetValue(WatermarkFontFamilyProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Sets the <see cref="FontStretch"/> of the <see cref="WatermarkText"/> when it is displayed.
+        /// </summary>
+        public FontStretch WatermarkFontStretch {
+            get {
+                return (FontStretch)GetValue(WatermarkFontStretchProperty);
+            }
+            set {
+                SetValue(WatermarkFontStretchProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Sets the <see cref="FontStyle"/> of the <see cref="WatermarkText"/> when it is displayed.
+        /// Default is <see cref="FontStyle.Italic"/>.
+        /// </summary>
+        public FontStyle WatermarkFontStyle {
+            get {
+                return (FontStyle)GetValue(WatermarkFontStyleProperty);
+            }
+            set {
+                SetValue(WatermarkFontStyleProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Sets the <see cref="FontWeight"/> of the <see cref="WatermarkText"/> when it is displayed.
+        /// </summary>
+        public FontWeight WatermarkFontWeight {
+            get {
+                return (FontWeight)GetValue(WatermarkFontWeightProperty);
+            }
+            set {
+                SetValue(WatermarkFontWeightProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Sets the foreground <see cref="Brush"/> of the <see cref="WatermarkText"/> when it is displayed.
+        /// Default is <see cref="Colors.Gray"/>.
+        /// </summary>
+        public Brush WatermarkForeground {
+            get {
+                return (Brush)GetValue(WatermarkForegroundProperty);
+            }
+            set {
+                SetValue(WatermarkForegroundProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Sets the text that is displayed when the <see cref="Intellibox"/> doesn't have focus or any entered content.
+        /// </summary>
+        public string WatermarkText {
+            get {
+                return (string)GetValue(WatermarkTextProperty);
+            }
+            set {
+                SetValue(WatermarkTextProperty, value);
+            }
         }
 
         private Style ZeroHeightColumnHeader {
