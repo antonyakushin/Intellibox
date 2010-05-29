@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using System.Collections;
 
 namespace FeserWard.Controls {
 
@@ -11,14 +12,22 @@ namespace FeserWard.Controls {
     /// </summary>
     internal class IntelliboxAsyncProvider {
 
-        private Func<string, int, object, IEnumerable<object>> callback;
+        private Func<string, int, object, IEnumerable> callback;
 
         private Dictionary<searchdata, BackgroundWorker> activesearches
             = new Dictionary<searchdata, BackgroundWorker>();
         
         private object LockObject = new object();
 
-        public IntelliboxAsyncProvider(Func<string, int, object, IEnumerable<object>> doesTheActualSearch) {
+        public bool HasActiveSearches {
+            get {
+                lock (LockObject) {
+                    return activesearches.Count > 0;
+                }
+            }
+        }
+
+        public IntelliboxAsyncProvider(Func<string, int, object, IEnumerable> doesTheActualSearch) {
             if (doesTheActualSearch == null)
                 throw new ArgumentNullException("doesTheActualSearch");
 
@@ -26,7 +35,7 @@ namespace FeserWard.Controls {
         }
 
         public void BeginSearchAsync(string searchTerm, DateTime startTimeUtc, int maxResults, object extraInfo,
-            Action<DateTime, IEnumerable<object>> whenDone) {
+            Action<DateTime, IEnumerable> whenDone) {
 
             var data = new searchdata() {
                 extra = extraInfo,
@@ -76,8 +85,8 @@ namespace FeserWard.Controls {
             public DateTime startTimeUtc;
             public int max;
             public object extra;
-            public Action<DateTime, IEnumerable<object>> whendone;
-            public IEnumerable<object> results;
+            public Action<DateTime, IEnumerable> whendone;
+            public IEnumerable results;
 
             /// <summary>
             /// have to store the canceled info here b/c the background worker

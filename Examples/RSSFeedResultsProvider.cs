@@ -29,6 +29,7 @@ using System.Linq;
 using System.Net;
 using System.Xml;
 using FeserWard.Controls;
+using System.Collections;
 
 namespace Examples {
 
@@ -110,12 +111,12 @@ namespace Examples {
 
         #region ISearchResultsProvider Members
 
-        public IEnumerable<object> DoSearch(string searchTerm, int maxResults, object tag) {
+        public IEnumerable DoSearch(string searchTerm, int maxResults, object tag) {
 
             return getRSSfeed()
                 .Where(term => term.Title.IndexOf(searchTerm, StringComparison.OrdinalIgnoreCase) > -1
                     || term.Description.IndexOf(searchTerm, StringComparison.OrdinalIgnoreCase) > -1)
-                    .Take(maxResults).Cast<object>();
+                    .Take(maxResults);
         }
 
         #endregion

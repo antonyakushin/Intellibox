@@ -24,12 +24,13 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Collections.Generic;
 using FeserWard.Controls;
+using System.Collections;
 
 namespace Examples {
 
     public class NoSearchResultsProvider : IIntelliboxResultsProvider {
 
-        public IEnumerable<object> DoSearch(string searchTerm, int maxResults, object tag) {
+        public IEnumerable DoSearch(string searchTerm, int maxResults, object tag) {
             return new List<object>();
         }
     }

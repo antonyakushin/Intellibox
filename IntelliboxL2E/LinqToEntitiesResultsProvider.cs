@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FeserWard.Controls;
+using System.Collections;
 
 namespace IntelliboxL2E {
 
@@ -34,7 +35,7 @@ namespace IntelliboxL2E {
         //you would not do this in a real application because the connection would always be open.
         private NorthwindEntities Data = new NorthwindEntities();
 
-        public IEnumerable<object> DoSearch(string searchTerm, int maxResults, object extraInfo) {
+        public IEnumerable DoSearch(string searchTerm, int maxResults, object extraInfo) {
 
             //prime the suppliers
             foreach (var prod in Data.Products) {
@@ -45,7 +46,7 @@ namespace IntelliboxL2E {
             //this is a l2e limit for sql server compact
             //for real sql, you can just perform a where without the tolist.
             var l2eIsNotFun = Data.Products.ToList()
-                .Where(p => p.Product_Name.StartsWith(searchTerm, StringComparison.OrdinalIgnoreCase)).Cast<object>();
+                .Where(p => p.Product_Name.StartsWith(searchTerm, StringComparison.OrdinalIgnoreCase));
             return l2eIsNotFun;
             //}
         }

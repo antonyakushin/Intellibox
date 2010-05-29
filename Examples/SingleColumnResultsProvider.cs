@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FeserWard.Controls;
+using System.Collections;
 
 namespace Examples {
 
@@ -52,9 +53,9 @@ namespace Examples {
             return preResults.OrderByDescending(s => s.Length);
         }
 
-        public IEnumerable<object> DoSearch(string searchTerm, int maxResults, object tag) {
+        public IEnumerable DoSearch(string searchTerm, int maxResults, object tag) {
             ConstructDataSource();
-            return _results.Where(term => term.StartsWith(searchTerm)).Take(maxResults).Cast<object>();
+            return _results.Where(term => term.StartsWith(searchTerm)).Take(maxResults);
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using FeserWard.Controls;
+using System.Collections;
 
 namespace Examples {
     public class DelayedResultsProvider : IIntelliboxResultsProvider {
@@ -30,11 +31,11 @@ namespace Examples {
             MillisecondDelay = delayMS < 0 ? 1000 : delayMS;
         }
 
-        public IEnumerable<object> DoSearch(string searchTerm, int maxResults, object extraInfo) {
+        public IEnumerable DoSearch(string searchTerm, int maxResults, object extraInfo) {
             Thread.Sleep(MillisecondDelay);
             return from s in _searchResults
                    where s.StartsWith(searchTerm)
-                   select s as object;
+                   select s;
 
         }
     }

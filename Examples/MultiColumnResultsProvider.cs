@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FeserWard.Controls;
+using System.Collections;
 
 namespace Examples {
     public class MultiColumnResultsProvider : IIntelliboxResultsProvider {
@@ -47,9 +48,9 @@ namespace Examples {
         }
 
 
-        public IEnumerable<object> DoSearch(string searchTerm, int maxResults, object tag) {
+        public IEnumerable DoSearch(string searchTerm, int maxResults, object tag) {
             ConstructResultSet();
-            return _results.Cast<object>();
+            return _results;
         }
 
         private class Person {
