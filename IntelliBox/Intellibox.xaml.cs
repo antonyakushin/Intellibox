@@ -122,11 +122,10 @@ namespace FeserWard.Controls {
             new UIPropertyMetadata(250, null, CoerceMinimumSearchDelayProperty));
 
         /// <summary>
-        /// Identifies the <see cref="TimeBeforeWaitNotification"/> Dependancy Property. Default is 125 milliseconds.
+        ///Using a DependencyProperty as the backing store for PageUpOrDownScrollRows.  This enables animation, styling, binding, etc... 
         /// </summary>
-        public static readonly DependencyProperty TimeBeforeWaitNotificationProperty =
-            DependencyProperty.Register("TimeBeforeWaitNotification", typeof(int), typeof(Intellibox),
-            new UIPropertyMetadata(125,null, CoerceTimeBeforeWaitNotificationProperty));
+        public static readonly DependencyProperty PagingScrollRowsProperty =
+            DependencyProperty.Register("PagingScrollRows", typeof(int), typeof(Intellibox), new UIPropertyMetadata(0));
 
         /// <summary>
         /// Identifies the <see cref="ResultsHeightProperty"/> Dependancy Property.
@@ -193,6 +192,13 @@ namespace FeserWard.Controls {
         /// </summary>
         public static readonly DependencyProperty WatermarkFontStyleProperty =
             DependencyProperty.Register("WatermarkFontStyle", typeof(FontStyle), typeof(Intellibox), new UIPropertyMetadata(FontStyles.Italic));
+
+        /// <summary>
+        /// Identifies the <see cref="TimeBeforeWaitNotification"/> Dependancy Property. Default is 125 milliseconds.
+        /// </summary>
+        public static readonly DependencyProperty TimeBeforeWaitNotificationProperty =
+            DependencyProperty.Register("TimeBeforeWaitNotification", typeof(int), typeof(Intellibox),
+            new UIPropertyMetadata(125, null, CoerceTimeBeforeWaitNotificationProperty));
 
         /// <summary>
         /// Identifies the <see cref="WatermarkFontWeight"/> Dependancy Property.
@@ -427,6 +433,18 @@ namespace FeserWard.Controls {
             }
             set {
                 SetValue(MinimumSearchDelayProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// The number of rows to scroll up or down when a user uses the Page Up or Page Down key.
+        /// </summary>
+        public int PagingScrollRows {
+            get {
+                return (int)GetValue(PagingScrollRowsProperty);
+            }
+            set {
+                SetValue(PagingScrollRowsProperty, value);
             }
         }
 
@@ -731,6 +749,7 @@ namespace FeserWard.Controls {
 
             _lastTimeSearchRecievedUtc = DateTime.Now.ToUniversalTime(); // make sure the field is never null
             Columns = new IntelliboxColumnCollection();
+            PagingScrollRows = 5;
 
             //setting up the default bindings in case the user doesn't set bindings themselves
             OnSelectedValueBindingChanged();
@@ -868,6 +887,10 @@ namespace FeserWard.Controls {
                 case Key.NumPad8:
                 case Key.NumPad2:
                     return 1;
+                case Key.PageDown:
+                    return PagingScrollRows;
+                case Key.PageUp:
+                    return PagingScrollRows;
                 default:
                     return 0;
             }
