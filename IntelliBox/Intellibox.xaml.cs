@@ -185,38 +185,26 @@ namespace FeserWard.Controls {
         /// <summary>
         /// Identifies the <see cref="WatermarkBackground"/> Dependancy Property.
         /// </summary>
-        public static readonly DependencyProperty WatermarkBackgroundProperty = TextElement.BackgroundProperty.AddOwner(
-            typeof(Intellibox),
-            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
-
-        /// <summary>
-        /// Identifies the <see cref="WatermarkFontFamily"/> Dependancy Property.
-        /// </summary>
-        public static readonly DependencyProperty WatermarkFontFamilyProperty = TextElement.FontFamilyProperty.AddOwner(typeof(Intellibox));
-
-        /// <summary>
-        /// Identifies the <see cref="WatermarkFontStretch"/> Dependancy Property.
-        /// </summary>
-        public static readonly DependencyProperty WatermarkFontStretchProperty =TextElement.FontStretchProperty.AddOwner(typeof(Intellibox));
+        public static readonly DependencyProperty WatermarkBackgroundProperty =
+            DependencyProperty.Register("WatermarkBackground", typeof(Brush), typeof(Intellibox), new UIPropertyMetadata(new SolidColorBrush(Colors.Transparent)));
 
         /// <summary>
         /// Identifies the <see cref="WatermarkFontStyle"/> Dependancy Property.
         /// </summary>
-        public static readonly DependencyProperty WatermarkFontStyleProperty = TextElement.FontStyleProperty.AddOwner(
-            typeof(Intellibox),
-            new FrameworkPropertyMetadata(FontStyles.Italic));
+        public static readonly DependencyProperty WatermarkFontStyleProperty =
+            DependencyProperty.Register("WatermarkFontStyle", typeof(FontStyle), typeof(Intellibox), new UIPropertyMetadata(FontStyles.Italic));
 
         /// <summary>
         /// Identifies the <see cref="WatermarkFontWeight"/> Dependancy Property.
         /// </summary>
-        public static readonly DependencyProperty WatermarkFontWeightProperty = TextElement.FontWeightProperty.AddOwner(typeof(Intellibox));
+        public static readonly DependencyProperty WatermarkFontWeightProperty =
+            DependencyProperty.Register("WatermarkFontWeight", typeof(FontWeight), typeof(Intellibox), new UIPropertyMetadata(FontWeights.Normal));
 
         /// <summary>
         /// Identifies the <see cref="WatermarkForeground"/> Dependancy Property.
         /// </summary>
-        public static readonly DependencyProperty WatermarkForegroundProperty = TextElement.ForegroundProperty.AddOwner(
-            typeof(Intellibox),
-             new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Gray)));
+        public static readonly DependencyProperty WatermarkForegroundProperty =
+            DependencyProperty.Register("WatermarkForeground", typeof(Brush), typeof(Intellibox), new UIPropertyMetadata(new SolidColorBrush(Colors.Gray)));
 
         /// <summary>
         /// Identifies the <see cref="WatermarkText"/> Dependancy Property.
@@ -656,30 +644,6 @@ namespace FeserWard.Controls {
             }
             set {
                 SetValue(WatermarkBackgroundProperty, value);
-            }
-        }
-
-        /// <summary>
-        /// Sets the <see cref="FontFamily"/> of the <see cref="WatermarkText"/> when it is displayed.
-        /// </summary>
-        public FontFamily WatermarkFontFamily {
-            get {
-                return (FontFamily)GetValue(WatermarkFontFamilyProperty);
-            }
-            set {
-                SetValue(WatermarkFontFamilyProperty, value);
-            }
-        }
-
-        /// <summary>
-        /// Sets the <see cref="FontStretch"/> of the <see cref="WatermarkText"/> when it is displayed.
-        /// </summary>
-        public FontStretch WatermarkFontStretch {
-            get {
-                return (FontStretch)GetValue(WatermarkFontStretchProperty);
-            }
-            set {
-                SetValue(WatermarkFontStretchProperty, value);
             }
         }
 
