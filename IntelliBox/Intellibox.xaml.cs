@@ -942,6 +942,16 @@ namespace FeserWard.Controls {
                 || pressed == Key.PageDown;
         }
 
+        /// <summary>
+        /// Set the last value and Call OnSearchBeginning and BeginSearchAsync
+        /// </summary>
+        /// <param name="current">The last typed in value</param>
+        private void CreateSearch(string current) {
+            _lastTextValue = current;
+            OnSearchBeginning(current, MaxResults, Tag);
+            SearchProvider.BeginSearchAsync(current, DateTime.Now.ToUniversalTime(), MaxResults, Tag, ProcessSearchResults);
+        }
+
         private static void OnDataProviderChanged(DependencyObject receiver, DependencyPropertyChangedEventArgs args) {
             //TODO changing the search provider really should cancel any searches already in progress
             var ib = receiver as Intellibox;
@@ -1047,9 +1057,7 @@ namespace FeserWard.Controls {
                 // belongs to the the code that kicks off the first search
                 bool startAnotherSearch = !last.Equals(current) && !string.IsNullOrEmpty(current);
                 if (startAnotherSearch) {
-                    _lastTextValue = current;
-                    OnSearchBeginning(current, MaxResults, Tag);
-                    SearchProvider.BeginSearchAsync(_lastTextValue, DateTime.Now.ToUniversalTime(), MaxResults, Tag, ProcessSearchResults);
+                    CreateSearch(current);
                 }
             }
         }
@@ -1111,10 +1119,7 @@ namespace FeserWard.Controls {
                         new EventHandler(OnSearchTimerTick),
                         this.Dispatcher);
 
-                    _lastTextValue = enteredText;
-                    OnSearchBeginning(_lastTextValue, MaxResults, Tag);
-                    SearchProvider.BeginSearchAsync(_lastTextValue, DateTime.Now.ToUniversalTime(), MaxResults, Tag, ProcessSearchResults);
-
+                    CreateSearch(enteredText);
                     SearchTimer.Start();
                 }
             }
@@ -1128,7 +1133,13 @@ namespace FeserWard.Controls {
             // this timer only needs to fire once
             WaitNotificationTimer = null;
 
-            waitingForResultsPopup.IsOpen = IsSearchInProgress && !ShowResults;
+            //determine if we have any active searches
+            var activeSearches = false;
+            if (SearchProvider != null && SearchProvider.HasActiveSearches) {
+                activeSearches = true;
+            }
+
+            waitingForResultsPopup.IsOpen = IsSearchInProgress && !ShowResults && activeSearches;
         }
 
         /// <summary>
@@ -1136,7 +1147,7 @@ namespace FeserWard.Controls {
         /// </summary>
         /// <param name="startTimeUtc"></param>
         /// <param name="results"></param>
-        private void ProcessSearchResults(DateTime startTimeUtc, IEnumerable<object> results) {
+        private void ProcessSearchResults(DateTime startTimeUtc, IEnumerable results) {
             if (_lastTimeSearchRecievedUtc > startTimeUtc)
                 return; // this result set isn't fresh, so don't bother processing it
 
@@ -1147,7 +1158,7 @@ namespace FeserWard.Controls {
 
             Items = (results is IList)
                 ? (IList)results //optimization to keep from making a copy of the list
-                : (IList)results.ToList();
+                : (IList)results.Cast<object>().ToList();
 
             noResultsPopup.IsOpen = Items.Count < 1;
 

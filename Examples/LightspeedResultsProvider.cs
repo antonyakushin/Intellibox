@@ -27,6 +27,7 @@ using System.Linq;
 using FeserWard.Controls;
 using IntelliBox.Examples;
 using Mindscape.LightSpeed;
+using System.Collections;
 
 namespace Examples {
 
@@ -56,12 +57,12 @@ namespace Examples {
             return lsCtx;
         }
 
-        public IEnumerable<object> DoSearch(string searchTerm, int maxResults, object extraInfo) {
+        public IEnumerable DoSearch(string searchTerm, int maxResults, object extraInfo) {
             //using (var uow = UnitOfWork) {
                 //return UnitOfWork.Products.Where(p => p.ProductName
                 //    .StartsWith(searchTerm)).Take(maxResults).Cast<object>();
                 return UnitOfWork.Products.Where(p => p.ProductName
-                  .StartsWith(searchTerm)).Cast<object>();
+                  .StartsWith(searchTerm));
             //}
         }
     }
