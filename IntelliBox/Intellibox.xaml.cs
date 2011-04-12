@@ -667,7 +667,7 @@ namespace FeserWard.Controls {
 
         /// <summary>
         /// Sets the <see cref="FontStyle"/> of the <see cref="WatermarkText"/> when it is displayed.
-        /// Default is <see cref="FontStyle.Italic"/>.
+        /// Default is <see cref="FontStyles.Italic"/>.
         /// </summary>
         public FontStyle WatermarkFontStyle {
             get {
