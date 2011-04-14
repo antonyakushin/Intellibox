@@ -584,7 +584,17 @@ OTHER DEALINGS IN THE SOFTWARE.
                                          DataProvider="{Binding Path=MultiColumnResults, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
                     </StackPanel>
                 </TabItem>
-                
+                <TabItem Header="work item 4391"
+                         ToolTip="test to make sure the problem in work item in 4391 is fixed">
+                    <StackPanel>
+                        <TextBlock>
+                            the control should display and 3 rows should always display in the result list, although
+                            those rows will be blank.
+                        </TextBlock>
+                        <auto:Intellibox ResultsMaxHeight="150"
+                                         DataProvider="{Binding Path=ObjectListResults, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+                    </StackPanel>
+                </TabItem>
             </TabControl>
         </TabItem>
 

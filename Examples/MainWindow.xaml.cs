@@ -68,6 +68,11 @@ namespace Examples {
             private set;
         }
 
+        public IIntelliboxResultsProvider ObjectListResults {
+            get;
+            private set;
+        }
+
         public ObservableCollection<string> SearchBeginNotifications {
             get;
             set;
@@ -115,6 +120,7 @@ namespace Examples {
 
             SearchBeginNotifications = new ObservableCollection<string>();
             ResultsDelayedNotifications = new ObservableCollection<string>();
+            ObjectListResults = new ObjectListProvider();
 
             InitializeComponent();
         }

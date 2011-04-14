@@ -161,6 +161,7 @@
       <DependentUpon>NorthwindLightSpeedModel.lsmodel</DependentUpon>
     </Compile>
     <Compile Include="NoSearchResultsProvider.cs" />
+    <Compile Include="ObjectListProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
