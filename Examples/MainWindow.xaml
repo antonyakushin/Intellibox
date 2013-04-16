@@ -547,6 +547,34 @@ OTHER DEALINGS IN THE SOFTWARE.
                                          DataProvider="{Binding Path=ObjectListResults, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
                     </StackPanel>
                 </TabItem>
+                
+                <TabItem Header="work item 5544"
+                         x:Name="tbIssue5544TestTab"
+                         ToolTip="test to make sure the problem in work item 5544 is fixed">
+                    <StackPanel>
+                        <TextBlock>
+                            
+                        </TextBlock>
+                        <TextBlock>
+                            
+                        </TextBlock>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="swap datacontexts"
+                                Click="btnIssue5544Test_Click" />
+                            <Label Content=" " />
+                            <Label Content="{Binding DataContextName}" />
+                        </StackPanel>
+                        
+                        <GroupBox Header="selected value from the intellibox">
+                            <TextBox Text="{Binding valueSelected}"  />
+                        </GroupBox>
+                        
+                        
+                        <local:Issue5544TestControl />
+                        
+                    </StackPanel>
+                    
+                </TabItem>
             </TabControl>
         </TabItem>
 

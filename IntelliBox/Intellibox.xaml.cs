@@ -791,10 +791,10 @@ namespace FeserWard.Controls {
         }
 
         private void ChooseCurrentItem() {
-            this.SelectedItem = ResultsList.SelectedItem;
+            this.SetValue(SelectedItemProperty, ResultsList.SelectedItem);
             
             // have to set this after the SelectedItem property is set
-            this.SelectedValue = IntermediateSelectedValue;
+            this.SetValue(SelectedValueProperty, IntermediateSelectedValue);
 
             _lastTextValue = UpdateSearchBoxText(true);
 

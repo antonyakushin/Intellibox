@@ -122,6 +122,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Issue5544TestControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LimitedResultsCtrl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -139,6 +143,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DelayedResultsProvider.cs" />
+    <Compile Include="Issue5544TestControl.xaml.cs">
+      <DependentUpon>Issue5544TestControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Issue5544TestDataContext1.cs" />
+    <Compile Include="Issue5544TestDataContext2.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

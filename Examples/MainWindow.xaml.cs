@@ -109,6 +109,9 @@ namespace Examples {
             }
         }
 
+        private Issue5544TestDataContext1 _issue5544TestContext1;
+        private Issue5544TestDataContext2 _issue5544TestContext2;
+
         public MainWindow() {
             DelayedResults = new DelayedResultsProvider();
             InvertSingleColumnResults = new InvertedSingleColumnResultsProvider();
@@ -122,6 +125,10 @@ namespace Examples {
             ObjectListResults = new ObjectListProvider();
 
             InitializeComponent();
+
+            _issue5544TestContext1 = new Issue5544TestDataContext1();
+            _issue5544TestContext2 = new Issue5544TestDataContext2();
+            tbIssue5544TestTab.DataContext = _issue5544TestContext1;
         }
 
         private void OnPropertyChanged(string propertyName) {
@@ -139,6 +146,18 @@ namespace Examples {
         private void resultsDelayedBox_SearchBeginning(string arg1, int arg2, object arg3) {
             var text = string.Format("New search. Text:{{{0}}}", arg1);
             ResultsDelayedNotifications.Add(text);
+        }
+
+        private void btnIssue5544Test_Click(object sender, RoutedEventArgs e)
+        {
+            if (tbIssue5544TestTab.DataContext == null || tbIssue5544TestTab.DataContext == _issue5544TestContext2)
+            {
+                tbIssue5544TestTab.DataContext = _issue5544TestContext1;
+            }
+            else
+            {
+                tbIssue5544TestTab.DataContext = _issue5544TestContext2;
+            }
         }
     }
 }
