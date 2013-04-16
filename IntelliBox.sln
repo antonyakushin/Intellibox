@@ -15,21 +15,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntelliboxL2E", "IntelliboxL2E\IntelliboxL2E.csproj", "{B7F742C8-2C5E-4A2A-BE99-EDEC894B28F0}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs10.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = IntelliBox\\IntelliBox.csproj
-		SccProjectName1 = IntelliBox
-		SccLocalPath1 = IntelliBox
-		SccProjectUniqueName2 = Examples\\Examples.csproj
-		SccProjectName2 = Examples
-		SccLocalPath2 = Examples
-		SccProjectUniqueName3 = IntelliboxL2E\\IntelliboxL2E.csproj
-		SccProjectName3 = IntelliboxL2E
-		SccLocalPath3 = IntelliboxL2E
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
