@@ -113,7 +113,6 @@ namespace Examples {
             DelayedResults = new DelayedResultsProvider();
             InvertSingleColumnResults = new InvertedSingleColumnResultsProvider();
             MultiColumnResults = new MultiColumnResultsProvider();
-            MultiColumnResultsRss = new RSSFeedResultsProvider();
             NoSearchResults = new NoSearchResultsProvider();
             SingleColumnResults = new SingleColumnResultsProvider();
             SqlServerCeProvider = new LightspeedResultsProvider();
