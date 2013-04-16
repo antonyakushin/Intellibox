@@ -109,54 +109,6 @@ OTHER DEALINGS IN THE SOFTWARE.
                     </StackPanel>
                 </TabItem>
 
-                <TabItem Header="Multi-Column List - RSS"
-                 ToolTip="Demonstrates displaying a multi-column list From an RSS Feed.">
-                    <StackPanel>
-                        <TextBlock TextWrapping="Wrap">This example uses the Yahoo Traffic RSS Feed to return results 
-                    for traffic conditions in zip code 10101. Example searches that will return results are "Closed" 
-                    , "Street" and "Construction"</TextBlock>
-                        <TextBlock />
-
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>Selected Value:</TextBlock>
-                            <TextBlock Text="{Binding ElementName=multiColumnRss, Path=SelectedValue}" />
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>Selected Item:</TextBlock>
-                            <TextBlock Text="{Binding ElementName=multiColumnRss, Path=SelectedItem}" />
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>Highlighted Value:</TextBlock>
-                            <TextBlock Name="two"
-                               Text="{Binding ElementName=multiColumnRss, Path=DisplayTextFromHighlightedItem}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock VerticalAlignment="Center"
-                               Margin="0,0,6,0">Search:</TextBlock>
-                            <auto:Intellibox Width="200"
-                                     ResultsHeight="110"
-                                     Name="multiColumnRss"
-                                     DisplayedValueBinding="{Binding Title}"
-                                     ExplicitlyIncludeColumns="True"
-                                     SelectedValueBinding="{Binding Link}"
-                                     DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResultsRss}">
-                                <auto:Intellibox.Columns>
-                                    <auto:IntelliboxColumn ForProperty="Title"
-                                                   Width="125"
-                                                   Header="Title" />
-                                    <auto:IntelliboxColumn ForProperty="Description"
-                                                   Width="200"
-                                                   Header="Description of Issue" />
-                                    <auto:IntelliboxColumn ForProperty="Category"
-                                                   Width="100" />
-                                </auto:Intellibox.Columns>
-                            </auto:Intellibox>
-                        </StackPanel>
-                    </StackPanel>
-                </TabItem>
-
                 <TabItem Header="Overriding Columns"
                  ToolTip="Demonstrates how to override the header title and width of specific columns, while leaving the others untouched.">
                     <StackPanel>
