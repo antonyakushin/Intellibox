@@ -977,9 +977,12 @@ namespace FeserWard.Controls {
         }
 
         private static void OnDataProviderChanged(DependencyObject receiver, DependencyPropertyChangedEventArgs args) {
-            //TODO changing the search provider really should cancel any searches already in progress
             var ib = receiver as Intellibox;
             if (ib != null && args != null && args.NewValue is IIntelliboxResultsProvider) {
+                if (ib.SearchProvider != null) {
+                    ib.SearchProvider.CancelAllSearches();
+                }
+
                 var provider = args.NewValue as IIntelliboxResultsProvider;
                 //Create the wrapper used to make the calls async. This hides the details from the user.
                 ib.SearchProvider = new IntelliboxAsyncProvider(provider.DoSearch);
