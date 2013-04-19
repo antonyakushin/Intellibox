@@ -229,7 +229,6 @@ namespace FeserWard.Controls {
 
         private ICommand _cancelAllSearches;
         private DateTime _lastTimeSearchRecievedUtc;
-        private Type _previousResultType;
         private string _lastTextValue;
         private BindingBase _selectedValueBinding;
         private BindingBase _displayedValueBinding;
@@ -1181,18 +1180,17 @@ namespace FeserWard.Controls {
             ShowResults = false;
             waitingForResultsPopup.IsOpen = false;
 
-            Items = (results is IList)
-                ? (IList)results //optimization to keep from making a copy of the list
-                : (IList)results.Cast<object>().ToList();
+            Items = results == null
+                ? new List<string>()
+                : ((results is IList)
+                    ? (IList)results //optimization to keep from making a copy of the list
+                    : (IList)results.Cast<object>().ToList());
 
             noResultsPopup.IsOpen = Items.Count < 1;
 
             if (Items.Count > 0) {
-                if (_previousResultType != Items[0].GetType()) {
-                    _previousResultType = Items[0].GetType();
-
-                    ResultsList.View = ConstructGridView(Items[0]);
-                }
+                // recreate the GridView for each result set so that the column widths are recalculated
+                ResultsList.View = ConstructGridView(Items[0]);
                 ResultsList.SelectedIndex = 0;
                 ShowResults = true;
             }
