@@ -78,6 +78,24 @@ namespace Examples {
             private set;
         }
 
+        public IIntelliboxResultsProvider DirectoryOnlySearch
+        {
+            get;
+            private set;
+        }
+        
+        public IIntelliboxResultsProvider FileOnlySearch
+        {
+            get;
+            private set;
+        }
+        
+        public IIntelliboxResultsProvider FileAndDirectorySearch
+        {
+            get;
+            private set;
+        }
+
         public ObservableCollection<string> SearchBeginNotifications {
             get;
             set;
@@ -125,6 +143,9 @@ namespace Examples {
             SingleColumnResults = new SingleColumnResultsProvider();
             SqlServerCeProvider = new LightspeedResultsProvider();
             WideAndNarrowResults = new WideAndNarrowResultsProvider();
+            DirectoryOnlySearch = new FilePathSearchProvider(FilePathSearchProvider.PathSearchIncludes.DirectoriesOnly);
+            FileOnlySearch = new FilePathSearchProvider(FilePathSearchProvider.PathSearchIncludes.FilesOnly);
+            FileAndDirectorySearch = new FilePathSearchProvider(FilePathSearchProvider.PathSearchIncludes.FilesAndDirectories);
 
             SearchBeginNotifications = new ObservableCollection<string>();
             ResultsDelayedNotifications = new ObservableCollection<string>();
