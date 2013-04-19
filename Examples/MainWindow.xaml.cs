@@ -73,6 +73,11 @@ namespace Examples {
             private set;
         }
 
+        public IIntelliboxResultsProvider WideAndNarrowResults {
+            get;
+            private set;
+        }
+
         public ObservableCollection<string> SearchBeginNotifications {
             get;
             set;
@@ -119,6 +124,7 @@ namespace Examples {
             NoSearchResults = new NoSearchResultsProvider();
             SingleColumnResults = new SingleColumnResultsProvider();
             SqlServerCeProvider = new LightspeedResultsProvider();
+            WideAndNarrowResults = new WideAndNarrowResultsProvider();
 
             SearchBeginNotifications = new ObservableCollection<string>();
             ResultsDelayedNotifications = new ObservableCollection<string>();

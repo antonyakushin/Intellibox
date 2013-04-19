@@ -574,6 +574,23 @@ OTHER DEALINGS IN THE SOFTWARE.
                     </StackPanel>
                     
                 </TabItem>
+                
+                <TabItem Header="work item 6309"
+                         ToolTip="test to make sure the result list recalculates column widths">
+                    <StackPanel>
+                        <TextBlock >
+                            To run this test, first type 'a' into the control; this will return a narrow result set.<LineBreak />
+                            Select a value, then close the result list. Next type 'z' into the control, this will return<LineBreak />
+                            a wide result set. Verify that the column widths in the result set have been recalculated.<LineBreak />
+                        </TextBlock>
+                        
+                        <auto:Intellibox
+                            DataProvider="{Binding Path=WideAndNarrowResults, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"
+                            DisplayedValueBinding="{Binding Name}"/>
+                        
+                    </StackPanel>
+                    
+                </TabItem>
             </TabControl>
         </TabItem>
 
