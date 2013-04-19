@@ -591,6 +591,30 @@ OTHER DEALINGS IN THE SOFTWARE.
                     </StackPanel>
                     
                 </TabItem>
+                
+                <TabItem Header="work item 6036"
+                         ToolTip="test of the new File Path Picker implementation">
+                    <StackPanel>
+                        <TextBlock>
+                            
+                        </TextBlock>
+                        
+                        <Label Content="Only returns directories matching the search term" />
+                        <auto:Intellibox
+                            DataProvider="{Binding Path=DirectoryOnlySearch, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                            />
+
+                        <Label Content="Only returns files matching the search term" />
+                        <auto:Intellibox
+                            DataProvider="{Binding Path=FileOnlySearch, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                            />
+
+                        <Label Content="Returns both files and directories matching the searhc term" />
+                        <auto:Intellibox
+                            DataProvider="{Binding Path=FileAndDirectorySearch, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                            />
+                    </StackPanel>
+                </TabItem>
             </TabControl>
         </TabItem>
 
