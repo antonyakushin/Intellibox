@@ -52,6 +52,13 @@ namespace Examples
 			set { if (value != _value) { _value = value; OnPropertyChanged("valueSelected"); } }
 		}
 
+		private string _item;
+		public string itemSelected
+		{
+			get { return _item; }
+			set { if (value != _item) { _item = value; OnPropertyChanged("itemSelected"); } }
+		}
+
 		private class queryProvider : FeserWard.Controls.IIntelliboxResultsProvider
 		{
 

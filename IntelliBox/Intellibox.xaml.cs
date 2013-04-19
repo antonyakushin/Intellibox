@@ -167,13 +167,15 @@ namespace FeserWard.Controls {
         /// Identifies the <see cref="SelectedItemProperty"/> Dependancy Property.
         /// </summary>
         public static readonly DependencyProperty SelectedItemProperty =
-            DependencyProperty.Register("SelectedItem", typeof(object), typeof(Intellibox), new UIPropertyMetadata(null));
+            DependencyProperty.Register("SelectedItem", typeof(object), typeof(Intellibox), 
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         /// <summary>
         /// Identifies the <see cref="SelectedValueProperty"/> Dependancy Property.
         /// </summary>
         public static readonly DependencyProperty SelectedValueProperty =
-            DependencyProperty.Register("SelectedValue", typeof(object), typeof(Intellibox), new UIPropertyMetadata(null));
+            DependencyProperty.Register("SelectedValue", typeof(object), typeof(Intellibox),
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         /// <summary>
         /// For Internal Use Only. Identifies the <see cref="ShowResultsProperty"/> Dependancy Property.
@@ -792,7 +794,7 @@ namespace FeserWard.Controls {
 
         private void ChooseCurrentItem() {
             this.SetValue(SelectedItemProperty, ResultsList.SelectedItem);
-            
+
             // have to set this after the SelectedItem property is set
             this.SetValue(SelectedValueProperty, IntermediateSelectedValue);
 

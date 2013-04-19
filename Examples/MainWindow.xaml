@@ -568,8 +568,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                         <GroupBox Header="selected value from the intellibox">
                             <TextBox Text="{Binding valueSelected}"  />
                         </GroupBox>
-                        
-                        
+
                         <local:Issue5544TestControl />
                         
                     </StackPanel>
