@@ -41,6 +41,7 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -82,6 +83,9 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Caliburn.Micro">
+      <HintPath>..\References\Caliburn.Micro.dll</HintPath>
+    </Reference>
     <Reference Include="Mindscape.LightSpeed, Version=3.0.789.12667, Culture=neutral, PublicKeyToken=360c8f37b466ebb2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\Mindscape.LightSpeed.dll</HintPath>
@@ -95,6 +99,10 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\References\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="UIAutomationProvider">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
@@ -116,6 +124,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\ExamplesVM.cs" />
+    <Compile Include="ViewModels\MainWindowVM.cs" />
+    <Compile Include="ViewModels\StandardSearchVM.cs" />
+    <Compile Include="ViewModels\TestsVM.cs" />
+    <Compile Include="ViewModels\WorkItem5544VM.cs" />
+    <Compile Include="ViewModels\WorkItem6036VM.cs" />
     <Compile Include="WideAndNarrowResultsProvider.cs" />
     <Page Include="BasicSearchResultsCtrl.xaml">
       <SubType>Designer</SubType>
@@ -194,6 +208,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="NorthwindLightSpeedModel.lsmodel">
       <Generator>LightSpeedModelGenerator</Generator>
       <LastGenOutput>NorthwindLightSpeedModel1.cs</LastGenOutput>

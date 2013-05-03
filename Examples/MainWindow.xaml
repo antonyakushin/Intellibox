@@ -406,10 +406,12 @@ OTHER DEALINGS IN THE SOFTWARE.
         <!---->
         <!---->
 
-        <TabItem Header="Functional Tests">
+        <TabItem Header="Functional Tests"
+                 DataContext="{Binding Tests}">
             <TabControl TabStripPlacement="Left">
                 <TabItem Header="Empty 'Path'"
-                         ToolTip="Bug: empty 'path' specifier in DisplayedValueBinding causes an exception.">
+                         ToolTip="Bug: empty 'path' specifier in DisplayedValueBinding causes an exception."
+                         DataContext="{Binding EmptyPathTestVM}">
                     <StackPanel>
                         <TextBlock TextWrapping="Wrap">
                             Bug: empty 'path' specifier in DisplayedValueBinding causes an exception.
@@ -436,7 +438,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
                 <TabItem Header="ValueConverters"
-                         ToolTip="makes sure ValueConverters on the DisplayedValueBinding work correctly">
+                         ToolTip="makes sure ValueConverters on the DisplayedValueBinding work correctly"
+                         DataContext="{Binding ValueConvertersTestVM}">
                     <StackPanel>
                         <StackPanel.Resources>
                             <conv:AppendTextConverter x:Key="appendingText" />
@@ -465,7 +468,8 @@ OTHER DEALINGS IN THE SOFTWARE.
                 </TabItem>
 
                 <TabItem Header="SelectedItem OneWayToSourceBinding"
-                         ToolTip="makes sure that the SelectedItem property supports a standard OneWayToSource binding">
+                         ToolTip="makes sure that the SelectedItem property supports a standard OneWayToSource binding"
+                         DataContext="{Binding OneWayToSourceTestVM}">
                     <StackPanel>
                         <TextBlock TextWrapping="Wrap">
                             The intellibox should be able to handle twoway bindings from the SelectedValue property
@@ -537,7 +541,8 @@ OTHER DEALINGS IN THE SOFTWARE.
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="work item 4391"
-                         ToolTip="test to make sure the problem in work item in 4391 is fixed">
+                         ToolTip="test to make sure the problem in work item in 4391 is fixed"
+                         DataContext="{Binding WorkItem4391TestVM}">
                     <StackPanel>
                         <TextBlock>
                             the control should display and 3 rows should always display in the result list, although
@@ -550,7 +555,8 @@ OTHER DEALINGS IN THE SOFTWARE.
                 
                 <TabItem Header="work item 5544"
                          x:Name="tbIssue5544TestTab"
-                         ToolTip="test to make sure the problem in work item 5544 is fixed">
+                         ToolTip="test to make sure the problem in work item 5544 is fixed"
+                         DataContext="{Binding WorkItem5544TestVM}">
                     <StackPanel>
                         <TextBlock>
                             
@@ -576,7 +582,8 @@ OTHER DEALINGS IN THE SOFTWARE.
                 </TabItem>
                 
                 <TabItem Header="work item 6309"
-                         ToolTip="test to make sure the result list recalculates column widths">
+                         ToolTip="test to make sure the result list recalculates column widths"
+                         DataContext="{Binding WorkItem6309TestVM}">
                     <StackPanel>
                         <TextBlock >
                             To run this test, first type 'a' into the control; this will return a narrow result set.<LineBreak />
@@ -593,7 +600,8 @@ OTHER DEALINGS IN THE SOFTWARE.
                 </TabItem>
                 
                 <TabItem Header="work item 6036"
-                         ToolTip="test of the new File Path Picker implementation">
+                         ToolTip="test of the new File Path Picker implementation"
+                         DataContext="{Binding WorkItem6036TestVM}">
                     <StackPanel>
                         <TextBlock>
                             
