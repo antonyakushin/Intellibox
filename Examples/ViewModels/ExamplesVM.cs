@@ -31,5 +31,6 @@ namespace Examples.ViewModels
 {
     class ExamplesVM
     {
+
     }
 }
