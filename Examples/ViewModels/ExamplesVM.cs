@@ -27,10 +27,69 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Examples.ViewModels
-{
-    class ExamplesVM
-    {
+namespace Examples.ViewModels {
+    class ExamplesVM {
+        public StandardSearchVM NoResultsVM {
+            get;
+            private set;
+        }
 
+        public StandardSearchVM SingleColumnVM {
+            get;
+            private set;
+        }
+
+        public StandardSearchVM LimitingResultsVM {
+            get;
+            private set;
+        }
+
+        public StandardSearchVM MultipleColumnVM {
+            get;
+            private set;
+        }
+
+        public StandardSearchVM CustomizingColumnsVM {
+            get;
+            private set;
+        }
+
+        public StandardSearchVM ChangeColumnPOsitionVM {
+            get;
+            private set;
+        }
+
+        public StandardSearchVM ORMExampleVM {
+            get;
+            private set;
+        }
+
+        public StandardSearchVM SearchFrequencyVM {
+            get;
+            private set;
+        }
+
+        public StandardSearchVM LengthySearchesVM {
+            get;
+            private set;
+        }
+
+        public StandardSearchVM WatermarkVM {
+            get;
+            private set;
+        }
+
+        public ExamplesVM() {
+            NoResultsVM = new StandardSearchVM(new NoSearchResultsProvider());
+            SingleColumnVM = new StandardSearchVM(new SingleColumnResultsProvider());
+            LimitingResultsVM = new StandardSearchVM(new InvertedSingleColumnResultsProvider());
+            MultipleColumnVM = new StandardSearchVM(new MultiColumnResultsProvider());
+            CustomizingColumnsVM = new StandardSearchVM(new MultiColumnResultsProvider());
+            ChangeColumnPOsitionVM = new StandardSearchVM(new MultiColumnResultsProvider());
+            ORMExampleVM = new StandardSearchVM(new LightspeedResultsProvider());
+            SearchFrequencyVM = null; //todo need a custom provider
+            LengthySearchesVM = null; //todo need a custom provider
+            WatermarkVM = new StandardSearchVM(new SingleColumnResultsProvider());
+        }
     }
 }
