@@ -123,6 +123,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="SearchProviders\NotifyingProvider.cs" />
     <Compile Include="ViewModels\ExamplesVM.cs" />
     <Compile Include="ViewModels\LengthySearchExampleVM.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />

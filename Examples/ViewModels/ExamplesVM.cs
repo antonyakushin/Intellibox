@@ -64,12 +64,12 @@ namespace Examples.ViewModels {
             private set;
         }
 
-        public StandardSearchVM SearchFrequencyVM {
+        public SearchFrequencyExampleVM SearchFrequencyVM {
             get;
             private set;
         }
 
-        public StandardSearchVM LengthySearchesVM {
+        public LengthySearchExampleVM LengthySearchesVM {
             get;
             private set;
         }
@@ -87,8 +87,8 @@ namespace Examples.ViewModels {
             CustomizingColumnsVM = new StandardSearchVM(new MultiColumnResultsProvider());
             ChangeColumnPOsitionVM = new StandardSearchVM(new MultiColumnResultsProvider());
             ORMExampleVM = new StandardSearchVM(new LightspeedResultsProvider());
-            SearchFrequencyVM = null; //todo need a custom provider
-            LengthySearchesVM = null; //todo need a custom provider
+            SearchFrequencyVM = new SearchFrequencyExampleVM();
+            LengthySearchesVM = new LengthySearchExampleVM();
             WatermarkVM = new StandardSearchVM(new SingleColumnResultsProvider());
         }
     }
