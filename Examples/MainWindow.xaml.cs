@@ -26,6 +26,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using FeserWard.Controls;
+using Examples.ViewModels;
 
 namespace Examples {
 
@@ -151,6 +152,7 @@ namespace Examples {
             ResultsDelayedNotifications = new ObservableCollection<string>();
             ObjectListResults = new ObjectListProvider();
 
+            DataContext = new MainWindowVM();
             InitializeComponent();
 
             _issue5544TestContext1 = new Issue5544TestDataContext1();

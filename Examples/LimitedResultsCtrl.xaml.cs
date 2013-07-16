@@ -28,9 +28,11 @@ using FeserWard.Controls;
 
 namespace Examples {
     public partial class LimitedResultsCtrl : UserControl {
+        [System.Obsolete]
         public static readonly DependencyProperty ProviderProperty =
             DependencyProperty.Register("Provider", typeof(IIntelliboxResultsProvider), typeof(LimitedResultsCtrl), new UIPropertyMetadata(null));
 
+        [System.Obsolete]
         public IIntelliboxResultsProvider Provider {
             get {
                 return (IIntelliboxResultsProvider)GetValue(ProviderProperty);

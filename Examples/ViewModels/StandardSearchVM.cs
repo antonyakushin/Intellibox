@@ -39,9 +39,6 @@ namespace Examples.ViewModels
         private object _selectedValue;
         public object SelectedValue { get { return _selectedValue; } set { if (value != _selectedValue) { _selectedValue = value; NotifyOfPropertyChange(() => SelectedValue); } } }
 
-        private string _selectedText;
-        public string SelectedText { get { return _selectedText; } set { if (value != _selectedText) { _selectedText = value; NotifyOfPropertyChange(() => SelectedText); } } }
-
         private IIntelliboxResultsProvider _queryProvider;
         public IIntelliboxResultsProvider QueryProvider { get { return _queryProvider; } private set { if (value != _queryProvider) { _queryProvider = value; this.NotifyOfPropertyChange(() => QueryProvider); } } }
 

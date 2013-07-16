@@ -54,7 +54,7 @@ namespace Examples.ViewModels {
             private set;
         }
 
-        public StandardSearchVM ChangeColumnPOsitionVM {
+        public StandardSearchVM ChangeColumnPositionVM {
             get;
             private set;
         }
@@ -85,7 +85,7 @@ namespace Examples.ViewModels {
             LimitingResultsVM = new StandardSearchVM(new InvertedSingleColumnResultsProvider());
             MultipleColumnVM = new StandardSearchVM(new MultiColumnResultsProvider());
             CustomizingColumnsVM = new StandardSearchVM(new MultiColumnResultsProvider());
-            ChangeColumnPOsitionVM = new StandardSearchVM(new MultiColumnResultsProvider());
+            ChangeColumnPositionVM = new StandardSearchVM(new MultiColumnResultsProvider());
             ORMExampleVM = new StandardSearchVM(new LightspeedResultsProvider());
             SearchFrequencyVM = new SearchFrequencyExampleVM();
             LengthySearchesVM = new LengthySearchExampleVM();

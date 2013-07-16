@@ -42,14 +42,14 @@ OTHER DEALINGS IN THE SOFTWARE.
     </Control.Resources>
 
     <TabControl TabStripPlacement="Bottom">
-        <TabItem Header="Examples">
+        <TabItem Header="Examples" DataContext="{Binding Examples}">
             <TabControl TabStripPlacement="Left">
                 <TabItem Header="No Search Results"
                  ToolTip="Shows what happens when no search results are avalable.">
                     <StackPanel>
                         <TextBlock>Type anything.</TextBlock>
                         <TextBlock>This example shows what happens when no search results are available.</TextBlock>
-                        <local:BasicSearchResultsCtrl Provider="{Binding ElementName=mainWin, Path=NoSearchResults}" />
+                        <local:BasicSearchResultsCtrl DataContext="{Binding NoResultsVM}" />
                     </StackPanel>
                 </TabItem>
 
@@ -58,7 +58,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                     <StackPanel>
                         <TextBlock>Type any of the letters of the alphabet 'a' through 'z' (lowercase).</TextBlock>
                         <TextBlock>This example demonstrates a provider that returns a single-column results list of a built in type.</TextBlock>
-                        <local:BasicSearchResultsCtrl Provider="{Binding ElementName=mainWin, Path=SingleColumnResults}" />
+                        <local:BasicSearchResultsCtrl DataContext="{Binding SingleColumnVM}" />
                     </StackPanel>
                 </TabItem>
 
@@ -68,80 +68,101 @@ OTHER DEALINGS IN THE SOFTWARE.
                     <StackPanel>
                         <TextBlock>Type any of the letters of the alphabet 'a' through 'z' (lowercase).</TextBlock>
                         <TextBlock>This example demonstrates how to change the maximum number of results the IntelliBox asks for.</TextBlock>
-                        <local:LimitedResultsCtrl Provider="{Binding ElementName=mainWin, Path=InvertSingleColumnResults}" />
+                        <local:LimitedResultsCtrl DataContext="{Binding LimitingResultsVM}" />
                     </StackPanel>
                 </TabItem>
 
                 <TabItem Header="Multi-Column List"
-                         ToolTip="Demonstrates displaying a multi-column list of simple Types.">
+                         ToolTip="Demonstrates displaying a multi-column list of simple Types."
+                         DataContext="{Binding MultipleColumnVM}">
                     <StackPanel>
                         <TextBlock>Type anything. The provider in this example always returns the same result set.</TextBlock>
                         <TextBlock>This example demonstrates how, without any configuration, the IntelliBox does</TextBlock>
                         <TextBlock>something reasonable with a multi-column result set.</TextBlock>
-                        <TextBlock />
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>Selected Value:</TextBlock>
-                            <TextBlock Text="{Binding ElementName=multiColumn, Path=SelectedValue}" />
-                        </StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20px" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="20px" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="10px" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>Selected Item:</TextBlock>
-                            <TextBlock Text="{Binding ElementName=multiColumn, Path=SelectedItem}" />
-                        </StackPanel>
+                            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">Selected Value:</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding SelectedValue}" />
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>Highlighted Value:</TextBlock>
-                            <TextBlock Name="one"
-                               Text="{Binding ElementName=multiColumn, Path=DisplayTextFromHighlightedItem}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock VerticalAlignment="Center"
-                               Margin="0,0,6,0">Search:</TextBlock>
-                            <auto:Intellibox Width="200"
-                                     Name="multiColumn"
-                                     DisplayedValueBinding="{Binding FirstName}"
-                                     SelectedValueBinding="{Binding PersonID}"
-                                     DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
+                            <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right">Selected Item:</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding SelectedItem}" />
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right">Highlighted Value:</TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding ElementName=multiColumn, Path=DisplayTextFromHighlightedItem}" />
+
+                            <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,6,0">Search:</TextBlock>
+                            <auto:Intellibox 
+                                Width="200" Grid.Row="5" Grid.Column="2" 
+                                Name="multiColumn"
+                                SelectedItem="{Binding SelectedItem}"
+                                SelectedValue="{Binding SelectedValue}"
+                                DisplayedValueBinding="{Binding FirstName}"
+                                SelectedValueBinding="{Binding PersonID}"
+                                DataProvider="{Binding QueryProvider}">
 
                             </auto:Intellibox>
-                        </StackPanel>
+                        </Grid>
                     </StackPanel>
                 </TabItem>
 
-                <TabItem Header="Customizing Columns"
-                 ToolTip="Demonstrates how to override the header title and width of specific columns, while leaving the others untouched.">
+                <TabItem 
+                    Header="Customizing Columns"
+                    ToolTip="Demonstrates how to override the header title and width of specific columns, while leaving the others untouched."
+                    DataContext="{Binding CustomizingColumnsVM}">
                     <StackPanel>
                         <TextBlock>Type anything. The provider in this example always returns the same result set.</TextBlock>
                         <TextBlock>This example demonstrates how to hide or change the width of some columns</TextBlock>
                         <TextBlock>without having to deal with all the columns in the result set. As a bonus! this</TextBlock>
                         <TextBlock>example also demonstrates how easy it is to bind the selected value and the</TextBlock>
                         <TextBlock>value displayed in the edit field to different columns.</TextBlock>
-                        <TextBlock />
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>Selected Value:</TextBlock>
-                            <TextBlock Text="{Binding ElementName=overrideColumn, Path=SelectedValue}" />
-                        </StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20px" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="20px" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="10px" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>Selected Item:</TextBlock>
-                            <TextBlock Text="{Binding ElementName=overrideColumn, Path=SelectedItem}" />
-                        </StackPanel>
+                            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">Selected Value:</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding SelectedValue}" />
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>Highlighted Value:</TextBlock>
-                            <TextBlock Name="three"
-                               Text="{Binding ElementName=overrideColumn, Path=DisplayTextFromHighlightedItem}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock VerticalAlignment="Center"
-                               Margin="0,0,6,0">Search:</TextBlock>
-                            <auto:Intellibox Width="200"
-                                     Name="overrideColumn"
-                                     DisplayedValueBinding="{Binding FirstName}"
-                                     SelectedValueBinding="{Binding PersonID}"
-                                     DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
+                            <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right">Selected Item:</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding SelectedItem}" />
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right">Highlighted Value:</TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding ElementName=overrideColumn, Path=DisplayTextFromHighlightedItem}" />
+
+                            <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,6,0">Search:</TextBlock>
+                            <auto:Intellibox 
+                                    Width="200" Grid.Row="5" Grid.Column="2" 
+                                    Name="overrideColumn"
+                                    SelectedItem="{Binding SelectedItem}"
+                                    SelectedValue="{Binding SelectedValue}"
+                                    DisplayedValueBinding="{Binding FirstName}"
+                                    SelectedValueBinding="{Binding PersonID}"
+                                    DataProvider="{Binding QueryProvider}">
                                 <auto:Intellibox.Columns>
                                     <auto:IntelliboxColumn ForProperty="Age"
                                                    Width="125"
@@ -150,7 +171,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                                                    Hide="True" />
                                 </auto:Intellibox.Columns>
                             </auto:Intellibox>
-                        </StackPanel>
+                        </Grid>
 
                         <!-- -->
                         <!-- this one shows how to explicitly specify columns when you're interested in not showing most of the columns -->
@@ -181,12 +202,12 @@ OTHER DEALINGS IN THE SOFTWARE.
                         <StackPanel Orientation="Horizontal">
                             <TextBlock VerticalAlignment="Center"
                                Margin="0,0,6,0">Search:</TextBlock>
-                            <auto:Intellibox Width="200"
+                            <auto:Intellibox Width="200" 
                                      Name="overrideAllColumn"
                                      DisplayedValueBinding="{Binding FirstName}"
                                      SelectedValueBinding="{Binding PersonID}"
                                      ExplicitlyIncludeColumns="True"
-                                     DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
+                                     DataProvider="{Binding QueryProvider}">
                                 <auto:Intellibox.Columns>
                                     <auto:IntelliboxColumn DisplayMemberBinding="{Binding FirstName}"
                                                    Width="150"
@@ -194,47 +215,58 @@ OTHER DEALINGS IN THE SOFTWARE.
                                     <auto:IntelliboxColumn DisplayMemberBinding="{Binding LastName}"
                                                    Width="75"
                                                    Header="Last Name" />
-                                </auto:Intellibox.Columns>
+                                </auto:Intellibox.Columns> 
                             </auto:Intellibox>
                         </StackPanel>
 
                     </StackPanel>
-
                 </TabItem>
 
-                <TabItem Header="Altering Column Position"
-                 ToolTip="Demonstrates how to alter the natural position of the displayed columns.">
+
+                <TabItem 
+                    Header="Altering Column Position"
+                    ToolTip="Demonstrates how to alter the natural position of the displayed columns."
+                    DataContext="{Binding ChangeColumnPositionVM}">
 
                     <StackPanel>
 
                         <TextBlock>Type anything. The provider in this example always returns the same result set.</TextBlock>
                         <TextBlock>This example demonstrates how to use the 'Position' property to change the</TextBlock>
                         <TextBlock>default positioning and order of columns in a multi-column result set.</TextBlock>
-                        <TextBlock />
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>Selected Value:</TextBlock>
-                            <TextBlock Text="{Binding ElementName=positionColumn, Path=SelectedValue}" />
-                        </StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20px" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="20px" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="10px" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>Selected Item:</TextBlock>
-                            <TextBlock Text="{Binding ElementName=positionColumn, Path=SelectedItem}" />
-                        </StackPanel>
+                            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">Selected Value:</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding SelectedValue}" />
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>Highlighted Value:</TextBlock>
-                            <TextBlock Name="five"
-                               Text="{Binding ElementName=positionColumn, Path=DisplayTextFromHighlightedItem}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock VerticalAlignment="Center"
-                               Margin="0,0,6,0">Search:</TextBlock>
-                            <auto:Intellibox Width="200"
-                                     Name="positionColumn"
-                                     DisplayedValueBinding="{Binding FirstName}"
-                                     SelectedValueBinding="{Binding PersonID}"
-                                     DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=MultiColumnResults}">
+                            <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right">Selected Item:</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding SelectedItem}" />
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right">Highlighted Value:</TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding ElementName=positionColumn, Path=DisplayTextFromHighlightedItem}" />
+
+                            <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,6,0">Search:</TextBlock>
+                            <auto:Intellibox 
+                                Width="200" Grid.Row="5" Grid.Column="2" 
+                                Name="positionColumn"
+                                SelectedItem="{Binding SelectedItem}"
+                                SelectedValue="{Binding SelectedValue}"
+                                DisplayedValueBinding="{Binding FirstName}"
+                                SelectedValueBinding="{Binding PersonID}"
+                                DataProvider="{Binding QueryProvider}">
 
                                 <auto:Intellibox.Columns>
                                     <auto:IntelliboxColumn ForProperty="Weight"
@@ -245,44 +277,54 @@ OTHER DEALINGS IN THE SOFTWARE.
                                                    Position="3" />
                                 </auto:Intellibox.Columns>
                             </auto:Intellibox>
-                        </StackPanel>
-
+                        </Grid>
                     </StackPanel>
 
                 </TabItem>
 
-                <TabItem Header="Multi-Column Northwind Product DB"
-                 ToolTip="Demonstrates displaying a multi-column list of simple Types returned from a database provider.">
+                <TabItem 
+                    Header="Multi-Column Northwind Product DB"
+                    ToolTip="Demonstrates displaying a multi-column list of simple Types returned from a database provider."
+                    DataContext="{Binding ORMExampleVM}">
                     <StackPanel>
-                        <TextBlock TextWrapping="Wrap">This example shows how you can use an ORM like LightSpeed to query
-                a database and return results.</TextBlock>
+                        <TextBlock TextWrapping="Wrap">This example shows how you can use an ORM like LightSpeed to query                a database and return results.</TextBlock>
                         <TextBlock>Product Search</TextBlock>
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>Selected Value:</TextBlock>
-                            <TextBlock Text="{Binding ElementName=lightspeedBox, Path=SelectedValue}" />
-                        </StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20px" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="20px" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="10px" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>Selected Item:</TextBlock>
-                            <TextBlock Text="{Binding ElementName=lightspeedBox, Path=SelectedItem}" />
-                        </StackPanel>
+                            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">Selected Value:</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding SelectedValue}" />
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>Highlighted Value:</TextBlock>
-                            <TextBlock Name="six"
-                               Text="{Binding ElementName=lightspeedBox, Path=DisplayTextFromHighlightedItem}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock VerticalAlignment="Center"
-                               Margin="0,0,6,0">Search:</TextBlock>
-                            <auto:Intellibox Width="200"
-                                     ResultsHeight="110"
-                                     ExplicitlyIncludeColumns="True"
-                                     Name="lightspeedBox"
-                                     DisplayedValueBinding="{Binding ProductName}"
-                                     SelectedValueBinding="{Binding ProductId}"
-                                     DataProvider="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=SqlServerCeProvider}">
+                            <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right">Selected Item:</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding SelectedItem}" />
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right">Highlighted Value:</TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding ElementName=lightspeedBox, Path=DisplayTextFromHighlightedItem}" />
+
+                            <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,6,0">Search:</TextBlock>
+                            <auto:Intellibox 
+                                Width="200" Grid.Row="5" Grid.Column="2" 
+                                ResultsHeight="110"
+                                ExplicitlyIncludeColumns="True"
+                                Name="lightspeedBox"
+                                SelectedItem="{Binding SelectedItem}"
+                                SelectedValue="{Binding SelectedValue}"
+                                DisplayedValueBinding="{Binding ProductName}"
+                                SelectedValueBinding="{Binding ProductId}"
+                                DataProvider="{Binding QueryProvider}">
                                 <auto:Intellibox.Columns>
                                     <auto:IntelliboxColumn DisplayMemberBinding="{Binding ProductName}"
                                                    Width="150"
@@ -295,82 +337,121 @@ OTHER DEALINGS IN THE SOFTWARE.
                                                    Header="Supplier" />
                                 </auto:Intellibox.Columns>
                             </auto:Intellibox>
-                        </StackPanel>
+                        </Grid>
                     </StackPanel>
                 </TabItem>
 
-                <TabItem Header="Setting Search Frequency"
-                 ToolTip="Demonstrates how to control the frequency of the SearchBeginning event">
+                <TabItem 
+                    Header="Setting Search Frequency"
+                    ToolTip="Demonstrates how to control the frequency of the SearchBeginning event"
+                    DataContext="{Binding SearchFrequencyVM}">
                     <StackPanel>
                         <TextBlock TextWrapping="Wrap">This example shows how to reduce contention on the backing data storage
                 by changing the default time interval between searches and the minimum number of characters needed to start a search.</TextBlock>
                         <TextBlock>Enter any character from a-z to start searching.</TextBlock>
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>Selected Value:</TextBlock>
-                            <TextBlock Text="{Binding ElementName=searchDelayBox, Path=SelectedValue}" />
-                        </StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20px" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="20px" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="20px" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="10px" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>Selected Item:</TextBlock>
-                            <TextBlock Text="{Binding ElementName=searchDelayBox, Path=SelectedItem}" />
-                        </StackPanel>
+                            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">Selected Value:</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding DelayedSearch.SelectedValue}" />
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>Highlighted Value:</TextBlock>
-                            <TextBlock Text="{Binding ElementName=searchDelayBox, Path=DisplayTextFromHighlightedItem}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel>
-                                <TextBlock VerticalAlignment="Center"
-                               Margin="0,0,6,0">Search:</TextBlock>
-                                <auto:Intellibox Width="200"
-                                     Name="searchDelayBox"
-                                     MinimumSearchDelay="1000"
-                                     MinimumPrefixLength="1"
-                                     DataProvider="{Binding Path=SingleColumnResults, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-                                     SearchBeginning="searchDelayBox_SearchBeginning"/>
-                            </StackPanel>
-                            <StackPanel Margin="10,0,0,0">
-                                <TextBlock>Search begun notifications</TextBlock>
-                                <ListView Width="200" Height="250"
-                            ItemsSource="{Binding Path=SearchBeginNotifications, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
-                            </StackPanel>
-                        </StackPanel>
+                            <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right">Selected Item:</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding DelayedSearch.SelectedItem}" />
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right">Highlighted Value:</TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding ElementName=searchDelayBox, Path=DisplayTextFromHighlightedItem}" />
+
+                            <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,6,0">Search:</TextBlock>
+                            <auto:Intellibox 
+                                Width="200" Grid.Row="5" Grid.Column="2" 
+                                Name="searchDelayBox"
+                                SelectedItem="{Binding DelayedSearch.SelectedItem}"
+                                SelectedValue="{Binding DelayedSearch.SelectedValue}"
+                                MinimumSearchDelay="1000"
+                                MinimumPrefixLength="1"
+                                DataProvider="{Binding DelayedSearch.QueryProvider}"/>
+
+                            <TextBlock Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" >Search begun notifications</TextBlock>
+                            <ListView  Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" Width="200" Height="250" HorizontalAlignment="Left"
+                                ItemsSource="{Binding SearchNotifications}" />
+                        </Grid>
                     </StackPanel>
                 </TabItem>
 
-                <TabItem Header="Searches that take a long time"
-                         ToolTip="Demonstrates how to tell the Intellibox to show the 'waiting for results' message.">
+                <TabItem 
+                    Header="Searches that take a long time"
+                    ToolTip="Demonstrates how to tell the Intellibox to show the 'waiting for results' message."
+                    DataContext="{Binding LengthySearchesVM}">
                     <StackPanel>
                         <TextBlock TextWrapping="Wrap">This example shows how to tell the Intellibox control what an excessively long search
                         is considered to be. After the first search has taken longer than the 'excessively long' time to return, the Intellibox
                         will show a form with a "Searching..." message and a cancel button.</TextBlock>
-                        
+
                         <TextBlock>Enter any character from a-z to start searching.</TextBlock>
 
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel>
-                                <TextBlock VerticalAlignment="Center"
-                                           Margin="0,0,6,0">Search:</TextBlock>
-                                <auto:Intellibox Width="200"
-                                                 Name="resultsDelayedBox"
-                                                 TimeBeforeWaitNotification="100"
-                                                 DataProvider="{Binding Path=DelayedResults, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-                                                 SearchBeginning="resultsDelayedBox_SearchBeginning" />
-                            </StackPanel>
-                            <StackPanel Margin="10,0,0,0">
-                                <TextBlock>Search begun notifications</TextBlock>
-                                <ListView Width="200"
-                                          Height="250"
-                                          ItemsSource="{Binding Path=ResultsDelayedNotifications, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
-                            </StackPanel>
-                        </StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20px" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="20px" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="20px" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="10px" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">Selected Value:</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding LongSearch.SelectedValue}" />
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right">Selected Item:</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding LongSearch.SelectedItem}" />
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right">Highlighted Value:</TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding ElementName=resultsDelayedBox, Path=DisplayTextFromHighlightedItem}" />
+
+                            <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,6,0">Search:</TextBlock>
+                            <auto:Intellibox 
+                                Width="200" Grid.Row="5" Grid.Column="2" 
+                                Name="resultsDelayedBox"
+                                SelectedItem="{Binding LongSearch.SelectedItem}"
+                                SelectedValue="{Binding LongSearch.SelectedValue}"
+                                TimeBeforeWaitNotification="100"
+                                DataProvider="{Binding LongSearch.QueryProvider}"/>
+
+                            <TextBlock Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" >Search begun notifications</TextBlock>
+                            <ListView  Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" Width="200" Height="250" HorizontalAlignment="Left"
+                                ItemsSource="{Binding SearchNotifications}" />
+                        </Grid>
                     </StackPanel>
                 </TabItem>
 
-                <TabItem Header="Showing Watermark text"
-                         ToolTip="">
+                <TabItem 
+                    Header="Showing Watermark text"
+                    ToolTip=""
+                    DataContext="{Binding WatermarkVM}">
                     <StackPanel>
                         <TextBlock TextWrapping="Wrap">
                             Demonstrates how to use the WatermarkText (and associated properties) to show a short
@@ -379,19 +460,46 @@ OTHER DEALINGS IN THE SOFTWARE.
 
                         <TextBox Text="This is a normal textbox. Notice how you can remove this text just by selecting and deleting it"
                                  TextWrapping="Wrap"/>
-                        <StackPanel Orientation="Horizontal">
 
-                            <TextBlock VerticalAlignment="Center"
-                                       Margin="0,0,6,0"
-                                       Text="Search: " />
-                            
-                                <auto:Intellibox Width="200"
-                                                 WatermarkText="Results begin with a-z"
-                                                 WatermarkBackground="AliceBlue"
-                                                 WatermarkForeground="Black"
-                                                 DataProvider="{Binding Path=SingleColumnResults, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
-                            
-                        </StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20px" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="20px" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="20px" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="10px" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">Selected Value:</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding SelectedValue}" />
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right">Selected Item:</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding SelectedItem}" />
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right">Highlighted Value:</TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding ElementName=watermarkBox, Path=DisplayTextFromHighlightedItem}" />
+
+                            <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,6,0">Search:</TextBlock>
+                            <auto:Intellibox 
+                                Width="200" Grid.Row="5" Grid.Column="2" 
+                                Name="watermarkBox"
+                                SelectedItem="{Binding SelectedItem}"
+                                SelectedValue="{Binding SelectedValue}"
+                                WatermarkText="Results begin with a-z"
+                                WatermarkBackground="AliceBlue"
+                                WatermarkForeground="Black"
+                                DataProvider="{Binding QueryProvider}" />
+
+                        </Grid>
                     </StackPanel>
                 </TabItem>
             </TabControl>
@@ -418,21 +526,21 @@ OTHER DEALINGS IN THE SOFTWARE.
                             <LineBreak />
                             http://intellibox.codeplex.com/WorkItem/View.aspx?WorkItemId=3993
                         </TextBlock>
-                        
+
                         <TextBlock />
-                        
+
                         <TextBlock>
                             Type any english alphabet character to get a list of results.
                             <LineBreak />
                             You should see the value of the selected row in textbox.
                         </TextBlock>
-                        
+
                         <TextBlock />
-                        
+
                         <auto:Intellibox Width="200"
                                          HorizontalAlignment="Left"
                                          DisplayedValueBinding="{Binding}"
-                                         DataProvider="{Binding Path=SingleColumnResults, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+                                         DataProvider="{Binding QueryProvider}" />
                     </StackPanel>
                 </TabItem>
 
@@ -451,7 +559,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                         </TextBlock>
 
                         <TextBlock />
-                        
+
                         <TextBlock>
                             Type any english alphabet character to get a list of results.
                             <LineBreak />
@@ -459,11 +567,11 @@ OTHER DEALINGS IN THE SOFTWARE.
                         </TextBlock>
 
                         <TextBlock />
-                        
+
                         <auto:Intellibox Width="200"
                                          HorizontalAlignment="Left"
                                          DisplayedValueBinding="{Binding Converter={StaticResource appendingText}, ConverterParameter=ABCDEF}"
-                                         DataProvider="{Binding Path=SingleColumnResults, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+                                         DataProvider="{Binding QueryProvider}" />
                     </StackPanel>
                 </TabItem>
 
@@ -492,9 +600,9 @@ OTHER DEALINGS IN THE SOFTWARE.
                             <TextBlock Text="First Name: " />
                             <TextBlock Text="{Binding Path=PersonObjectForOneWay.FirstName, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
                         </StackPanel>
-                        
+
                         <TextBlock />
-                        
+
                         <auto:Intellibox Width="200"
                                          HorizontalAlignment="Left"
                                          DisplayedValueBinding="{Binding FirstName}"
@@ -530,7 +638,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                         </StackPanel>
 
                         <TextBlock />
-                        
+
                         <auto:Intellibox
                                          HorizontalAlignment="Left"
                                          DisplayedValueBinding="{Binding FirstName}"
@@ -552,17 +660,17 @@ OTHER DEALINGS IN THE SOFTWARE.
                                          DataProvider="{Binding Path=ObjectListResults, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
                     </StackPanel>
                 </TabItem>
-                
+
                 <TabItem Header="work item 5544"
                          x:Name="tbIssue5544TestTab"
                          ToolTip="test to make sure the problem in work item 5544 is fixed"
                          DataContext="{Binding WorkItem5544TestVM}">
                     <StackPanel>
                         <TextBlock>
-                            
+
                         </TextBlock>
                         <TextBlock>
-                            
+
                         </TextBlock>
                         <StackPanel Orientation="Horizontal">
                             <Button Content="swap datacontexts"
@@ -570,17 +678,17 @@ OTHER DEALINGS IN THE SOFTWARE.
                             <Label Content=" " />
                             <Label Content="{Binding DataContextName}" />
                         </StackPanel>
-                        
+
                         <GroupBox Header="selected value from the intellibox">
                             <TextBox Text="{Binding valueSelected}"  />
                         </GroupBox>
 
                         <local:Issue5544TestControl />
-                        
+
                     </StackPanel>
-                    
+
                 </TabItem>
-                
+
                 <TabItem Header="work item 6309"
                          ToolTip="test to make sure the result list recalculates column widths"
                          DataContext="{Binding WorkItem6309TestVM}">
@@ -590,23 +698,23 @@ OTHER DEALINGS IN THE SOFTWARE.
                             Select a value, then close the result list. Next type 'z' into the control, this will return<LineBreak />
                             a wide result set. Verify that the column widths in the result set have been recalculated.<LineBreak />
                         </TextBlock>
-                        
+
                         <auto:Intellibox
                             DataProvider="{Binding Path=WideAndNarrowResults, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"
                             DisplayedValueBinding="{Binding Name}"/>
-                        
+
                     </StackPanel>
-                    
+
                 </TabItem>
-                
+
                 <TabItem Header="work item 6036"
                          ToolTip="test of the new File Path Picker implementation"
                          DataContext="{Binding WorkItem6036TestVM}">
                     <StackPanel>
                         <TextBlock>
-                            
+
                         </TextBlock>
-                        
+
                         <Label Content="Only returns directories matching the search term" />
                         <auto:Intellibox
                             DataProvider="{Binding Path=DirectoryOnlySearch, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
