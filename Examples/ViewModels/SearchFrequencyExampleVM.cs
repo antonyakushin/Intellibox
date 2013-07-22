@@ -6,7 +6,8 @@ using System.Collections.ObjectModel;
 using Examples.SearchProviders;
 
 namespace Examples.ViewModels {
-    class SearchFrequencyExampleVM {
+    public class SearchFrequencyExampleVM
+    {
 
         public StandardSearchVM DelayedSearch {
             get;

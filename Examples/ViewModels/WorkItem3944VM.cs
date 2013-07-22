@@ -22,19 +22,30 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Caliburn.Micro;
 using FeserWard.Controls;
-using Examples.ViewModels;
 
-namespace Examples {
+namespace Examples.ViewModels
+{
+    public class WorkItem3944VM : PropertyChangedBase
+    {
+        private object _person;
+        public object PersonObjectForOneWay { get { return _person; } set { if (value != _person) { _person = value; NotifyOfPropertyChange(() => PersonObjectForOneWay); } } }
 
-    public partial class MainWindow : Window {
+        private string _name;
+        public string PersonFirstNameForOneWay { get { return _name; } set { if (_name != value) { _name = value; NotifyOfPropertyChange(() => PersonFirstNameForOneWay); } } }
 
-        public MainWindow() {
-            InitializeComponent();
+        private IIntelliboxResultsProvider _queryProvider;
+        public IIntelliboxResultsProvider QueryProvider { get { return _queryProvider; } private set { if (value != _queryProvider) { _queryProvider = value; this.NotifyOfPropertyChange(() => QueryProvider); } } }
 
+
+        public WorkItem3944VM()
+        {
+            QueryProvider = new MultiColumnResultsProvider();
         }
     }
 }

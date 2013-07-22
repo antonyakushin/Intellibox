@@ -31,7 +31,7 @@ using FeserWard.Controls;
 
 namespace Examples.ViewModels
 {
-    class WorkItem6036VM
+    public class WorkItem6036VM
     {
         public StandardSearchVM DirectoryOnlySearch { get; private set; }
         public StandardSearchVM FileOnlySearch { get; private set; }

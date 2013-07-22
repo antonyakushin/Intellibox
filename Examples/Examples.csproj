@@ -123,6 +123,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Infrastructure\IntelliboxExamplesBootstrapper.cs" />
     <Compile Include="SearchProviders\NotifyingProvider.cs" />
     <Compile Include="ViewModels\ExamplesVM.cs" />
     <Compile Include="ViewModels\LengthySearchExampleVM.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="ViewModels\SearchFrequencyExampleVM.cs" />
     <Compile Include="ViewModels\StandardSearchVM.cs" />
     <Compile Include="ViewModels\TestsVM.cs" />
+    <Compile Include="ViewModels\WorkItem3944VM.cs" />
     <Compile Include="ViewModels\WorkItem5544VM.cs" />
     <Compile Include="ViewModels\WorkItem6036VM.cs" />
     <Compile Include="WideAndNarrowResultsProvider.cs" />

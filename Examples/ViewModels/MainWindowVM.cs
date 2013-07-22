@@ -29,7 +29,7 @@ using System.Text;
 
 namespace Examples.ViewModels
 {
-    internal class MainWindowVM
+    public class MainWindowVM
     {
         public ExamplesVM Examples { get; private set; }
         public TestsVM Tests { get; private set; }
