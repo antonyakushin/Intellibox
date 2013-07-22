@@ -594,11 +594,12 @@ OTHER DEALINGS IN THE SOFTWARE.
                             The value shown in the 'FirstName' field should match the value shown in the textbox.
                         </TextBlock>
 
+                        
                         <TextBlock />
 
                         <StackPanel Orientation="Horizontal" >
                             <TextBlock Text="First Name: " />
-                            <TextBlock Text="{Binding Path=PersonObjectForOneWay.FirstName, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+                            <TextBlock Text="{Binding Path=PersonObjectForOneWay.FirstName}" />
                         </StackPanel>
 
                         <TextBlock />
@@ -606,14 +607,15 @@ OTHER DEALINGS IN THE SOFTWARE.
                         <auto:Intellibox Width="200"
                                          HorizontalAlignment="Left"
                                          DisplayedValueBinding="{Binding FirstName}"
-                                         SelectedItem="{Binding Path=PersonObjectForOneWay, Mode=OneWayToSource, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                         SelectedItem="{Binding Path=PersonObjectForOneWay, Mode=OneWayToSource}"
                                          ResultsMaxHeight="150"
-                                         DataProvider="{Binding Path=MultiColumnResults, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+                                         DataProvider="{Binding Path=QueryProvider}" />
                     </StackPanel>
                 </TabItem>
 
                 <TabItem Header="SelectedValue OneWayToSource"
-                         ToolTip="makes sure that the SelectedValue property supports a OneWayToSource binding">
+                         ToolTip="makes sure that the SelectedValue property supports a OneWayToSource binding"
+                         DataContext="{Binding OneWayToSourceTestVM}">
                     <StackPanel>
                         <TextBlock TextWrapping="Wrap">
                             The intellibox should be able to handle OneWayToSource bindings from the SelectedValue property to
@@ -634,7 +636,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
                         <StackPanel Orientation="Horizontal" >
                             <TextBlock Text="First Name: " />
-                            <TextBlock Text="{Binding Path=PersonFirstNameForOneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+                            <TextBlock Text="{Binding Path=PersonFirstNameForOneWay}" />
                         </StackPanel>
 
                         <TextBlock />
@@ -642,10 +644,10 @@ OTHER DEALINGS IN THE SOFTWARE.
                         <auto:Intellibox
                                          HorizontalAlignment="Left"
                                          DisplayedValueBinding="{Binding FirstName}"
-                                         SelectedValue="{Binding Path=PersonFirstNameForOneWay, Mode=OneWayToSource, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                         SelectedValue="{Binding Path=PersonFirstNameForOneWay, Mode=OneWayToSource}"
                                          SelectedValueBinding="{Binding Path=FirstName}"
                                          ResultsMaxHeight="150"
-                                         DataProvider="{Binding Path=MultiColumnResults, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+                                         DataProvider="{Binding Path=QueryProvider}" />
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="work item 4391"
@@ -657,7 +659,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                             those rows will be blank.
                         </TextBlock>
                         <auto:Intellibox ResultsMaxHeight="150"
-                                         DataProvider="{Binding Path=ObjectListResults, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+                                         DataProvider="{Binding Path=QueryProvider}" />
                     </StackPanel>
                 </TabItem>
 
@@ -669,21 +671,17 @@ OTHER DEALINGS IN THE SOFTWARE.
                         <TextBlock>
 
                         </TextBlock>
-                        <TextBlock>
-
-                        </TextBlock>
                         <StackPanel Orientation="Horizontal">
-                            <Button Content="swap datacontexts"
-                                Click="btnIssue5544Test_Click" />
+                            <Button x:Name="SwapDataContexts" Content="swap datacontexts" />
                             <Label Content=" " />
-                            <Label Content="{Binding DataContextName}" />
+                            <Label Content="{Binding CurrentDataContext.DataContextName}" />
                         </StackPanel>
 
                         <GroupBox Header="selected value from the intellibox">
-                            <TextBox Text="{Binding valueSelected}"  />
+                            <TextBox Text="{Binding CurrentDataContext.valueSelected}"  />
                         </GroupBox>
 
-                        <local:Issue5544TestControl />
+                        <local:Issue5544TestControl DataContext="{Binding CurrentDataContext}" />
 
                     </StackPanel>
 
@@ -700,7 +698,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                         </TextBlock>
 
                         <auto:Intellibox
-                            DataProvider="{Binding Path=WideAndNarrowResults, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"
+                            DataProvider="{Binding Path=QueryProvider}"
                             DisplayedValueBinding="{Binding Name}"/>
 
                     </StackPanel>
@@ -717,17 +715,17 @@ OTHER DEALINGS IN THE SOFTWARE.
 
                         <Label Content="Only returns directories matching the search term" />
                         <auto:Intellibox
-                            DataProvider="{Binding Path=DirectoryOnlySearch, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                            DataProvider="{Binding Path=DirectoryOnlySearch.QueryProvider}"
                             />
 
                         <Label Content="Only returns files matching the search term" />
                         <auto:Intellibox
-                            DataProvider="{Binding Path=FileOnlySearch, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                            DataProvider="{Binding Path=FileOnlySearch.QueryProvider}"
                             />
 
                         <Label Content="Returns both files and directories matching the searhc term" />
                         <auto:Intellibox
-                            DataProvider="{Binding Path=FileAndDirectorySearch, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                            DataProvider="{Binding Path=FileAndDirectorySearch.QueryProvider}"
                             />
                     </StackPanel>
                 </TabItem>

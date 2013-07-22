@@ -8,7 +8,7 @@ using System.Collections;
 using Examples.SearchProviders;
 
 namespace Examples.ViewModels {
-    class LengthySearchExampleVM {
+    public class LengthySearchExampleVM {
 
         public StandardSearchVM LongSearch {
             get;

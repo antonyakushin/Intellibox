@@ -27,38 +27,43 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Caliburn.Micro;
+using System.ComponentModel;
 
 namespace Examples.ViewModels
 {
-    class WorkItem5544VM : PropertyChangedBase
+    public class WorkItem5544VM : PropertyChangedBase
     {
-        private StandardSearchVM _dataContext1;
-        private StandardSearchVM _dataContext2;
-        private StandardSearchVM _currentContext;
+        private Issue5544TestDataContext1 _dataContext1;
+        private Issue5544TestDataContext2 _dataContext2;
+        private INotifyPropertyChanged _currentContext;
 
-        public StandardSearchVM CurrentDataContext { 
+        public INotifyPropertyChanged CurrentDataContext
+        { 
             get { 
                 return _currentContext; 
             } 
             private set { 
                 if (value != _currentContext) { 
                     _currentContext = value;
-                    NotifyOfPropertyChange(() => CurrentDataContext); 
+                    NotifyOfPropertyChange(() => CurrentDataContext);
+
                 } 
             } 
         }
 
+        public bool CanSwapDataContexts { get { return true; } }
+
         public void SwapDataContexts()
         {
             CurrentDataContext = (CurrentDataContext == _dataContext1)
-                ? _dataContext2
+                ? (INotifyPropertyChanged)_dataContext2
                 : _dataContext1;
         }
 
         public WorkItem5544VM()
         {
-            _dataContext1 = new StandardSearchVM(new SingleColumnResultsProvider());
-            _dataContext2 = new StandardSearchVM(new MultiColumnResultsProvider());
+            _dataContext1 = new Issue5544TestDataContext1();
+            _dataContext2 = new Issue5544TestDataContext2();
 
             CurrentDataContext = _dataContext1;
         }

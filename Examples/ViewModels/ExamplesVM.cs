@@ -28,7 +28,7 @@ using System.Linq;
 using System.Text;
 
 namespace Examples.ViewModels {
-    class ExamplesVM {
+    public class ExamplesVM {
         public StandardSearchVM NoResultsVM {
             get;
             private set;

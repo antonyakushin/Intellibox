@@ -27,5 +27,9 @@ using System.Windows;
 
 namespace Examples {
     public partial class App : Application {
+
+        public App() {
+            InitializeComponent();
+        }
     }
 }

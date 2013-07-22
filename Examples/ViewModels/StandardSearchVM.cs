@@ -31,7 +31,7 @@ using Caliburn.Micro;
 
 namespace Examples.ViewModels
 {
-    class StandardSearchVM : PropertyChangedBase
+    public class StandardSearchVM : PropertyChangedBase
     {
         private object _selectedItem;
         public object SelectedItem { get { return _selectedItem; } set { if (value != _selectedItem) { _selectedItem = value; NotifyOfPropertyChange(() => SelectedItem); } } }
