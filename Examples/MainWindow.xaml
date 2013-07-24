@@ -29,7 +29,8 @@ OTHER DEALINGS IN THE SOFTWARE.
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Examples"
         xmlns:auto="clr-namespace:FeserWard.Controls;assembly=IntelliBox"
-        x:Name="mainWin"
+    xmlns:cal="http://www.caliburnproject.org"
+    x:Name="mainWin"
         Title="Usage examples for the Intellibox"
         WindowStartupLocation="CenterScreen"
         Width="709"
@@ -672,7 +673,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
                         </TextBlock>
                         <StackPanel Orientation="Horizontal">
-                            <Button x:Name="SwapDataContexts" Content="swap datacontexts" />
+                            <Button x:Name="SwapDataContexts" Content="swap datacontexts" cal:Message.Attach="[Event Click] = [Action SwapDataContexts()];" />
                             <Label Content=" " />
                             <Label Content="{Binding CurrentDataContext.DataContextName}" />
                         </StackPanel>
@@ -723,7 +724,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                             DataProvider="{Binding Path=FileOnlySearch.QueryProvider}"
                             />
 
-                        <Label Content="Returns both files and directories matching the searhc term" />
+                        <Label Content="Returns both files and directories matching the search term" />
                         <auto:Intellibox
                             DataProvider="{Binding Path=FileAndDirectorySearch.QueryProvider}"
                             />
