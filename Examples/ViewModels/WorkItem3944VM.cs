@@ -24,6 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 using Caliburn.Micro;
 using FeserWard.Controls;
+using Examples.SearchProviders;
 
 namespace Examples.ViewModels
 {

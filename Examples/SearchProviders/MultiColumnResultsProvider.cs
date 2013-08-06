@@ -28,7 +28,8 @@ using System.Collections.Generic;
 using System.Linq;
 using FeserWard.Controls;
 
-namespace Examples {
+namespace Examples.SearchProviders
+{
     public class MultiColumnResultsProvider : IIntelliboxResultsProvider {
         private List<Person> _results;
 

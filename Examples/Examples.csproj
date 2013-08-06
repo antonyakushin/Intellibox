@@ -134,7 +134,7 @@
     <Compile Include="ViewModels\WorkItem3944VM.cs" />
     <Compile Include="ViewModels\WorkItem5544VM.cs" />
     <Compile Include="ViewModels\WorkItem6036VM.cs" />
-    <Compile Include="WideAndNarrowResultsProvider.cs" />
+    <Compile Include="SearchProviders\WideAndNarrowResultsProvider.cs" />
     <Page Include="BasicSearchResultsCtrl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -161,12 +161,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DelayedResultsProvider.cs" />
+    <Compile Include="SearchProviders\DelayedResultsProvider.cs" />
     <Compile Include="Issue5544TestControl.xaml.cs">
       <DependentUpon>Issue5544TestControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Issue5544TestDataContext1.cs" />
-    <Compile Include="Issue5544TestDataContext2.cs" />
+    <Compile Include="ViewModels\Issue5544TestDataContext1.cs" />
+    <Compile Include="ViewModels\Issue5544TestDataContext2.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -176,24 +176,24 @@
     <Compile Include="..\IntelliBox\Properties\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AppendTextConverter.cs" />
+    <Compile Include="Infrastructure\AppendTextConverter.cs" />
     <Compile Include="BasicSearchResultsCtrl.xaml.cs">
       <DependentUpon>BasicSearchResultsCtrl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CurrencyConverter.cs" />
-    <Compile Include="InvertedSingleColumnResultsProvider.cs" />
-    <Compile Include="LightspeedResultsProvider.cs" />
+    <Compile Include="Infrastructure\CurrencyConverter.cs" />
+    <Compile Include="SearchProviders\InvertedSingleColumnResultsProvider.cs" />
+    <Compile Include="SearchProviders\LightspeedResultsProvider.cs" />
     <Compile Include="LimitedResultsCtrl.xaml.cs">
       <DependentUpon>LimitedResultsCtrl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MultiColumnResultsProvider.cs" />
+    <Compile Include="SearchProviders\MultiColumnResultsProvider.cs" />
     <Compile Include="NorthwindLightSpeedModel1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>NorthwindLightSpeedModel.lsmodel</DependentUpon>
     </Compile>
-    <Compile Include="NoSearchResultsProvider.cs" />
-    <Compile Include="ObjectListProvider.cs" />
+    <Compile Include="SearchProviders\NoSearchResultsProvider.cs" />
+    <Compile Include="SearchProviders\ObjectListProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -207,7 +207,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="SingleColumnResultsProvider.cs" />
+    <Compile Include="SearchProviders\SingleColumnResultsProvider.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

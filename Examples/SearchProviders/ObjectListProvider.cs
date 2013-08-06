@@ -23,15 +23,19 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
-using System.Collections.Generic;
 using FeserWard.Controls;
 
-namespace Examples {
+namespace Examples.SearchProviders
+{
+    public class ObjectListProvider : IIntelliboxResultsProvider {
 
-    public class NoSearchResultsProvider : IIntelliboxResultsProvider {
+        public IEnumerable DoSearch(string searchTerm, int maxResults, object extraInfo) {
+            return new object[] { 
+                new object[] { 1, 2 },
+                new object[] { 3, 4 },
+                new object[] { 5, 6 }
 
-        public IEnumerable DoSearch(string searchTerm, int maxResults, object tag) {
-            return new List<object>();
+            };
         }
     }
 }

@@ -28,7 +28,8 @@ using FeserWard.Controls;
 using IntelliBox.Examples;
 using Mindscape.LightSpeed;
 
-namespace Examples {
+namespace Examples.SearchProviders
+{
 
     public class LightspeedResultsProvider : IIntelliboxResultsProvider {
 

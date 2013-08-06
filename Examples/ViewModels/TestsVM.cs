@@ -23,6 +23,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
 
+using Examples.SearchProviders;
 namespace Examples.ViewModels
 {
     public class TestsVM
@@ -30,7 +31,7 @@ namespace Examples.ViewModels
         public StandardSearchVM EmptyPathTestVM { get; private set; }
         public StandardSearchVM ValueConvertersTestVM { get; private set; }
 
-        public WorkItem3944VM OneWayToSourceTestVM { get; private set; } //TODO need to combine this test tab into a single tab
+        public WorkItem3944VM OneWayToSourceTestVM { get; private set; }
 
         public StandardSearchVM WorkItem4391TestVM { get; private set; }
         public WorkItem5544VM WorkItem5544TestVM { get; private set; }

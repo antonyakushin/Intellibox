@@ -29,7 +29,7 @@ using System.Text;
 using System.Threading;
 using FeserWard.Controls;
 
-namespace Examples {
+namespace Examples.SearchProviders {
     public class DelayedResultsProvider : IIntelliboxResultsProvider {
 
         private static string[] _searchResults = Enumerable.Range(0, 26 * 5)

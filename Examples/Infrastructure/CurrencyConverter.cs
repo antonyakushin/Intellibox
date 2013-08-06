@@ -25,7 +25,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 using System;
 using System.Windows.Data;
 
-namespace IntelliBox.Examples {
+namespace Examples.Infrastructure
+{
 
     public class CurrencyConverter : IValueConverter {
 
