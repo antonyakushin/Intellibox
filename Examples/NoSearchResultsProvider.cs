@@ -1,4 +1,5 @@
-﻿/*
+﻿using System.Collections;
+/*
 Copyright (c) 2010 Stephen P Ward and Joseph E Feser
 
 Permission is hereby granted, free of charge, to any person
@@ -24,7 +25,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.Collections.Generic;
 using FeserWard.Controls;
-using System.Collections;
 
 namespace Examples {
 
