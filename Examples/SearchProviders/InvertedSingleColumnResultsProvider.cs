@@ -1,5 +1,4 @@
-﻿using System.Collections;
-/*
+﻿/*
 Copyright (c) 2010 Stephen P Ward and Joseph E Feser
 
 Permission is hereby granted, free of charge, to any person
@@ -23,18 +22,15 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
-using FeserWard.Controls;
 
-namespace Examples {
-    public class ObjectListProvider : IIntelliboxResultsProvider {
+using System.Collections.Generic;
+using System.Linq;
 
-        public IEnumerable DoSearch(string searchTerm, int maxResults, object extraInfo) {
-            return new object[] { 
-                new object[] { 1, 2 },
-                new object[] { 3, 4 },
-                new object[] { 5, 6 }
-
-            };
+namespace Examples.SearchProviders
+{
+    class InvertedSingleColumnResultsProvider : SingleColumnResultsProvider {
+        protected override IEnumerable<string> Sort(IEnumerable<string> preResults) {
+            return preResults.OrderBy(s => s.Length);
         }
     }
 }

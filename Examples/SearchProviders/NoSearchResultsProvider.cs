@@ -1,4 +1,5 @@
-﻿/*
+﻿using System.Collections;
+/*
 Copyright (c) 2010 Stephen P Ward and Joseph E Feser
 
 Permission is hereby granted, free of charge, to any person
@@ -22,14 +23,16 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
-
 using System.Collections.Generic;
-using System.Linq;
+using FeserWard.Controls;
 
-namespace Examples {
-    class InvertedSingleColumnResultsProvider : SingleColumnResultsProvider {
-        protected override IEnumerable<string> Sort(IEnumerable<string> preResults) {
-            return preResults.OrderBy(s => s.Length);
+namespace Examples.SearchProviders
+{
+
+    public class NoSearchResultsProvider : IIntelliboxResultsProvider {
+
+        public IEnumerable DoSearch(string searchTerm, int maxResults, object tag) {
+            return new List<object>();
         }
     }
 }

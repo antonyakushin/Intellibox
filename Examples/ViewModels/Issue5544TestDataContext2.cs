@@ -24,7 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 using System.ComponentModel;
 
-namespace Examples
+namespace Examples.ViewModels
 {
 	class Issue5544TestDataContext2 : INotifyPropertyChanged
 	{
