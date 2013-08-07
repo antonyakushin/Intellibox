@@ -730,6 +730,31 @@ OTHER DEALINGS IN THE SOFTWARE.
                             />
                     </StackPanel>
                 </TabItem>
+                
+                <TabItem Header="work item 6308"
+                         ToolTip="test for updating the search box text when the SelectedItem is changed via databinding"
+                         DataContext="{Binding WorkItem6308TestVM}">
+                    <StackPanel>
+                        <TextBlock>
+                            Type any letter of the alphabet to start, and then select an item from the result list.
+                            Once an item is selected, click the button on this tab. If the text in the intellibox changes
+                            to an 'A' (or a 'Z' if an 'A' was already selected), then this test passes. Otherwise, it fails.
+                        </TextBlock>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="MyItem value: " />
+                            <TextBox Text="{Binding MyItem, Mode=OneWay}" />
+                        </StackPanel>
+                        
+                        <Button x:Name="ChangeSearchText" Content="Change the SearchText" cal:Message.Attach="[Event Click] = [Action ChangeMyItem()];" />
+                        
+                        <auto:Intellibox
+                            DataProvider="{Binding QueryProvider}"
+                            SelectedItem="{Binding MyItem}"
+                            />
+                    </StackPanel>
+                </TabItem>
+                
             </TabControl>
         </TabItem>
 
