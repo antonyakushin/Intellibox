@@ -39,6 +39,8 @@ namespace Examples.ViewModels
         public StandardSearchVM WorkItem6309TestVM { get; private set; }
         public WorkItem6036VM WorkItem6036TestVM { get; private set; }
 
+        public WorkItem6308VM WorkItem6308TestVM { get; private set; }
+
         public TestsVM()
         {
             EmptyPathTestVM = new StandardSearchVM(new SingleColumnResultsProvider());
@@ -48,7 +50,7 @@ namespace Examples.ViewModels
             WorkItem5544TestVM = new WorkItem5544VM();
             WorkItem6309TestVM = new StandardSearchVM(new WideAndNarrowResultsProvider());
             WorkItem6036TestVM = new WorkItem6036VM();
-
+            WorkItem6308TestVM = new WorkItem6308VM();
         }
     }
 }

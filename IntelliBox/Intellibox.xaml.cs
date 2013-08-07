@@ -168,7 +168,7 @@ namespace FeserWard.Controls {
         /// </summary>
         public static readonly DependencyProperty SelectedItemProperty =
             DependencyProperty.Register("SelectedItem", typeof(object), typeof(Intellibox), 
-                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSelectedItemChanged)));
 
         /// <summary>
         /// Identifies the <see cref="SelectedValueProperty"/> Dependancy Property.
@@ -997,6 +997,16 @@ namespace FeserWard.Controls {
 
             this.SetBinding(Intellibox.DisplayTextFromSelectedItemProperty,
                 BindingBaseFactory.ConstructBindingForSelected(this, DisplayedValueBinding));
+        }
+
+        private static void OnSelectedItemChanged(DependencyObject receiver, DependencyPropertyChangedEventArgs args)
+        {
+            var ib = receiver as Intellibox;
+            if (ib != null)
+            {
+                ib.OnDisplayedValueBindingChanged();
+                ib._lastTextValue = ib.UpdateSearchBoxText(true);
+            }
         }
 
         private void OnListItemMouseDoubleClick(object sender, MouseButtonEventArgs e) {
