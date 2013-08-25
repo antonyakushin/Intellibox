@@ -21,7 +21,6 @@ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
-  
 -->
     
     <UserControl x:Class="Examples.Issue5544TestControl"
@@ -32,63 +31,179 @@ OTHER DEALINGS IN THE SOFTWARE.
              xmlns:auto="clr-namespace:FeserWard.Controls;assembly=IntelliBox"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="10" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="10" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        
-        <Label Grid.Column="0"
-               Grid.Row="0"
-               Content="Greeting: " />
-        <TextBox Grid.Column="2"
-                 Grid.Row="0"
-                 Text="{Binding greetingTxt}" />
-
-        <Label Grid.Column="0"
-               Grid.Row="1"
-               Content="Full Name: " />
-        <TextBox Grid.Column="2"
-                 Grid.Row="1"
-                 Text="{Binding nameTxt}" />
-        
-        <Label Grid.Column="0"
-               Grid.Row="2"
-               Content="Send me spam email!" />
-        <CheckBox
-            Grid.Column="2"
-            Grid.Row="2"
-            Content="this is a test checkbox"
-                  IsChecked="{Binding sendSpam}" />
-
-        <Label Grid.Column="0"
-               Grid.Row="3"
-               Content="Search: " />
-        <auto:Intellibox
-            Grid.Column="2"
-            Grid.Row="3"
-            x:Name="issue5544IBox"
-            DataProvider="{Binding queryResults}"
-            SelectedValueBinding="{Binding Name}"
-            DisplayedValueBinding="{Binding Salutation}"
-            SelectedValue="{Binding valueSelected}"
-            />
-        
-        <TextBlock Grid.Row="5" Grid.ColumnSpan="3">
-            valueSelected history
+    <StackPanel>
+        <TextBlock>
+            The control below binds the "SelectedItem" and "SelectedValue" properties of the Intellibox control to properties on the ViewModel.
         </TextBlock>
-        <TextBox Grid.Row="6" Grid.ColumnSpan="3"
-                 Text="{Binding Path=valueSelected}" IsReadOnly="True" />
+        <Grid
+            DataContext="{Binding FirstDataContextSet}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="Auto" />
+                <ColumnDefinition
+                    Width="10" />
+                <ColumnDefinition
+                    Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="10" />
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="*" />
+            </Grid.RowDefinitions>
 
-    </Grid>
+            <Label
+                Grid.Column="0"
+                Grid.Row="0"
+                Content="Greeting: " />
+            <TextBox
+                Grid.Column="2"
+                Grid.Row="0"
+                Text="{Binding greetingTxt}" />
+
+            <Label
+                Grid.Column="0"
+                Grid.Row="1"
+                Content="Full Name: " />
+            <TextBox
+                Grid.Column="2"
+                Grid.Row="1"
+                Text="{Binding nameTxt}" />
+
+            <Label
+                Grid.Column="0"
+                Grid.Row="2"
+                Content="Send me spam email!" />
+            <CheckBox
+                Grid.Column="2"
+                Grid.Row="2"
+                Content="this is a test checkbox"
+                IsChecked="{Binding sendSpam}" />
+
+            <Label
+                Grid.Column="0"
+                Grid.Row="3"
+                Content="Search: " />
+            <auto:Intellibox
+                Grid.Column="2"
+                Grid.Row="3"
+                x:Name="issue5544IBox"
+                DataProvider="{Binding queryResults}"
+                SelectedValueBinding="{Binding Name}"
+                DisplayedValueBinding="{Binding Salutation}"
+                SelectedValue="{Binding valueSelected}"
+                SelectedItem="{Binding itemSelected}" />
+
+            <GroupBox
+                Grid.Row="5"
+                Grid.ColumnSpan="3"
+                Header="selected value from the intellibox">
+                <TextBox
+                    Text="{Binding valueSelected}" />
+            </GroupBox>
+
+        </Grid>
+        
+        <TextBlock>
+            The control below does NOT bind the "SelectedItem" and "SelectedValue" properties of the Intellibox control to properties on the ViewModel.
+        </TextBlock>
+
+        <Grid
+            DataContext="{Binding SecondDataContextSet}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="Auto" />
+                <ColumnDefinition
+                    Width="10" />
+                <ColumnDefinition
+                    Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="10" />
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="*" />
+            </Grid.RowDefinitions>
+
+            <Label
+                Grid.Column="0"
+                Grid.Row="0"
+                Content="Greeting: " />
+            <TextBox
+                Grid.Column="2"
+                Grid.Row="0"
+                Text="{Binding greetingTxt}" />
+
+            <Label
+                Grid.Column="0"
+                Grid.Row="1"
+                Content="Full Name: " />
+            <TextBox
+                Grid.Column="2"
+                Grid.Row="1"
+                Text="{Binding nameTxt}" />
+
+            <Label
+                Grid.Column="0"
+                Grid.Row="2"
+                Content="Send me spam email!" />
+            <CheckBox
+                Grid.Column="2"
+                Grid.Row="2"
+                Content="this is a test checkbox"
+                IsChecked="{Binding sendSpam}" />
+
+            <Label
+                Grid.Column="0"
+                Grid.Row="3"
+                Content="Search: " />
+            <auto:Intellibox
+                Grid.Column="2"
+                Grid.Row="3"
+                x:Name="issue5544IBox2"
+                DataProvider="{Binding queryResults}"
+                SelectedValueBinding="{Binding Name}"
+                DisplayedValueBinding="{Binding Salutation}" />
+
+            <GroupBox
+                Grid.Row="5"
+                Grid.ColumnSpan="3"
+                Header="selected value from the intellibox">
+                <TextBox
+                    Text="{Binding Path=SelectedValue, ElementName=issue5544IBox2, Mode=OneWay}" />
+            </GroupBox>
+
+            <GroupBox
+                Grid.Row="6"
+                Grid.ColumnSpan="3"
+                Header="selected item from the intellibox">
+                <TextBox
+                    Text="{Binding Path=SelectedItem, ElementName=issue5544IBox2, Mode=OneWay}" />
+            </GroupBox>
+
+        </Grid>
+    </StackPanel>
+        
 </UserControl>
