@@ -124,6 +124,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Infrastructure\IntelliboxExamplesBootstrapper.cs" />
+    <Compile Include="SearchProviders\Issue5544ResultsProvider.cs" />
     <Compile Include="SearchProviders\NotifyingProvider.cs" />
     <Compile Include="SearchProviders\WorkItem6308ResultsProvider.cs" />
     <Compile Include="ViewModels\ExamplesVM.cs" />
@@ -167,8 +168,7 @@
     <Compile Include="Issue5544TestControl.xaml.cs">
       <DependentUpon>Issue5544TestControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\Issue5544TestDataContext1.cs" />
-    <Compile Include="ViewModels\Issue5544TestDataContext2.cs" />
+    <Compile Include="ViewModels\Issue5544TestDataContext.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

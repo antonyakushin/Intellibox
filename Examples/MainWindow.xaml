@@ -669,20 +669,11 @@ OTHER DEALINGS IN THE SOFTWARE.
                          ToolTip="test to make sure the problem in work item 5544 is fixed"
                          DataContext="{Binding WorkItem5544TestVM}">
                     <StackPanel>
-                        <TextBlock>
-
-                        </TextBlock>
                         <StackPanel Orientation="Horizontal">
                             <Button x:Name="SwapDataContexts" Content="swap datacontexts" cal:Message.Attach="[Event Click] = [Action SwapDataContexts()];" />
-                            <Label Content=" " />
-                            <Label Content="{Binding CurrentDataContext.DataContextName}" />
                         </StackPanel>
 
-                        <GroupBox Header="selected value from the intellibox">
-                            <TextBox Text="{Binding CurrentDataContext.valueSelected}"  />
-                        </GroupBox>
-
-                        <local:Issue5544TestControl DataContext="{Binding CurrentDataContext}" />
+                        <local:Issue5544TestControl />
 
                     </StackPanel>
 

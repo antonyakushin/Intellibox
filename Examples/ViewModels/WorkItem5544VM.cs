@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-/*
+﻿/*
 Copyright (c) 2010 Stephen P Ward and Joseph E Feser
 
 Permission is hereby granted, free of charge, to any person
@@ -24,44 +23,72 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
 using Caliburn.Micro;
+using System.ComponentModel;
+using Examples.SearchProviders;
 
 namespace Examples.ViewModels
 {
     public class WorkItem5544VM : PropertyChangedBase
     {
-        private Issue5544TestDataContext1 _dataContext1;
-        private Issue5544TestDataContext2 _dataContext2;
-        private INotifyPropertyChanged _currentContext;
+        private Issue5544TestDataContext _dataContext1;
+        private Issue5544TestDataContext _dataContext2;
+        private Issue5544TestDataContext _dataContext3;
+        private Issue5544TestDataContext _dataContext4;
 
-        public INotifyPropertyChanged CurrentDataContext
+        private INotifyPropertyChanged _firstContext;
+
+        public INotifyPropertyChanged FirstDataContextSet
         { 
             get { 
-                return _currentContext; 
+                return _firstContext; 
             } 
             private set { 
-                if (value != _currentContext) { 
-                    _currentContext = value;
-                    NotifyOfPropertyChange(() => CurrentDataContext);
+                if (value != _firstContext) { 
+                    _firstContext = value;
+                    NotifyOfPropertyChange(() => FirstDataContextSet);
 
                 } 
             } 
         }
 
-        public bool CanSwapDataContexts { get { return true; } }
+        private INotifyPropertyChanged _secondContext;
 
+        public INotifyPropertyChanged SecondDataContextSet {
+            get {
+                return _secondContext;
+            }
+            private set {
+                if (value != _secondContext) {
+                    _secondContext = value;
+                    NotifyOfPropertyChange(() => SecondDataContextSet);
+                }
+            }
+        }
+
+        bool _onfirstDataContextSet = false;
         public void SwapDataContexts()
         {
-            CurrentDataContext = (CurrentDataContext == _dataContext1)
-                ? (INotifyPropertyChanged)_dataContext2
-                : _dataContext1;
+            _onfirstDataContextSet = !_onfirstDataContextSet;
+            if (_onfirstDataContextSet) {
+                FirstDataContextSet = _dataContext1;
+                SecondDataContextSet = _dataContext3;
+            }
+            else {
+                FirstDataContextSet = _dataContext2;
+                SecondDataContextSet = _dataContext4;
+            }
         }
 
         public WorkItem5544VM()
         {
-            _dataContext1 = new Issue5544TestDataContext1();
-            _dataContext2 = new Issue5544TestDataContext2();
+            var provider = new Issue5544ResultsProvider();
+            _dataContext1 = new Issue5544TestDataContext("Data Context #1", provider);
+            _dataContext2 = new Issue5544TestDataContext("Data Context #2", provider);
 
-            CurrentDataContext = _dataContext1;
+            _dataContext3 = new Issue5544TestDataContext("Data Context #3", provider);
+            _dataContext4 = new Issue5544TestDataContext("Data Context #4", provider);
+
+            SwapDataContexts();
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿
-/*
+﻿/*
 Copyright (c) 2010 Stephen P Ward and Joseph E Feser
 
 Permission is hereby granted, free of charge, to any person
@@ -23,17 +22,37 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using FeserWard.Controls;
 
-namespace Examples.SearchProviders
-{
+namespace Examples.SearchProviders {
+	public class Issue5544ResultsProvider : IIntelliboxResultsProvider {
 
-    public class NoSearchResultsProvider : IIntelliboxResultsProvider {
+		public System.Collections.IEnumerable DoSearch(string searchTerm, int maxResults, object extraInfo) {
+			return new testresult[] {
+					new testresult { Name ="name 2-1", Salutation= "salutation 2-1"},
+					new testresult { Name ="name 2-2", Salutation= "salutation 2-2"},
+					new testresult { Name ="name 2-3", Salutation= "salutation 2-3"}
+				};
+		}
 
-        public IEnumerable DoSearch(string searchTerm, int maxResults, object tag) {
-            return new List<object>();
-        }
-    }
+		private class testresult {
+			public string Name {
+				get;
+				set;
+			}
+			public string Salutation {
+				get;
+				set;
+			}
+
+			public override string ToString() {
+				return string.Format("Name: '{0}', Salutation: '{1}'", Name, Salutation);
+			}
+		}
+
+	}
 }

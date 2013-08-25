@@ -759,6 +759,21 @@ namespace FeserWard.Controls {
             RowColorizer = new IntelliboxAlternateRowColorizer() {
                 OddRowBrush = Brushes.Gainsboro
             };
+
+            this.DataContextChanged += new DependencyPropertyChangedEventHandler(Intellibox_DataContextChanged);
+        }
+
+        void Intellibox_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e) {
+
+            var expr = this.GetBindingExpression(SelectedItemProperty);
+            if (expr == null) {
+                SelectedItem = null;
+            }
+
+            expr = this.GetBindingExpression(SelectedValueProperty);
+            if (expr == null) {
+                SelectedValue = null;
+            }
         }
 
         private void CancelSelection() {
@@ -794,9 +809,6 @@ namespace FeserWard.Controls {
         private void ChooseCurrentItem() {
             this.SetValue(SelectedItemProperty, ResultsList.SelectedItem);
 
-            // have to set this after the SelectedItem property is set
-            this.SetValue(SelectedValueProperty, IntermediateSelectedValue);
-
             _lastTextValue = UpdateSearchBoxText(true);
 
             OnUserEndedSearchEvent();
@@ -804,11 +816,6 @@ namespace FeserWard.Controls {
             if (Items != null) {
                 Items = null;
             }
-        }
-
-        private void ClearSelectedItem() {
-            this.SelectedItem = null;
-            OnUserEndedSearchEvent();
         }
 
         private GridView ConstructGridView(object item) {
@@ -1006,6 +1013,10 @@ namespace FeserWard.Controls {
             {
                 ib.OnDisplayedValueBindingChanged();
                 ib._lastTextValue = ib.UpdateSearchBoxText(true);
+
+                // have to set this after the SelectedItem property is set
+                ib.OnSelectedValueBindingChanged();
+                ib.SetValue(SelectedValueProperty, ib.IntermediateSelectedValue);
             }
         }
 
@@ -1145,7 +1156,8 @@ namespace FeserWard.Controls {
                 return;
 
             if (string.IsNullOrEmpty(enteredText)) {
-                ClearSelectedItem();
+                this.SelectedItem = null;
+                OnUserEndedSearchEvent();
             }
             else {
                 bool doSearchNow = !IsSearchInProgress && enteredText.Length >= MinimumPrefixLength;
