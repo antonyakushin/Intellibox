@@ -220,6 +220,13 @@ namespace FeserWard.Controls {
         public static readonly DependencyProperty WatermarkTextProperty =
             DependencyProperty.Register("WatermarkText", typeof(string), typeof(Intellibox), new UIPropertyMetadata(string.Empty));
 
+        /// <summary>
+        /// Identifies the <see cref="AutoSelectSingleResult"/> Dependancy Property
+        /// </summary>
+        public static readonly DependencyProperty AutoSelectSingleResultProperty =
+            DependencyProperty.Register("AutoSelectSingleResult", typeof(bool), typeof(Intellibox),
+            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
         private static Type[] _baseTypes = new[] {
             typeof(bool), typeof(byte), typeof(sbyte), typeof(char), typeof(decimal),
             typeof(double), typeof(float),
@@ -626,6 +633,18 @@ namespace FeserWard.Controls {
             }
         }
 
+        /// <summary>
+        /// When <see cref="true"/> query results that have only a single result will will be automatically selected.
+        /// </summary>
+        public bool AutoSelectSingleResult {
+            get {
+                return (bool)GetValue(AutoSelectSingleResultProperty);
+            }
+            set {
+                SetValue(AutoSelectSingleResultProperty, value);
+            }
+        }
+
         private bool ShowResults {
             get {
                 return (bool)GetValue(ShowResultsProperty);
@@ -1006,6 +1025,10 @@ namespace FeserWard.Controls {
                 BindingBaseFactory.ConstructBindingForSelected(this, DisplayedValueBinding));
         }
 
+        private static void OnIsDropDownOpenChanged(DependencyObject receiver, DependencyPropertyChangedEventArgs args) {
+
+        }
+
         private static void OnSelectedItemChanged(DependencyObject receiver, DependencyPropertyChangedEventArgs args)
         {
             var ib = receiver as Intellibox;
@@ -1220,6 +1243,12 @@ namespace FeserWard.Controls {
                 ShowResults = true;
             }
 
+			if (AutoSelectSingleResult && Items.Count == 1) {
+				ResultsList.SelectedItem = Items[0];
+				ChooseCurrentItem();
+				ShowResults = false;
+			}
+
             OnSearchCompleted();
         }
 
@@ -1237,8 +1266,8 @@ namespace FeserWard.Controls {
             return text;
         }
 
-        public virtual void Focus() {
-            PART_EDITFIELD.Focus();
+        public new bool Focus() {
+            return PART_EDITFIELD.Focus();
         }
 
         private void PART_EDITFIELD_GotFocus(object sender, RoutedEventArgs e) {
