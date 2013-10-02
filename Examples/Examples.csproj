@@ -138,6 +138,7 @@
     <Compile Include="ViewModels\WorkItem6036VM.cs" />
     <Compile Include="SearchProviders\WideAndNarrowResultsProvider.cs" />
     <Compile Include="ViewModels\WorkItem6308VM.cs" />
+    <Compile Include="ViewModels\WorkItem6310VM.cs" />
     <Page Include="BasicSearchResultsCtrl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -40,6 +40,10 @@ namespace Examples.ViewModels
         public WorkItem6036VM WorkItem6036TestVM { get; private set; }
 
         public WorkItem6308VM WorkItem6308TestVM { get; private set; }
+        public WorkItem6310VM WorkItem6310TestVM {
+            get;
+            private set;
+        }
 
         public TestsVM()
         {
@@ -51,6 +55,7 @@ namespace Examples.ViewModels
             WorkItem6309TestVM = new StandardSearchVM(new WideAndNarrowResultsProvider());
             WorkItem6036TestVM = new WorkItem6036VM();
             WorkItem6308TestVM = new WorkItem6308VM();
+            WorkItem6310TestVM = new WorkItem6310VM();
         }
     }
 }

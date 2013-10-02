@@ -746,6 +746,23 @@ OTHER DEALINGS IN THE SOFTWARE.
                     </StackPanel>
                 </TabItem>
                 
+                <TabItem Header="workitem 6310"
+                         ToolTip="Test for closing the search results popup programmatically"
+                         DataContext="{Binding WorkItem6310TestVM}">
+                    <StackPanel>
+
+                        <TextBlock>
+                            Use the checkbox below to turn the selecting of single results on and off.
+                        </TextBlock>
+                        <CheckBox IsChecked="{Binding SelectSingleResult}">
+                            Automatically select single results?
+                        </CheckBox>
+                        
+                        <auto:Intellibox DataProvider="{Binding QueryProvider}" AutoSelectSingleResult="{Binding SelectSingleResult}" />
+                    </StackPanel>
+                    
+                </TabItem>
+                
             </TabControl>
         </TabItem>
 
