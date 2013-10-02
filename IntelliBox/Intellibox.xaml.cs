@@ -1237,6 +1237,10 @@ namespace FeserWard.Controls {
             return text;
         }
 
+        public virtual void Focus() {
+            PART_EDITFIELD.Focus();
+        }
+
         private void PART_EDITFIELD_GotFocus(object sender, RoutedEventArgs e) {
             if (SelectAllOnFocus) {
                 PART_EDITFIELD.SelectAll();
