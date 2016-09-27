@@ -122,6 +122,12 @@ namespace FeserWard.Controls {
             new UIPropertyMetadata(250, null, CoerceMinimumSearchDelayProperty));
 
         /// <summary>
+        /// Identifies the <see cref="NoResultsTextProperty"/> Dependancy Property.
+        /// </summary>
+        protected static readonly DependencyProperty NoResultsTextProperty =
+            DependencyProperty.Register("NoResultsText", typeof(string), typeof(Intellibox), new UIPropertyMetadata("No results found"));
+
+        /// <summary>
         ///Using a DependencyProperty as the backing store for PageUpOrDownScrollRows.  This enables animation, styling, binding, etc... 
         /// </summary>
         public static readonly DependencyProperty PagingScrollRowsProperty =
@@ -441,6 +447,22 @@ namespace FeserWard.Controls {
             }
             set {
                 SetValue(MinimumSearchDelayProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the text displayed in the search results popup when no records are found.
+        /// This is a Dependancy Property.
+        /// </summary>
+        public string NoResultsText
+        {
+            get
+            {
+                return (string)GetValue(NoResultsTextProperty);
+            }
+            set
+            {
+                SetValue(NoResultsTextProperty, value);
             }
         }
 

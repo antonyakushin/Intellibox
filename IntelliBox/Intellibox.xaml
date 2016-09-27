@@ -101,7 +101,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                     BorderThickness="1">
                 <TextBlock Padding="16,4"
                            FontStyle="Italic"
-                           Text="No results found"
+                           Text="{Binding Path=NoResultsText, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
                            Foreground="Black"
                            Background="White" />
             </Border>
