@@ -1194,6 +1194,11 @@ namespace FeserWard.Controls {
             }
         }
 
+        private void OnTextBoxChanged(object sender, TextChangedEventArgs e)
+        {
+            TextChanged?.Invoke(sender, e);
+        }
+
         private void PerformSearchActions(string enteredText) {
             enteredText = ApplyDisableWhitespaceTrim(enteredText);
 
@@ -1311,5 +1316,11 @@ namespace FeserWard.Controls {
                 CancelSelection();
             }
         }
+
+        /// <summary>
+        /// Event called when text is updated.
+        /// </summary>
+        public event EventHandler<TextChangedEventArgs> TextChanged;
+
     }
 }

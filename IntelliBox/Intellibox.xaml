@@ -46,7 +46,8 @@ OTHER DEALINGS IN THE SOFTWARE.
         <TextBox Name="PART_EDITFIELD"
                  PreviewKeyDown="OnTextBoxPreviewKeyDown"
                  KeyUp="OnTextBoxKeyUp"
-                 GotFocus="PART_EDITFIELD_GotFocus" />
+                 GotFocus="PART_EDITFIELD_GotFocus"
+                 TextChanged="OnTextBoxChanged" />
         <TextBlock Margin="1"
                    Padding="4,2"
                    Focusable="False"
