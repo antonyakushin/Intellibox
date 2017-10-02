@@ -1098,6 +1098,13 @@ namespace FeserWard.Controls {
                 ChooseCurrentItem();
         }
 
+        private void OnListItemKeyDown(object sender, KeyEventArgs e)
+        {
+            // Enter selects the current item
+            if (e.Key == Key.Enter)
+                ChooseCurrentItem();
+        }
+
         private void OnRowColorizerChanged() {
             if (IsInitialized) {
                 var bind = new Binding() {
@@ -1112,6 +1119,8 @@ namespace FeserWard.Controls {
                 style.Setters.Add(settSingleClick);
                 var settDoubleClick = new EventSetter(ListViewItem.MouseDoubleClickEvent, new MouseButtonEventHandler(OnListItemMouseDoubleClick));
                 style.Setters.Add(settDoubleClick);
+                var settKeyDown = new EventSetter(ListViewItem.KeyDownEvent, new KeyEventHandler(OnListItemKeyDown));
+                style.Setters.Add(settKeyDown);
 
                 Resources[typeof(ListViewItem)] = style;
             }
