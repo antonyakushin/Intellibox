@@ -233,6 +233,13 @@ namespace FeserWard.Controls {
             DependencyProperty.Register("AutoSelectSingleResult", typeof(bool), typeof(Intellibox),
             new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
+        /// <summary>
+        /// Identifies the <see cref="SingleClickToSelectResult"/> Dependancy Property
+        /// </summary>
+        public static readonly DependencyProperty SingleClickToSelectResultProperty =
+            DependencyProperty.Register("SingleClickToSelectResult", typeof(bool), typeof(Intellibox),
+            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
         private static Type[] _baseTypes = new[] {
             typeof(bool), typeof(byte), typeof(sbyte), typeof(char), typeof(decimal),
             typeof(double), typeof(float),
@@ -766,6 +773,21 @@ namespace FeserWard.Controls {
         }
 
         /// <summary>
+        /// When True, selects the result after a single click instead of a double click. This is a Dependancy Property.
+        /// </summary>
+        public bool SingleClickToSelectResult
+        {
+            get
+            {
+                return (bool)GetValue(SingleClickToSelectResultProperty);
+            }
+            set
+            {
+                SetValue(SingleClickToSelectResultProperty, value);
+            }
+        }
+
+        /// <summary>
         /// Applies the <see cref="DisableWhitespaceTrim"/> property to the <paramref name="input"/> text.
         /// The return value is always non-null.
         /// </summary>
@@ -1065,8 +1087,15 @@ namespace FeserWard.Controls {
             }
         }
 
-        private void OnListItemMouseDoubleClick(object sender, MouseButtonEventArgs e) {
-            ChooseCurrentItem();
+        private void OnListItemMouseSingleClick(object sender, MouseButtonEventArgs e) {
+            if (SingleClickToSelectResult)
+                ChooseCurrentItem();
+        }
+
+        private void OnListItemMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (!SingleClickToSelectResult)
+                ChooseCurrentItem();
         }
 
         private void OnRowColorizerChanged() {
@@ -1079,8 +1108,10 @@ namespace FeserWard.Controls {
                 var style = new Style(typeof(ListViewItem));
                 style.Setters.Add(new Setter(ListViewItem.BackgroundProperty, bind));
 
-                var sett = new EventSetter(ListViewItem.MouseDoubleClickEvent, new MouseButtonEventHandler(OnListItemMouseDoubleClick));
-                style.Setters.Add(sett);
+                var settSingleClick = new EventSetter(ListViewItem.PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(OnListItemMouseSingleClick));
+                style.Setters.Add(settSingleClick);
+                var settDoubleClick = new EventSetter(ListViewItem.MouseDoubleClickEvent, new MouseButtonEventHandler(OnListItemMouseDoubleClick));
+                style.Setters.Add(settDoubleClick);
 
                 Resources[typeof(ListViewItem)] = style;
             }
