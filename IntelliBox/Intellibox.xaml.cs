@@ -1115,7 +1115,7 @@ namespace FeserWard.Controls {
                 var style = new Style(typeof(ListViewItem));
                 style.Setters.Add(new Setter(ListViewItem.BackgroundProperty, bind));
 
-                var settSingleClick = new EventSetter(ListViewItem.PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(OnListItemMouseSingleClick));
+                var settSingleClick = new EventSetter(ListViewItem.PreviewMouseLeftButtonUpEvent, new MouseButtonEventHandler(OnListItemMouseSingleClick));
                 style.Setters.Add(settSingleClick);
                 var settDoubleClick = new EventSetter(ListViewItem.MouseDoubleClickEvent, new MouseButtonEventHandler(OnListItemMouseDoubleClick));
                 style.Setters.Add(settDoubleClick);
