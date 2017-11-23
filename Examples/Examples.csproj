@@ -126,6 +126,7 @@
     <Compile Include="Infrastructure\IntelliboxExamplesBootstrapper.cs" />
     <Compile Include="SearchProviders\Issue5544ResultsProvider.cs" />
     <Compile Include="SearchProviders\NotifyingProvider.cs" />
+    <Compile Include="SearchProviders\NumericCodeDescriptionSearchProvider.cs" />
     <Compile Include="SearchProviders\WorkItem6308ResultsProvider.cs" />
     <Compile Include="ViewModels\ExamplesVM.cs" />
     <Compile Include="ViewModels\LengthySearchExampleVM.cs" />
