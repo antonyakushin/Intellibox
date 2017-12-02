@@ -33,4 +33,3 @@ packages/**
 *.resharper
 *.ncrunch*
 *.ndproj
-/.vs
