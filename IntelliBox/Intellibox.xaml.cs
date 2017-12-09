@@ -1028,10 +1028,11 @@ namespace FeserWard.Controls {
         }
 
         private bool IsNavigationKey(Key pressed) {
+            var numLockOn = (Keyboard.GetKeyStates(Key.NumLock) == KeyStates.Toggled);
             return pressed == Key.Down
                 || pressed == Key.Up
-                || pressed == Key.NumPad8
-                || pressed == Key.NumPad2
+                || (pressed == Key.NumPad8 && !numLockOn)
+                || (pressed == Key.NumPad2 && !numLockOn)
                 || pressed == Key.PageUp    //TODO need to handle navigation keys that skip items
                 || pressed == Key.PageDown;
         }
